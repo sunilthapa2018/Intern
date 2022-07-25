@@ -141,7 +141,7 @@ class MainPage extends StatelessWidget {
             label: 'Communication Tutorials',
             backgroundColor: Colors.blue,
           ),
-          
+
           BottomNavigationBarItem(
             icon: Icon(Icons.forum),
             label: 'Forum',
