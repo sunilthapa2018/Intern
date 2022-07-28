@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:training/Widget/bottom_nav_bar.dart';
-import 'package:training/Widget/navigation_drawer.dart';
+import 'package:flutter/services.dart';
+import 'package:motivational_leadership/Widget/bottom_nav_bar.dart';
+import 'package:motivational_leadership/Widget/navigation_drawer.dart';
 
 class HomePage extends StatelessWidget{
   const HomePage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) => Scaffold(
-    //drawer: const NavigationDrawerWidget(),
-    //appBar: AppBar(
-      // title: const Text("Home"),
-    //),
-    body: const Center(child: Text('Home')),
-    //bottomNavigationBar: const BottomNavBar(),
+    //body: const Center(child: Text('Home')),
+    body: const Text('Home'),
+    appBar: AppBar(
+      toolbarHeight: 24,
+      backgroundColor: Colors.transparent,
+      elevation: 0.0,
+      systemOverlayStyle: SystemUiOverlayStyle.dark,
+    ),
+
   );
 
 }

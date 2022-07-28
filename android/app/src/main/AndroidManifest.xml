@@ -1,9 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="training.leadershipdevelopment.training">
+    package="motivational_leadership.leadershipdevelopment.motivational_leadership">
    <application
         android:label="Motivational Leadership"
-        android:name="Motivational Leadership"
+        android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
        tools:ignore="MissingClass">
         <activity

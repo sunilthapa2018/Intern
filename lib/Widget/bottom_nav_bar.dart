@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:training/Screen/coaching_page.dart';
-import 'package:training/Screen/communication_page.dart';
-import 'package:training/Screen/forum_page.dart';
-import 'package:training/Screen/home_page.dart';
-import 'package:training/Screen/more_page.dart';
-import 'package:training/Screen/profile_page.dart';
-import 'package:training/Screen/questions_page.dart';
+import 'package:motivational_leadership/Screen/coaching_page.dart';
+import 'package:motivational_leadership/Screen/communication_page.dart';
+import 'package:motivational_leadership/Screen/forum_page.dart';
+import 'package:motivational_leadership/Screen/home_page.dart';
+import 'package:motivational_leadership/Screen/more_page.dart';
+import 'package:motivational_leadership/Screen/profile_page.dart';
+import 'package:motivational_leadership/Screen/questions_page.dart';
 
 import '../main.dart';
 
@@ -38,42 +38,43 @@ class _MainPageState extends State<BottomNavBar> {
   Widget build(BuildContext context) {
     return Scaffold(
       // appBar: AppBar(
-      //   title: const Text('Leadership Development'),
+      //   //title: const Text('Leadership Development'),
+      //   backgroundColor: Colors.transparent,
+      //   bottomOpacity:  0,
+      //   elevation: 0,
       // ),
       body: screens[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.white,
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.home_outlined),
             label: 'Home',
-            //backgroundColor: Color(0xFF2196F3),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.question_mark),
+            icon: Icon(Icons.question_mark_outlined),
             label: 'Question',
-            //backgroundColor: Color(0xFF2196F3),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.model_training),
+            icon: Icon(Icons.model_training_outlined),
             label: 'Coaching',
-            //backgroundColor: Color(0xFF2196F3),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.help),
+            icon: Icon(Icons.on_device_training_outlined),
             label: 'EI',
-            //backgroundColor: Colors.red,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.more_horiz),
             label: 'More',
-            //backgroundColor: Colors.blue,
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.white70,
+        selectedItemColor: Color(0xFFff6600),
+        unselectedItemColor: Colors.grey,
+        iconSize: 30,
+
+
         onTap: _onItemTapped,
       ),
     );

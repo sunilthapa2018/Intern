@@ -1,4 +1,4 @@
-package training.leadershipdevelopment.training;
+package motivational_leadership.leadershipdevelopment.motivational_leadership;
 
 import io.flutter.embedding.android.FlutterActivity;
 

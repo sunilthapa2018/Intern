@@ -1,4 +1,4 @@
-# training
+# motivational_leadership
 
 A new Flutter project.
 

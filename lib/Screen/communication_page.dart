@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:training/Widget/bottom_nav_bar.dart';
-import 'package:training/Widget/navigation_drawer.dart';
+import 'package:motivational_leadership/Widget/bottom_nav_bar.dart';
+import 'package:motivational_leadership/Widget/navigation_drawer.dart';
 
 class CommunicationPage extends StatelessWidget{
   const CommunicationPage({Key? key}) : super(key: key);
