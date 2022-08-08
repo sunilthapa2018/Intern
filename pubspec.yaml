@@ -30,6 +30,14 @@ dependencies:
   flutter:
     sdk: flutter
 
+# Database and Authentication
+  cloud_firestore: ^3.4.2
+  firebase_auth: ^3.6.1
+
+#Utilities
+  page_transition: ^2.0.9
+  form_field_validator: ^1.1.0
+
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -51,10 +59,6 @@ flutter_icons:
   android: true
   ios: true
   image_path: "assets/logo.png"
-
-
-
-
 
 
 

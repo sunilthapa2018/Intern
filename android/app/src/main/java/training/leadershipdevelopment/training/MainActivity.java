@@ -1,6 +1,7 @@
-package motivational_leadership.leadershipdevelopment.motivational_leadership;
+package training.leadershipdevelopment.training;
 
 import io.flutter.embedding.android.FlutterActivity;
 
 public class MainActivity extends FlutterActivity {
+
 }

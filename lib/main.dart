@@ -1,32 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:motivational_leadership/Utility/utils.dart';
 import 'package:motivational_leadership/Widget/bottom_nav_bar.dart';
-import "Screen/communication_page.dart";
-import "Screen/forum_page.dart";
-import "Screen/home_page.dart";
-import "Screen/profile_page.dart";
-import "Screen/questions_page.dart";
+import 'package:motivational_leadership/screen/signin.dart';
 
-void main() {
-  // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-  //   statusBarColor: Colors.red,
-  // ));
-  // SystemUiOverlayStyle.systemStatusBarContrastEnforced: false;
+import "page/communication_page.dart";
+import "page/forum_page.dart";
+import "page/home_page.dart";
+import "page/questions_page.dart";
 
-  // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-  //     statusBarColor: Colors.transparent,
-  //     systemNavigationBarColor: Colors.transparent,
-  //     systemNavigationBarIconBrightness: Brightness.light
-  // ));
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    //systemNavigationBarColor: Color(0xFF2e3c96),
-    // systemNavigationBarColor: Color(0xFFff6600),
     systemNavigationBarColor: Colors.black45,
   ));
   runApp(const MyApp());
 }
-
+final navigatorKey = GlobalKey<NavigatorState>();
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -35,10 +29,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      scaffoldMessengerKey: Utils.messengerKey,
+      navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       title: _title,
       theme: ThemeData.light(),
-
       home: MainPage(),
     );
   }
@@ -62,15 +57,25 @@ class _MainPageState extends State<MainPage> {
   ];
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        //toolbarHeight: 20,
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
-        systemOverlayStyle: SystemUiOverlayStyle.dark,
-      ),
-      body: screens[_selectedIndex],
-      bottomNavigationBar: const BottomNavBar(),
+    return StreamBuilder<User?>(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        if(snapshot.hasData){
+          return Scaffold(
+            appBar: AppBar(
+              //toolbarHeight: 20,
+              backgroundColor: Colors.transparent,
+              elevation: 0.0,
+              systemOverlayStyle: SystemUiOverlayStyle.dark,
+            ),
+            body: screens[_selectedIndex],
+            bottomNavigationBar: const BottomNavBar(),
+          );
+        }else{
+          return SignIn();
+        }
+
+      }
     );
   }
 }

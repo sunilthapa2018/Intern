@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:motivational_leadership/Screen/communication_page.dart';
-import 'package:motivational_leadership/Screen/forum_page.dart';
-import 'package:motivational_leadership/Screen/home_page.dart';
-import 'package:motivational_leadership/Screen/profile_page.dart';
-import 'package:motivational_leadership/Screen/questions_page.dart';
+import 'package:motivational_leadership/page/communication_page.dart';
+import 'package:motivational_leadership/page/forum_page.dart';
+import 'package:motivational_leadership/page/home_page.dart';
+import 'package:motivational_leadership/page/profile_page.dart';
+import 'package:motivational_leadership/page/questions_page.dart';
 
 import '../main.dart';
 

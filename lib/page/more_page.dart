@@ -1,21 +1,27 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:motivational_leadership/Widget/bottom_nav_bar.dart';
 import 'package:motivational_leadership/Widget/navigation_drawer.dart';
-import 'package:motivational_leadership/Screen/communication_page.dart';
-import 'package:motivational_leadership/Screen/forum_page.dart';
-import 'package:motivational_leadership/Screen/home_page.dart';
-import 'package:motivational_leadership/Screen/profile_page.dart';
-import 'package:motivational_leadership/Screen/questions_page.dart';
+import 'package:motivational_leadership/models/get_user_id.dart';
+import 'package:motivational_leadership/page/communication_page.dart';
+import 'package:motivational_leadership/page/forum_page.dart';
+import 'package:motivational_leadership/page/home_page.dart';
+import 'package:motivational_leadership/page/profile_page.dart';
+import 'package:motivational_leadership/page/questions_page.dart';
+import 'package:motivational_leadership/services/get_user_name.dart';
+
+import '../main.dart';
 int padding = 20;
+String uid = FirebaseAuth.instance.currentUser!.uid;
+// Text userText =  GetUserName(documentId: uid) as Text;
+// String userName = userText.data.toString();
 
 class MorePage extends StatelessWidget{
-
-
-  const MorePage({Key? key}) : super(key: key);
+  const MorePage({Key? key}) : super(key: key);  
 
   @override
-  Widget build(BuildContext context) => Scaffold(
+  Widget build(BuildContext context) => Scaffold(    
     appBar: AppBar(
       toolbarHeight: 24,
       backgroundColor: Colors.transparent,
@@ -45,14 +51,8 @@ class MorePage extends StatelessWidget{
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(10,50,0,20),
-              child: Text(
-                'Sunil',
-                style: TextStyle(
-                  color: Color(0xFFff6600),
-                  fontWeight: FontWeight.w900,
-                  fontSize: 36,
-                ),
-              ),
+
+              child: GetUserName(documentId: uid),
             ),
           ]),
         ),
@@ -72,10 +72,10 @@ class MorePage extends StatelessWidget{
           ),
           onTap: () {
             //changeTab(index);
-            Navigator.pop(context);
-            Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => const ProfilePage(),
-            ));
+            // Navigator.pop(context);
+            // Navigator.of(context).push(MaterialPageRoute(
+            //   builder: (context) => const ProfilePage(),
+            // ));
           },
         ),
         Divider(color: Color(0xFFFFFFFFE5),height: 2,),
@@ -93,10 +93,6 @@ class MorePage extends StatelessWidget{
             ),
           ),
           onTap: () {
-            Navigator.pop(context);
-            Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => const CommunicationPage(),
-            ));
 
           },
         ),
@@ -115,10 +111,7 @@ class MorePage extends StatelessWidget{
             ),
           ),
           onTap: () {
-            Navigator.pop(context);
-            Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => const QuestionPage(),
-            ));
+
           },
         ),
         Divider(color: Color(0xFFFFFFFFE5),height: 2,),
@@ -136,10 +129,7 @@ class MorePage extends StatelessWidget{
             ),
           ),
           onTap: () {
-            Navigator.pop(context);
-            Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => const CommunicationPage(),
-            ));
+
           },
         ),
         Divider(color: Color(0xFFFFFFFFE5),height: 2,),
@@ -157,10 +147,7 @@ class MorePage extends StatelessWidget{
             ),
           ),
           onTap: () {
-            Navigator.pop(context);
-            Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => const ForumPage(),
-            ));
+
           },
         ),
         Divider(color: Color(0xFFFFFFFFE5),height: 2,),
@@ -178,11 +165,8 @@ class MorePage extends StatelessWidget{
             ),
           ),
           onTap: () {
-            Navigator.pop(context);
-            Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => const ProfilePage(),
-            ));
-          },
+            FirebaseAuth.instance.signOut();
+            },
         ),
         Padding(
           padding: const EdgeInsets.fromLTRB(0,20,0,0),
@@ -196,5 +180,5 @@ class MorePage extends StatelessWidget{
       ],
     ),
   );
-
+  
 }

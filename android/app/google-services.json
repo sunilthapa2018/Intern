@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "575358598279",
+    "project_id": "fir-756e9",
+    "storage_bucket": "fir-756e9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:575358598279:android:c1330bd5a88a6a14998c22",
+        "android_client_info": {
+          "package_name": "motivational_leadership.leadershipdevelopment.motivational_leadership"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "575358598279-mc2q36vlpkbbfh1ch7lcs55nqebn80mb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4APnMF6V3Bjvqboh44zbA2gURF2_GJKs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "575358598279-mc2q36vlpkbbfh1ch7lcs55nqebn80mb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

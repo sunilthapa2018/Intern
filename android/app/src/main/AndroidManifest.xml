@@ -7,7 +7,7 @@
         android:icon="@mipmap/ic_launcher"
        tools:ignore="MissingClass">
         <activity
-            android:name=".MainActivity"
+            android:name="training.leadershipdevelopment.training.MainActivity"
             android:exported="true"
             android:launchMode="singleTop"
             android:theme="@style/LaunchTheme"
