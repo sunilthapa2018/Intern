@@ -7,6 +7,7 @@ import 'package:motivational_leadership/page/home_page.dart';
 import 'package:motivational_leadership/screen/forget_password.dart';
 import 'package:motivational_leadership/screen/signup.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 import '../main.dart';
@@ -59,22 +60,22 @@ class _SignInState extends State<SignIn> {
                         child: Row(
                             children: [
                               Text(
-                                'Welcome',
-                                style: TextStyle(
-                                  //color: Color(0xFFff6600),
-                                  color: Color(0xFF2e3c96),
-                                  fontWeight: FontWeight.w900,
-                                  fontSize: 36,
-                                ),
-                              ),
-                              Text(
-                                ' back!',
+                                'Welcome!',
                                 style: TextStyle(
                                   color: Color(0xFFff6600),
+                                  //color: Color(0xFF2e3c96),
                                   fontWeight: FontWeight.w900,
                                   fontSize: 36,
                                 ),
                               ),
+                              // Text(
+                              //   ' back!',
+                              //   style: TextStyle(
+                              //     color: Color(0xFFff6600),
+                              //     fontWeight: FontWeight.w900,
+                              //     fontSize: 36,
+                              //   ),
+                              // ),
                             ]),
                       ),
                       Padding(
@@ -91,7 +92,13 @@ class _SignInState extends State<SignIn> {
                             labelText: "Email",
                             hintText: "Enter your Email Address"
                         ),
-                        validator: EmailValidator(errorText: "Not A Valid Email"),
+                        //validator: EmailValidator(errorText: "Not A Valid Email"),
+                        validator: MultiValidator(
+                            [
+                              MinLengthValidator(1, errorText: "Please enter your email address"),
+                              EmailValidator(errorText: "Not A Valid Email"),
+                            ]
+                        ),
                       ),
                       SizedBox(
                         height: 6,
@@ -178,9 +185,9 @@ class _SignInState extends State<SignIn> {
                             child: Container(
                               child: Text('Sign Up',
                                   style: TextStyle(
-                                      color: Colors.black87,
-                                      decoration: TextDecoration.underline,
-                                      fontSize: 17)),
+                                    color: Colors.black87,
+                                    decoration: TextDecoration.underline,
+                                    fontSize: 17)),
                             ),
                           ),
                         ],
@@ -206,10 +213,20 @@ class _SignInState extends State<SignIn> {
         builder: (context) => Center(child: CircularProgressIndicator()),
     );
     try {
+      String _email = emailController.text.trim();
+      String _password = passwordController.text.trim();
       await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: emailController.text.trim(),
-          password: passwordController.text.trim(),
+          email: _email,
+          password: _password,
       );
+
+      // obtain shared preferences
+      final prefs = await SharedPreferences.getInstance();
+
+      // set value
+      await prefs.setString('password', _password);
+      print("mytag " + _password + " is saved as password\n");
+
     } on FirebaseAuthException catch (e) {
       print(e);
       Utils.showSnackBar(e.message);

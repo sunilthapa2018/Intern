@@ -46,7 +46,8 @@ class _MainPageState extends State<BottomNavBar> {
       body: screens[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.white,
+        //backgroundColor: Colors.white,
+        backgroundColor: Color(0xFFf58d47),
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined),
@@ -70,8 +71,9 @@ class _MainPageState extends State<BottomNavBar> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Color(0xFFff6600),
-        unselectedItemColor: Colors.grey,
+        //selectedItemColor: Color(0xFFff6600),
+        selectedItemColor: Color(0xFF2e3c96),
+        unselectedItemColor: Colors.white,
         iconSize: 30,
 
 

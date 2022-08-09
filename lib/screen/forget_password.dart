@@ -105,8 +105,12 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       GestureDetector(
                         onTap: () {
                           if (formKey.currentState!.validate()) {
-                            resetPassword();
-
+                            try{
+                              resetPassword();
+                            } on FirebaseAuthException catch (e) {
+                              print(e);
+                              Utils.showSnackBar(e.message);
+                            }
                           }else{
                             Utils.showSnackBar('Please enter valid Email Address');                            
                           }
@@ -148,8 +152,14 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   }
 
   Future resetPassword() async {
-    await FirebaseAuth.instance
-        .sendPasswordResetEmail(email: emailController.text.trim());
-    Utils.showSnackBar('Password Reset Email has been sent');
+    try{
+      await FirebaseAuth.instance
+          .sendPasswordResetEmail(email: emailController.text.trim());
+      Utils.showSnackBar('Password Reset Email has been sent');
+    } on FirebaseAuthException catch (e) {
+      print(e);
+      Utils.showSnackBar(e.message);
+    }
+
   }
 }

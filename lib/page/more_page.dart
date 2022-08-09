@@ -10,8 +10,10 @@ import 'package:motivational_leadership/page/home_page.dart';
 import 'package:motivational_leadership/page/profile_page.dart';
 import 'package:motivational_leadership/page/questions_page.dart';
 import 'package:motivational_leadership/services/get_user_name.dart';
+import 'package:page_transition/page_transition.dart';
 
 import '../main.dart';
+import '../screen/profile.dart';
 int padding = 20;
 String uid = FirebaseAuth.instance.currentUser!.uid;
 // Text userText =  GetUserName(documentId: uid) as Text;
@@ -35,7 +37,8 @@ class MorePage extends StatelessWidget{
       padding: EdgeInsets.zero,
       children: [
         Container(
-          color: Colors.white,
+          color: Color(0xFF6495ED),
+          // color: Color(0xFF52adc8),
           child: Row(children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(20,50,0,20),
@@ -71,6 +74,13 @@ class MorePage extends StatelessWidget{
             ),
           ),
           onTap: () {
+            Navigator.of(context).push(PageTransition(
+                type: PageTransitionType.rightToLeftJoined,
+                childCurrent: this,
+                duration: Duration(milliseconds: 300),
+                reverseDuration: Duration(milliseconds: 300),
+                child: Profile()
+            ));
             //changeTab(index);
             // Navigator.pop(context);
             // Navigator.of(context).push(MaterialPageRoute(
@@ -172,8 +182,8 @@ class MorePage extends StatelessWidget{
           padding: const EdgeInsets.fromLTRB(0,20,0,0),
           child: Image.asset('assets/complete_logo.png',
 
-          height: 60,
-          width: 100,
+          height: 80,
+          width: 120,
           fit: BoxFit.contain,
           ),
         )
