@@ -1,16 +1,25 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:motivational_leadership/Student/home.dart';
 import 'package:motivational_leadership/page/communication_page.dart';
 import 'package:motivational_leadership/page/forum_page.dart';
 import 'package:motivational_leadership/page/home_page.dart';
 import 'package:motivational_leadership/page/profile_page.dart';
 import 'package:motivational_leadership/page/questions_page.dart';
+import 'package:motivational_leadership/screen/signin.dart';
+import 'package:page_transition/page_transition.dart';
 
 import '../main.dart';
+import '../page/more_page.dart';
+import '../screen/profile.dart';
+import '../services/get_user_name.dart';
+
 
 class NavigationDrawerWidget extends StatelessWidget{
   const NavigationDrawerWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context){
+    String uid = FirebaseAuth.instance.currentUser!.uid;
     return Drawer(
       child: ListView(
         // Removing any padding from the ListView.
@@ -18,35 +27,28 @@ class NavigationDrawerWidget extends StatelessWidget{
 
         children: [
           SizedBox(
-            height: 240,
-            child: DrawerHeader(
-              decoration: const BoxDecoration(
-                color: Colors.blue,
-              ),
-              padding: const EdgeInsets.only(top: 20, bottom: 0),
-              //margin: const EdgeInsets.only(bottom: 200),
-              child: Column(
-                children: const [
-                  CircleAvatar(
-                    radius: 52,
-                    child:Icon(
-                      Icons.person_outline,
-                      size: 70,
+            height: 120,
+            child: Container(
+              color: Color(0xFF6495ED),
+              // color: Color(0xFF52adc8),
+              child: Row(children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20,50,0,20),
+                  child: Text(
+                    'Hey',
+                    style: TextStyle(
+                      //color: Color(0xFFff6600),
+                      color: Color(0xFF2e3c96),
+                      fontWeight: FontWeight.w900,
+                      fontSize: 36,
                     ),
                   ),
-                  //SizedBox(height: 12),
-                  Spacer(),
-                  Text(
-                    'Sunil Thapa',
-                    style: TextStyle(fontSize: 20, color: Colors.white),
-                  ),
-                  Text(
-                    'luck.sunilthapa@gmail.com',
-                    style: TextStyle(fontSize: 16, color: Colors.white),
-                  ),
-                  Spacer(),
-                ],
-              ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(10,50,0,20),
+                  child: GetUserName(documentId: uid),
+                ),
+              ]),
             ),
           ),
 
@@ -55,33 +57,10 @@ class NavigationDrawerWidget extends StatelessWidget{
             leading: const Icon(Icons.home_outlined),
             title: const Text('Home'),
             onTap: () {
-              //changeTab(index);
-              Navigator.pop(context);
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const HomePage(),
-              ));
-            },
-          ),
-          ListTile(
-            contentPadding: const EdgeInsets.symmetric(horizontal: 50.0),
-            leading: const Icon(Icons.info_outline),
-            title: const Text('Communication Tutorial'),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const CommunicationPage(),
-              ));
-
-            },
-          ),
-          ListTile(
-            contentPadding: const EdgeInsets.symmetric(horizontal: 50.0),
-            leading: const Icon(Icons.help_outline),
-            title: const Text('Questions'),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const QuestionPage(),
+              Navigator.of(context).push(PageTransition(
+                  type: PageTransitionType.rightToLeftJoined,
+                  childCurrent: this,
+                  child: StudentHome()
               ));
             },
           ),
@@ -90,20 +69,10 @@ class NavigationDrawerWidget extends StatelessWidget{
             leading: const Icon(Icons.feedback_outlined),
             title: const Text('Feedback'),
             onTap: () {
-              Navigator.pop(context);
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const CommunicationPage(),
-              ));
-            },
-          ),
-          ListTile(
-            contentPadding: const EdgeInsets.symmetric(horizontal: 50.0),
-            leading: const Icon(Icons.forum_outlined),
-            title: const Text('Forum'),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const ForumPage(),
+              Navigator.of(context).push(PageTransition(
+                  type: PageTransitionType.rightToLeftJoined,
+                  childCurrent: this,
+                  child: CommunicationPage()
               ));
             },
           ),
@@ -112,9 +81,23 @@ class NavigationDrawerWidget extends StatelessWidget{
             leading: const Icon(Icons.supervised_user_circle_outlined),
             title: const Text('Profile'),
             onTap: () {
-              Navigator.pop(context);
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const ProfilePage(),
+              Navigator.of(context).push(PageTransition(
+                  type: PageTransitionType.rightToLeftJoined,
+                  childCurrent: this,
+                  child: Profile()
+              ));
+            },
+          ),
+          ListTile(
+            contentPadding: const EdgeInsets.symmetric(horizontal: 50.0),
+            leading: const Icon(Icons.logout_outlined),
+            title: const Text('Logout'),
+            onTap: () {
+              FirebaseAuth.instance.signOut();
+              Navigator.of(context).push(PageTransition(
+                  type: PageTransitionType.rightToLeftJoined,
+                  childCurrent: this,
+                  child: SignIn()
               ));
             },
           ),

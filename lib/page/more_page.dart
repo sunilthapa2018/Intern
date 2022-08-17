@@ -54,7 +54,6 @@ class MorePage extends StatelessWidget{
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(10,50,0,20),
-
               child: GetUserName(documentId: uid),
             ),
           ]),
@@ -81,11 +80,6 @@ class MorePage extends StatelessWidget{
                 reverseDuration: Duration(milliseconds: 300),
                 child: Profile()
             ));
-            //changeTab(index);
-            // Navigator.pop(context);
-            // Navigator.of(context).push(MaterialPageRoute(
-            //   builder: (context) => const ProfilePage(),
-            // ));
           },
         ),
         Divider(color: Color(0xFFFFFFFFE5),height: 2,),

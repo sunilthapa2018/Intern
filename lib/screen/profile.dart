@@ -49,16 +49,17 @@ class _ProfileState extends State<Profile> {
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       appBar: AppBar(
-        toolbarHeight: 0,
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
+        title: Text("Profile"),
+        backgroundColor: Color(0xFFF2811D),
+        // toolbarHeight: 0,
+        // backgroundColor: Colors.transparent,
+        // elevation: 0.0,
         systemOverlayStyle: SystemUiOverlayStyle.dark,
       ),
       body: Container(
         //color: Colors.deepOrange,
         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 20),
         child: Form(
-          //autovalidateMode: AutovalidateMode.always,
           key: formKey,
           child: Column(
             children: [

@@ -3,20 +3,20 @@ import 'package:flutter/services.dart';
 
 import '../Widget/navigation_drawer.dart';
 
-class AdminHome extends StatefulWidget {
-  const AdminHome({Key? key}) : super(key: key);
+class CoachHome extends StatefulWidget {
+  const CoachHome({Key? key}) : super(key: key);
 
   @override
-  State<AdminHome> createState() => _AdminHomeState();
+  State<CoachHome> createState() => _AdminHomeState();
 }
 
-class _AdminHomeState extends State<AdminHome> {
+class _AdminHomeState extends State<CoachHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         drawer: const NavigationDrawerWidget(),
       appBar: AppBar(
-      title: Text("Admin"),
+      title: Text("Coach"),
       backgroundColor: Color(0xFFF2811D),
       // toolbarHeight: 20,
       // backgroundColor: Colors.transparent,

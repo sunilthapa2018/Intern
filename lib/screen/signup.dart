@@ -215,7 +215,7 @@ class _SignUpState extends State<SignUp> {
         password: password,
       );
       User? user = result.user;
-      await DatabaseService(uid: user!.uid).updateUserData(name, phone);
+      await DatabaseService(uid: user!.uid).updateUserData(name, phone, "student");
       //print("MYTAG : uid = " + user.uid);
 
     } on FirebaseAuthException catch (e) {

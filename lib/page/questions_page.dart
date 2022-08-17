@@ -7,7 +7,7 @@ class QuestionPage extends StatelessWidget{
   const QuestionPage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) => Scaffold(
-    body: const Text('Leadership'),
+    body: const Text('Question Page'),
     appBar: AppBar(
       toolbarHeight: 24,
       backgroundColor: Colors.transparent,

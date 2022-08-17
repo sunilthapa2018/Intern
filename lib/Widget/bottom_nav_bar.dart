@@ -3,6 +3,7 @@ import 'package:motivational_leadership/page/coaching_page.dart';
 import 'package:motivational_leadership/page/communication_page.dart';
 import 'package:motivational_leadership/page/forum_page.dart';
 import 'package:motivational_leadership/page/home_page.dart';
+import 'package:motivational_leadership/page/leadership_page.dart';
 import 'package:motivational_leadership/page/more_page.dart';
 import 'package:motivational_leadership/page/profile_page.dart';
 import 'package:motivational_leadership/page/questions_page.dart';
@@ -23,7 +24,7 @@ class _MainPageState extends State<BottomNavBar> {
   int _selectedIndex = 0;
   final screens = [
     const HomePage(),
-    const QuestionPage(),
+    const LeadershipPage(),
     const CoachingPage(),
     const CommunicationPage(),
     const MorePage(),
@@ -37,17 +38,25 @@ class _MainPageState extends State<BottomNavBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   //title: const Text('Leadership Development'),
-      //   backgroundColor: Colors.transparent,
-      //   bottomOpacity:  0,
-      //   elevation: 0,
+      // body: screens[_selectedIndex],
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: screens,
+      ),
+      // body: Navigator(
+      //   onGenerateRoute: (settings) {
+      //     Widget page = LeadershipPage();
+      //     if (settings.name == 'QuestionPage') page = QuestionPage();
+      //     return MaterialPageRoute(builder: (_) => page);
+      //   },
       // ),
-      body: screens[_selectedIndex],
+
+
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         //backgroundColor: Colors.white,
-        backgroundColor: Color(0xFFf58d47),
+        // backgroundColor: Color(0xFFf58d47),
+        backgroundColor: Color(0xFFF2811D),
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined),
@@ -72,13 +81,12 @@ class _MainPageState extends State<BottomNavBar> {
         ],
         currentIndex: _selectedIndex,
         //selectedItemColor: Color(0xFFff6600),
-        selectedItemColor: Color(0xFF2e3c96),
+        selectedItemColor: Color(0xFF2B3A8C),
         unselectedItemColor: Colors.white,
         iconSize: 30,
-
-
         onTap: _onItemTapped,
       ),
+
     );
   }
 }
