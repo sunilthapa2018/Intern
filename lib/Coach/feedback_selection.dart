@@ -7,15 +7,15 @@ import 'package:motivational_leadership/services/database.dart';
 import 'package:page_transition/page_transition.dart';
 import '../Utility/utils.dart';
 
-class QuestionTypeSelection extends StatefulWidget {
-  final String questionType;
+class FeedbackSelection extends StatefulWidget {
+  final String userID;
 
-  QuestionTypeSelection({required this.questionType});
+  FeedbackSelection({required this.userID});
   @override
-  _QuestionTypeSelectionState createState() => _QuestionTypeSelectionState();
+  _FeedbackSelectionState createState() => _FeedbackSelectionState();
 }
 
-class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
+class _FeedbackSelectionState extends State<FeedbackSelection> {
   late String _questionType="";
   Color backgroundColor =  Color(0xFFD9D9D9);
   Color itemColor =  Color(0xFF417CA9);
@@ -670,7 +670,7 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
   @override
   initState() {
     super.initState();
-    _questionType = widget.questionType;
+    _questionType = widget.userID;
     dataAFuture = getData("Actions");
     dataBFuture = getData("Overcoming Challenges");
     dataCFuture = getData("Success Indicators (KPIs)");

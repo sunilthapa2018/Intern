@@ -2,14 +2,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:motivational_leadership/Student/home.dart';
 import 'package:motivational_leadership/page/communication_page.dart';
+import 'package:motivational_leadership/Coach/coach_home.dart';
 import 'package:motivational_leadership/screen/signin.dart';
 import 'package:page_transition/page_transition.dart';
 import '../screen/profile.dart';
 import '../services/get_user_name.dart';
 
 String uid = FirebaseAuth.instance.currentUser!.uid;
-class NavigationDrawerWidget extends StatelessWidget{
-  const NavigationDrawerWidget({Key? key}) : super(key: key);
+class CoachNavigationDrawerWidget extends StatelessWidget{
+  const CoachNavigationDrawerWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context){
@@ -54,7 +55,7 @@ class NavigationDrawerWidget extends StatelessWidget{
               Navigator.of(context).push(PageTransition(
                   type: PageTransitionType.rightToLeftJoined,
                   childCurrent: this,
-                  child: StudentHome()
+                  child: CoachHome()
               ));
             },
           ),

@@ -4,9 +4,6 @@ import 'package:motivational_leadership/screen/question_type_selection.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-import '../Widget/navigation_drawer.dart';
-
-
 class VideoPlayback extends StatefulWidget {
   final String questionType;
   const VideoPlayback({Key? key, required this.questionType}) : super(key: key);

@@ -218,9 +218,7 @@ class _ProfileState extends State<Profile> {
       barrierDismissible: false,
       builder: (context) => Center(child: CircularProgressIndicator()),
     );
-
     try {
-
       //Reading saved password from local db and re-authenticating user with credentials
       final prefs = await SharedPreferences.getInstance();
       final _savedPass = prefs.getString('password').toString();
@@ -249,24 +247,6 @@ class _ProfileState extends State<Profile> {
       Utils.showSnackBar("Failed to update user: $e.message");
     }
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
-
-    // return users
-    //     .doc(uid)
-    //     .update({
-    //       'full name': _name,
-    //       'phone': _phone
-    //     })
-    //     .then((value){
-    //         Utils.showSnackBar("User details have been updated");
-    //         navigatorKey.currentState!.popUntil((route) => route.isFirst);
-    //     })
-    //     .catchError((error) {
-    //       print("Failed to update user: $error");
-    //       navigatorKey.currentState!.popUntil((route) => route.isFirst);
-    //     }
-    //
-    // );
-
   }
 
   void pupulateData() {

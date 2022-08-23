@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:motivational_leadership/Utility/utils.dart';
 import 'package:motivational_leadership/screen/admin_home.dart';
-import 'package:motivational_leadership/screen/coach_home.dart';
+import 'package:motivational_leadership/Coach/coach_home.dart';
 import 'package:motivational_leadership/screen/signin.dart';
+import 'package:motivational_leadership/services/database.dart';
 import 'Student/home.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-String userType = "student";
+
+late String userType = "loading";
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -18,11 +20,10 @@ Future main() async {
   runApp(const MyApp());
 }
 final navigatorKey = GlobalKey<NavigatorState>();
-
+final String uID = FirebaseAuth.instance.currentUser!.uid;
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
   static const String _title = 'Coaching app';
 
   @override
@@ -49,56 +50,50 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<User?>(
+    Future.wait([getType(),]);
+    bool entered = false;
+    return StreamBuilder(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
         if(snapshot.hasData){
-          getUserType();
+          //getType();
+          // Future.wait([getType(),]);
           print('MYTAG : From main.dart UserType = $userType');
           if(userType=='admin'){
+            entered = true;
             return AdminHome();
           }else if(userType=='coach'){
+            entered = true;
             return CoachHome();
           }else{
             return StudentHome();
           }
-          // return Scaffold(
-          //   appBar: AppBar(
-          //     //toolbarHeight: 20,
-          //     title: Text("GGGG"),
-          //     // backgroundColor: Colors.transparent,
-          //     // elevation: 0.0,
-          //     systemOverlayStyle: SystemUiOverlayStyle.dark,
-          //   ),
-          //   //body: screens[_selectedIndex],
-          //   // bottomNavigationBar: const BottomNavBar(),
-          // );
         }else{
+          entered;
           return SignIn();
         }
-
       }
     );
   }
-  void getUserType() {
-    String uid = FirebaseAuth.instance.currentUser!.uid;
-    FirebaseFirestore.instance
-        .collection('users')
-        .doc(uid)
-        .get()
-        .then((DocumentSnapshot documentSnapshot) {
-      if (documentSnapshot.exists) {
-        try{
-          userType = documentSnapshot.get("type");
-        }on FirebaseAuthException catch (e) {
-          userType = "student";
-          print("mytag " + e.toString());
-          Utils.showSnackBar("Usertype not found : $e.message");
-        }
+  Future getType() async {
+    String uid = await FirebaseAuth.instance.currentUser!.uid;
+    userType = await DatabaseService.getUserType(uid);
+    print("MYTAG : getType : userType = $userType");
+    //return userType.toString();
 
-      } else {
-        print('Document does not exist on the database');
-      }
+  }
+
+  @override
+  void initState() {
+    Future.wait([getType(),]);
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      getType();
     });
+    // userType = getType().toString();
+    // if(userType!='admin' && userType!='coach' && userType != 'student'){
+    //   userType = getType().toString();
+    // }
+    super.initState();
+
   }
 }
