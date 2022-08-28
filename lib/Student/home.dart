@@ -1,371 +1,110 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:page_transition/page_transition.dart';
+import 'package:motivational_leadership/Student/widgets/student_autonomy_tile.dart';
+import 'package:motivational_leadership/Student/widgets/student_belonging.dart';
+import 'package:motivational_leadership/Student/widgets/student_competence.dart';
+import 'package:motivational_leadership/Utility/colors.dart';
+import 'package:motivational_leadership/providers/autonomy_provider.dart';
+import 'package:motivational_leadership/providers/belonging_provider.dart';
+import 'package:motivational_leadership/providers/competence_provider.dart';
+import 'package:provider/provider.dart';
+
 import '../Widget/navigation_drawer.dart';
-import '../main.dart';
-import '../screen/question_type_selection.dart';
-import '../screen/video.dart';
 
 class StudentHome extends StatefulWidget {
   const StudentHome({Key? key}) : super(key: key);
+
   @override
   State<StudentHome> createState() => _StudentHomeState();
 }
 
 class _StudentHomeState extends State<StudentHome> {
-  Color backgroundColor =  Color(0xFFD9D9D9);
-  Color itemColor =  Color(0xFF417CA9);
-  late Future<String> dataAFuture;
-  late Future<String> dataBFuture;
-  late Future<String> dataCFuture;
-
   @override
-  Widget build(BuildContext context) => Scaffold(
+  Widget build(BuildContext context) {
+    log("Studetn home build ");
+    log(MediaQuery.of(context).size.height.toString());
+    log(MediaQuery.of(context).size.width.toString());
+
+    return RefreshIndicator(
+      onRefresh: () => _refresh(context),
+      child: Scaffold(
         drawer: const NavigationDrawerWidget(),
-        appBar: AppBar(
-          title: Text("Home"),
-          backgroundColor: Color(0xFFF2811D),
-          // toolbarHeight: 20,
-          // backgroundColor: Colors.transparent,
-          // elevation: 0.0,
-          systemOverlayStyle: SystemUiOverlayStyle.dark,
-        ),
-        body: RefreshIndicator(
-          onRefresh: _refresh,
-          child: Container(
-            color: backgroundColor,
-            // color: Color(0xFF6495ED),
-            child: ListView(
-              // Removing any padding from the ListView.
-              padding: EdgeInsets.zero,
-              children: [
-                GestureDetector(
-                  child: Container(
-                    //color: Color(0xFF6495ED),
-                    margin: const EdgeInsets.fromLTRB(10, 20, 10, 5),
-                    //height: 120,
-                    decoration: BoxDecoration(
-                      // color: Color(0xFFF2811D),
-                        color: itemColor,
-                        borderRadius: new BorderRadius.only(
-                          topLeft: const Radius.circular(5.0),
-                          topRight: const Radius.circular(25.0),
-                          bottomLeft: const Radius.circular(25.0),
-                          bottomRight: const Radius.circular(5.0),
-                        )
-                    ),
-                    // color: Color(0xFF52adc8),
-                    child: Column(
-                      children: [
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(30,20,0,20),
-                            child: Text(
-                              'AUTONOMY',
-                              style: TextStyle(
-                                //color: Color(0xFFff6600),
-                                color: Colors.white,
-                                fontWeight: FontWeight.w800,
-                                fontSize: 24,
-                                letterSpacing: 2,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Align(
-
-                          alignment: Alignment.centerRight,
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(0,0,20,20),
-                            child: FutureBuilder<String>(
-                              future: dataAFuture,
-                              builder: (context, snapshot) {
-                                switch (snapshot.connectionState){
-                                  case ConnectionState.waiting:
-                                    if (snapshot.hasData) {
-                                      String data = snapshot.data!;
-                                      return Text("$data",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 16,
-                                        ),
-                                      );
-                                    }else{
-                                      return Text("Loading...",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 16,
-                                        ),
-                                      );
-                                    }
-                                  case ConnectionState.done:
-                                  default:
-                                    if (snapshot.hasError) {
-                                      final error = snapshot.error;
-                                      return Text("$error");
-                                    } else if (snapshot.hasData) {
-                                      String data = snapshot.data!;
-                                      return Text("$data",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 16,
-                                        ),
-                                      );
-                                    }else{
-                                      return Text("No Data");
-                                    }
-                                }
-                              }
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  onTap: () {
-                    Navigator.of(context).push(PageTransition(
-                        type: PageTransitionType.rightToLeftJoined,
-                        childCurrent: widget,
-                        child: VideoPlayback(questionType: 'Autonomy')
-                    ));
-                  },
-                ),
-                GestureDetector(
-                  child: Container(
-                    //color: Color(0xFF6495ED),
-                    margin: const EdgeInsets.fromLTRB(10, 10, 10, 5),
-                    //height: 120,
-                    decoration: BoxDecoration(
-                        color: itemColor,
-                        borderRadius: new BorderRadius.only(
-                          topLeft: const Radius.circular(5.0),
-                          topRight: const Radius.circular(25.0),
-                          bottomLeft: const Radius.circular(25.0),
-                          bottomRight: const Radius.circular(5.0),
-                        )
-                    ),
-                    // color: Color(0xFF52adc8),
-                    child: Column(
-                      children: [
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(30,20,0,20),
-                            child: Text(
-                              'BELONGING',
-                              style: TextStyle(
-                                //color: Color(0xFFff6600),
-                                color: Colors.white,
-                                fontWeight: FontWeight.w800,
-                                fontSize: 24,
-                                letterSpacing: 2,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(0,0,20,20),
-                            child: FutureBuilder<String>(
-                                future: dataBFuture,
-                                builder: (context, snapshot) {
-                                  switch (snapshot.connectionState){
-                                    case ConnectionState.waiting:
-                                      if (snapshot.hasData) {
-                                        String data = snapshot.data!;
-                                        return Text("$data",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 16,
-                                          ),
-                                        );
-                                      }else{
-                                        return Text("Loading...",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 16,
-                                          ),
-                                        );
-                                      }
-                                    case ConnectionState.done:
-                                    default:
-                                      if (snapshot.hasError) {
-                                        final error = snapshot.error;
-                                        return Text("$error");
-                                      } else if (snapshot.hasData) {
-                                        String data = snapshot.data!;
-                                        return Text("$data",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 16,
-                                          ),
-                                        );
-                                      }else{
-                                        return Text("No Data");
-                                      }
-                                  }
-                                }
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  onTap: () {
-                    Navigator.of(context).push(PageTransition(
-                        type: PageTransitionType.rightToLeftJoined,
-                        childCurrent: widget,
-                        child: VideoPlayback(questionType: 'Belonging')
-                    ));
-                  },
-                ),        GestureDetector(
-                  child: Container(
-                    //color: Color(0xFF6495ED),
-                    margin: const EdgeInsets.fromLTRB(10, 10, 10, 5),
-                    //height: 120,
-                    decoration: BoxDecoration(
-                        color: itemColor,
-                        // color: Color(0xFF46eb34),
-                        borderRadius: new BorderRadius.only(
-                          topLeft: const Radius.circular(5.0),
-                          topRight: const Radius.circular(25.0),
-                          bottomLeft: const Radius.circular(25.0),
-                          bottomRight: const Radius.circular(5.0),
-                        )
-                    ),
-                    // color: Color(0xFF52adc8),
-                    child: Column(
-                      children: [
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(30,20,0,20),
-                            child: Text(
-                              'COMPETENCE',
-                              style: TextStyle(
-                                //color: Color(0xFFff6600),
-                                color: Colors.white,
-                                fontWeight: FontWeight.w800,
-                                fontSize: 24,
-                                letterSpacing: 2,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(0,0,20,20),
-                            child: FutureBuilder<String>(
-                                future: dataCFuture,
-                                builder: (context, snapshot) {
-                                  switch (snapshot.connectionState){
-                                    case ConnectionState.waiting:
-                                      if (snapshot.hasData) {
-                                        String data = snapshot.data!;
-                                        return Text("$data",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 16,
-                                          ),
-                                        );
-                                      }else{
-                                        return Text("Loading...",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 16,
-                                          ),
-                                        );
-                                      }
-                                    case ConnectionState.done:
-                                    default:
-                                      if (snapshot.hasError) {
-                                        final error = snapshot.error;
-                                        return Text("$error");
-                                      } else if (snapshot.hasData) {
-                                        String data = snapshot.data!;
-                                        return Text("$data",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 16,
-                                          ),
-                                        );
-                                      }else{
-                                        return Text("No Data");
-                                      }
-                                  }
-                                }
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  onTap: () {
-                    Navigator.of(context).push(PageTransition(
-                        type: PageTransitionType.rightToLeftJoined,
-                        childCurrent: widget,
-                        child: VideoPlayback(questionType: 'Competence')
-                    ));
-                  },
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0,40,0,0),
-                  child: Image.asset('assets/complete_logo.png',
-                    height: 80,
-                    width: 120,
-                    fit: BoxFit.contain,
-                  ),
-                )
-              ],
-            ),
-          ),
-        )
-  );
-
-
-  @override
-  void initState(){
-    super.initState();
-    dataAFuture = getData("Autonomy");
-    dataBFuture = getData("Belonging");
-    dataCFuture = getData("Competence");
-    refreshPage();
-  }
-  Future<void> refreshPage() async {
-    int counter=0;
-    while(counter <= 1000){
-      await Future.delayed(Duration(milliseconds: 10));
-      setState((){});
-      counter++;
-    }
+        appBar: _buildAppBar(context),
+        body: FutureBuilder(
+            future: _loadInitialData(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              return _buildMainBody(context);
+            }),
+      ),
+    );
   }
 
-  Future<String> getData(String type) async {
-    final QuerySnapshot qSnapshot = await FirebaseFirestore.instance.collection('questions')
-        .where('type', isEqualTo: type)
-        .get();
-    final int qDocuments = qSnapshot.docs.length;
-
-    String uid = FirebaseAuth.instance.currentUser!.uid;
-    final QuerySnapshot aSnapshot = await FirebaseFirestore.instance.collection('answers')
-        .where('uid', isEqualTo: uid)
-        .where('type', isEqualTo: type)
-        .get();
-    final int aDocuments = aSnapshot.docs.length;
-    String returnText = "Completed : " + aDocuments.toString() + "/" + qDocuments.toString();
-    return returnText;
+  AppBar _buildAppBar(BuildContext context) {
+    return AppBar(
+      title: const Text("Home"),
+      backgroundColor: const Color(0xFFF2811D),
+      systemOverlayStyle: SystemUiOverlayStyle.dark,
+      actions: [
+        IconButton(
+            onPressed: () {
+              _refresh(context);
+            },
+            icon: Icon(Icons.refresh)),
+      ],
+    );
   }
 
-  Future<void> _refresh() async {
-    await Future.wait([dataAFuture = getData("Autonomy"), dataBFuture = getData("Belonging"), dataCFuture = getData("Competence")]);
-    this.setState((){});
+  _buildMainBody(BuildContext context) {
+    return Container(
+      color: backgroundColor,
+      height: double.infinity,
+      child: Column(
+        children: [
+          const StudentAutonomyTile(),
+          const StudentBelongingTile(),
+          const StudentCompetenceTile(),
+          _buildButtonLogo()
+        ],
+      ),
+    );
+  }
+
+  Padding _buildButtonLogo() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
+      child: Image.asset(
+        'assets/complete_logo.png',
+        height: 80,
+        width: 120,
+        fit: BoxFit.contain,
+      ),
+    );
+  }
+
+  _refresh(BuildContext context) async {
+    context.read<AutonomyProvider>().getData(type: "Autonomy", notify: true);
+    context.read<BelongingProvider>().getData(type: "Belonging", notify: true);
+    context
+        .read<CompetenceProvider>()
+        .getData(type: "Competence", notify: true);
+  }
+
+  _loadInitialData() async {
+    await context
+        .read<AutonomyProvider>()
+        .getData(type: "Autonomy", notify: false);
+    await context
+        .read<BelongingProvider>()
+        .getData(type: "Belonging", notify: false);
+    await context
+        .read<CompetenceProvider>()
+        .getData(type: "Competence", notify: false);
   }
 }
