@@ -1,30 +1,18 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-import 'package:motivational_leadership/Utility/utils.dart';
-import 'package:motivational_leadership/screen/signin.dart';
+
+import 'package:motivational_leadership/main.dart';
 import 'package:motivational_leadership/services/database.dart';
-import 'package:page_transition/page_transition.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:motivational_leadership/utility/base_util.dart';
 
-import '../main.dart';
-
-
-class Profile extends StatefulWidget {
+class SignUp extends StatefulWidget {
   @override
-  _ProfileState createState() => _ProfileState();
-
+  _SignUpState createState() => _SignUpState();
 }
 
-class _ProfileState extends State<Profile> {
-  String uid = FirebaseAuth.instance.currentUser!.uid;
-  String name = "";
-  String email = FirebaseAuth.instance.currentUser!.email.toString();
-  String password = "SuperSecretPassword";
-  String phone = "";
-
+class _SignUpState extends State<SignUp> {
   TextEditingController nameController = new TextEditingController();
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
@@ -38,6 +26,7 @@ class _ProfileState extends State<Profile> {
     emailController.dispose();
     passwordController.dispose();
     phoneController.dispose();
+
     super.dispose();
   }
 
@@ -49,17 +38,16 @@ class _ProfileState extends State<Profile> {
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text("Profile"),
-        backgroundColor: Color(0xFFF2811D),
-        // toolbarHeight: 0,
-        // backgroundColor: Colors.transparent,
-        // elevation: 0.0,
+        toolbarHeight: 0,
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
         systemOverlayStyle: SystemUiOverlayStyle.dark,
       ),
       body: Container(
         //color: Colors.deepOrange,
         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 20),
         child: Form(
+          //autovalidateMode: AutovalidateMode.always,
           key: formKey,
           child: Column(
             children: [
@@ -71,7 +59,7 @@ class _ProfileState extends State<Profile> {
                       child: Row(
                           children: [
                             Text(
-                              'My',
+                              'Register',
                               style: TextStyle(
                                 //color: Color(0xFFff6600),
                                 color: Color(0xFF2e3c96),
@@ -80,7 +68,7 @@ class _ProfileState extends State<Profile> {
                               ),
                             ),
                             Text(
-                              ' Profile',
+                              ' User!',
                               style: TextStyle(
                                 color: Color(0xFFff6600),
                                 fontWeight: FontWeight.w900,
@@ -102,7 +90,6 @@ class _ProfileState extends State<Profile> {
                     ),
                     TextFormField(
                       controller: nameController,
-                      //initialValue: 'Sunil',
                       decoration: InputDecoration(
                           labelText: "Full Name",
                           hintText: "Enter your Full Name"
@@ -118,7 +105,6 @@ class _ProfileState extends State<Profile> {
                     ),
                     TextFormField(
                       controller: emailController,
-
                       decoration: InputDecoration(
                           labelText: "Email",
                           hintText: "Enter your Email Address"),
@@ -141,6 +127,8 @@ class _ProfileState extends State<Profile> {
                       obscureText: true,
                       validator: MultiValidator(
                           [
+                            RequiredValidator(errorText: 'Required'),
+                            MinLengthValidator(6, errorText: "It should be at least 6 characters"),
                             MaxLengthValidator(15, errorText: "It should be Max 15 characters"),
                           ]
                       ),
@@ -150,7 +138,6 @@ class _ProfileState extends State<Profile> {
                     ),
                     TextFormField(
                       controller: phoneController,
-
                       decoration: InputDecoration(
                           //border: OutlineInputBorder(),
                           labelText: "Phone No",
@@ -170,7 +157,7 @@ class _ProfileState extends State<Profile> {
                     GestureDetector(
                       onTap: () {
                         if (formKey.currentState!.validate()) {
-                          updateUserDetails();
+                          RegisterUser();
                         }else{
                           Utils.showSnackBar("Please make sure everything on this form is valid !");
                         }
@@ -183,7 +170,7 @@ class _ProfileState extends State<Profile> {
                             color: Color(0xFF2e3c96),
                             borderRadius: BorderRadius.circular(30)),
                         child: Text(
-                          "Save Changes",
+                          "Sign Up",
                           style: TextStyle(fontSize: 16, color: Colors.white),
                         ),
                       ),
@@ -205,75 +192,32 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  CollectionReference users = FirebaseFirestore.instance.collection('users');
-
-  Future<void> updateUserDetails() async{
-    //Updating user email and password
-    String _email = emailController.text.trim();
-    String _pass = passwordController.text.trim();
-    final user = FirebaseAuth.instance.currentUser;
-
+  Future RegisterUser() async {
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (context) => Center(child: CircularProgressIndicator()),
     );
     try {
-      //Reading saved password from local db and re-authenticating user with credentials
-      final prefs = await SharedPreferences.getInstance();
-      final _savedPass = prefs.getString('password').toString();
-      AuthCredential credential = EmailAuthProvider.credential(email: email, password: _savedPass);
-      await FirebaseAuth.instance.currentUser!.reauthenticateWithCredential(credential);
+      String email = emailController.text.trim();
+      String password = passwordController.text.trim();
+      String name = nameController.text.trim();
+      String phone = phoneController.text.trim();
 
-      await user!.updateEmail(_email);
-      if(_pass!="" || !_pass.isEmpty){
-        await user.updatePassword(_pass);
-        await prefs.setString('password', _pass);
-      }
+      //create user for authentication
+      UserCredential result = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      User? user = result.user;
+      await DatabaseService(uid: user!.uid).updateUserData(name, phone, "student");
+      //print("MYTAG : uid = " + user.uid);
+
     } on FirebaseAuthException catch (e) {
-      print("mytag " + e.toString());
-      Utils.showSnackBar("Failed to update user: $e.message");
-    }
-
-    //Updating user name and phone number
-    String _name = nameController.text.trim();
-    String _phone = phoneController.text.trim();
-
-    try{
-      users.doc(uid).update({'full name': _name,'phone': _phone});
-      Utils.showSnackBar("User details have been updated");
-    } on FirebaseAuthException catch (e) {
-      print("mytag " + e.toString());
-      Utils.showSnackBar("Failed to update user: $e.message");
+      print(e);
+      Utils.showSnackBar(e.message);
     }
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
-
-  void pupulateData() {
-    FirebaseFirestore.instance
-        .collection('users')
-        .doc(uid)
-        .get()
-        .then((DocumentSnapshot documentSnapshot) {
-      if (documentSnapshot.exists) {
-        // name = doc["full name"];
-        name = documentSnapshot.get("full name");
-        phone = documentSnapshot.get("phone");
-        print('Document data: ${documentSnapshot.data()}\n');
-        print('Full name : ' + name + ' phone : ' + phone + '\n');
-        nameController.text = name;
-        emailController.text = email;
-        phoneController.text = phone;
-      } else {
-        print('Document does not exist on the database');
-      }
-    });
-  }
-
-  void initState() {
-    super.initState();
-    pupulateData();
-  }
-
 
 }

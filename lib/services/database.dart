@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
-import '../Utility/utils.dart';
-
+import 'package:motivational_leadership/utility/base_util.dart';
 
 class DatabaseService{
   final String uid;
@@ -18,23 +16,6 @@ class DatabaseService{
       'phone': phone,
     });
   }
-
-  // List<String> docIDs = [];
-  // Future getUserId(String uid) async{
-  //   await FirebaseFirestore.instance.collection('users').get().then(
-  //           (snapshot) => snapshot.docs.forEach((document) {
-  //             docIDs.add(document.reference.id);
-  //       })
-  //   );
-  // }
-
-  // Future getUserType(String uid) async{
-  //   await FirebaseFirestore.instance.collection('users').get().then(
-  //       (snapshot) => snapshot.docs.forEach((element) {
-  //         print(element.reference);
-  //       })
-  //   );
-  // }
 
   static Future<String> getUserName(String uid) async {
     final docRef = await FirebaseFirestore.instance.collection('users').doc(uid);

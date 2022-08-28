@@ -1,12 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:motivational_leadership/Coach/coach_navigation_drawer.dart';
-import 'package:motivational_leadership/Coach/feedback_selection.dart';
 import 'package:motivational_leadership/services/database.dart';
+import 'package:motivational_leadership/ui/coach/coach_navigation_drawer_page.dart';
+import 'package:motivational_leadership/ui/coach/feedback_selection_page.dart';
 import 'package:page_transition/page_transition.dart';
 
-import '../Widget/navigation_drawer.dart';
 
 String uid = FirebaseAuth.instance.currentUser!.uid;
 class CoachHome extends StatefulWidget {
@@ -42,34 +41,27 @@ class _AdminHomeState extends State<CoachHome> {
               return Padding(
                 padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
                 child: Card(
-                  child: GestureDetector(
-                    child: ListTile(
-                      // title: Text(getName(index).toString()),
-                      title: FutureBuilder(
-                        future: name = getName(index),
-                        builder: (context, snapshot) {
-                          return Text(snapshot.data.toString());
-                        },
-                      ),
-                      onTap: (){
-                        print("ListTile");
-                      }
-
+                  child: ListTile(
+                    // title: Text(getName(index).toString()),
+                    title: FutureBuilder(
+                      future: name = getName(index),
+                      builder: (context, snapshot) {
+                        return Text(snapshot.data.toString());
+                      },
                     ),
-                    // onTap: (){
-                    //   print("ListTile");
-                    //   //String name = getUserName();
-                    //   // Navigator.of(context).push(PageTransition(
-                    //   //     type: PageTransitionType.rightToLeftJoined,
-                    //   //     childCurrent: widget,
-                    //   //     child: FeedbackSelection(userID: '',)
-                    //   // ));
-                    //
-                    // },
+                    onTap: (){
+                      String uid = userSubmissionList.elementAt(index);
+                      print("MYTAG : Clicked uid = $uid");
+                      Navigator.of(context).push(PageTransition(
+                          type: PageTransitionType.rightToLeftJoined,
+                          childCurrent: widget,
+                          child: FeedbackSelection(userID: uid,),
+                      ));
+
+                    }
                   ),
-
-
                 ),
+
               );
             },
           ),

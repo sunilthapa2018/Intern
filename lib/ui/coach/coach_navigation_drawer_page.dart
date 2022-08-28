@@ -1,20 +1,19 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:motivational_leadership/Student/home.dart';
-import 'package:motivational_leadership/page/communication_page.dart';
-import 'package:motivational_leadership/Coach/coach_home.dart';
-import 'package:motivational_leadership/screen/signin.dart';
+import 'package:motivational_leadership/ui/coach/coach_home_page.dart';
+import 'package:motivational_leadership/services/get_user_name.dart';
+import 'package:motivational_leadership/ui/profile_page.dart';
+import 'package:motivational_leadership/ui/signin_page.dart';
 import 'package:page_transition/page_transition.dart';
-import '../screen/profile.dart';
-import '../services/get_user_name.dart';
+
 
 String uid = FirebaseAuth.instance.currentUser!.uid;
-class CoachNavigationDrawerWidget extends StatelessWidget{
+
+class CoachNavigationDrawerWidget extends StatelessWidget {
   const CoachNavigationDrawerWidget({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context){
-
+  Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
         // Removing any padding from the ListView.
@@ -28,7 +27,7 @@ class CoachNavigationDrawerWidget extends StatelessWidget{
               // color: Color(0xFF52adc8),
               child: Row(children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(20,50,0,20),
+                  padding: const EdgeInsets.fromLTRB(20, 50, 0, 20),
                   child: Text(
                     'Hey',
                     style: TextStyle(
@@ -40,13 +39,12 @@ class CoachNavigationDrawerWidget extends StatelessWidget{
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(10,50,0,20),
+                  padding: const EdgeInsets.fromLTRB(10, 50, 0, 20),
                   child: GetUserName(documentId: uid),
                 ),
               ]),
             ),
           ),
-
           ListTile(
             contentPadding: const EdgeInsets.symmetric(horizontal: 50.0),
             leading: const Icon(Icons.home_outlined),
@@ -55,8 +53,7 @@ class CoachNavigationDrawerWidget extends StatelessWidget{
               Navigator.of(context).push(PageTransition(
                   type: PageTransitionType.rightToLeftJoined,
                   childCurrent: this,
-                  child: CoachHome()
-              ));
+                  child: CoachHome()));
             },
           ),
           ListTile(
@@ -67,8 +64,7 @@ class CoachNavigationDrawerWidget extends StatelessWidget{
               Navigator.of(context).push(PageTransition(
                   type: PageTransitionType.rightToLeftJoined,
                   childCurrent: this,
-                  child: CommunicationPage()
-              ));
+                  child: SignIn()));
             },
           ),
           ListTile(
@@ -79,8 +75,7 @@ class CoachNavigationDrawerWidget extends StatelessWidget{
               Navigator.of(context).push(PageTransition(
                   type: PageTransitionType.rightToLeftJoined,
                   childCurrent: this,
-                  child: Profile()
-              ));
+                  child: Profile()));
             },
           ),
           ListTile(
@@ -92,8 +87,7 @@ class CoachNavigationDrawerWidget extends StatelessWidget{
               Navigator.of(context).push(PageTransition(
                   type: PageTransitionType.rightToLeftJoined,
                   childCurrent: this,
-                  child: SignIn()
-              ));
+                  child: SignIn()));
             },
           ),
         ],

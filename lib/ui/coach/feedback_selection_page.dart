@@ -2,10 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:motivational_leadership/screen/question.dart';
+import 'package:motivational_leadership/ui/student/question_display_page.dart';
 import 'package:motivational_leadership/services/database.dart';
+import 'package:motivational_leadership/utility/base_util.dart';
 import 'package:page_transition/page_transition.dart';
-import '../Utility/utils.dart';
 
 class FeedbackSelection extends StatefulWidget {
   final String userID;

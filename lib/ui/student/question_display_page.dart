@@ -2,10 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:motivational_leadership/utility/base_util.dart';
 import 'package:page_transition/page_transition.dart';
-import '../Utility/utils.dart';
-import '../main.dart';
-
 
 class Question extends StatefulWidget {
   final String questionType;
@@ -135,7 +133,7 @@ class _QuestionState extends State<Question> {
                         } else if (snapshot.hasData) {
                           String data = snapshot.data!;
                           if(data.isEmpty){
-                            return Text("Question field error!!! Question missing some fields. Report Admin",
+                            return Text("Question field error!!! Question missing some fields. Report admin",
                               style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.w600,
