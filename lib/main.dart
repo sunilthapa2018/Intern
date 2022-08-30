@@ -13,6 +13,7 @@ import 'package:motivational_leadership/providers/belonging_provider.dart';
 import 'package:motivational_leadership/providers/competence_provider.dart';
 import 'package:motivational_leadership/screen/admin_home.dart';
 import 'package:motivational_leadership/screen/signin.dart';
+import 'package:motivational_leadership/screen/signup.dart';
 import 'package:motivational_leadership/services/database.dart';
 import 'package:provider/provider.dart';
 
@@ -58,27 +59,27 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           colorScheme:
               ColorScheme.fromSwatch().copyWith(secondary: backgroundColor)),
-      home: SignIn,
+      home: SignUp(),
     );
   }
 
-  Future<Widget> openRespectivePage() async {
-    final User? user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      String uid = user.uid;
-      userType = await DatabaseService.getUserType(uid);
-      log("main.dart : openRespectivePage : userType = $userType");
-      if (userType == 'admin') {
-        return const AdminHome();
-      } else if (userType == 'coach') {
-        return const CoachHome();
-      } else if (userType == 'student') {
-        return const StudentHome();
-      } else {
-        return Utils.showSnackBar("Cant find this user type in database");
-      }
-    } else {}
-  }
+  // Future<Widget> openRespectivePage() async {
+  //   final User? user = FirebaseAuth.instance.currentUser;
+  //   if (user != null) {
+  //     String uid = user.uid;
+  //     userType = await DatabaseService.getUserType(uid);
+  //     log("main.dart : openRespectivePage : userType = $userType");
+  //     if (userType == 'admin') {
+  //       return const AdminHome();
+  //     } else if (userType == 'coach') {
+  //       return const CoachHome();
+  //     } else if (userType == 'student') {
+  //       return const StudentHome();
+  //     } else {
+  //       return Utils.showSnackBar("Cant find this user type in database");
+  //     }
+  //   } else {}
+  // }
 }
 
 class MainPage extends StatefulWidget {
