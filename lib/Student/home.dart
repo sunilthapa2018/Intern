@@ -36,8 +36,7 @@ class _StudentHomeState extends State<StudentHome> {
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
-                child: CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white)),
+                child: CircularProgressIndicator(),
               );
             }
             return _buildMainBody(context);

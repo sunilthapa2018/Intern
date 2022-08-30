@@ -11,10 +11,11 @@ import 'package:motivational_leadership/Utility/utils.dart';
 import 'package:motivational_leadership/providers/autonomy_provider.dart';
 import 'package:motivational_leadership/providers/belonging_provider.dart';
 import 'package:motivational_leadership/providers/competence_provider.dart';
-import 'package:motivational_leadership/screen/admin_home.dart';
 import 'package:motivational_leadership/screen/signin.dart';
 import 'package:motivational_leadership/services/database.dart';
 import 'package:provider/provider.dart';
+
+import 'screen/admin_home.dart';
 
 String userType = "loading";
 Future main() async {
@@ -58,26 +59,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           colorScheme:
               ColorScheme.fromSwatch().copyWith(secondary: backgroundColor)),
-      home: SignIn,
+      home: const MainPage(),
     );
-  }
-
-  Future<Widget> openRespectivePage() async {
-    final User? user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      String uid = user.uid;
-      userType = await DatabaseService.getUserType(uid);
-      log("main.dart : openRespectivePage : userType = $userType");
-      if (userType == 'admin') {
-        return const AdminHome();
-      } else if (userType == 'coach') {
-        return const CoachHome();
-      } else if (userType == 'student') {
-        return const StudentHome();
-      } else {
-        return Utils.showSnackBar("Cant find this user type in database");
-      }
-    } else {}
   }
 }
 
@@ -93,45 +76,51 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context, snapshot) {
-          Future.wait([
-            getType(),
-          ]);
-          if (snapshot.hasData) {
-            log('main.dart : StreamBuilder UserType = $userType');
-            if (userType == 'admin') {
-              return const AdminHome();
-            } else if (userType == 'coach') {
-              return const CoachHome();
-            } else if (userType == 'student') {
-              return const StudentHome();
-            } else {
-              return Container();
-            }
-          } else {
+        builder: (context, AsyncSnapshot<User?> snapshot) {
+          if (snapshot.data == null) {
             return SignIn();
+          } else {
+            return FutureBuilder(
+              future: getType(),
+              builder: ((context, AsyncSnapshot<String?> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Scaffold(
+                    appBar: AppBar(),
+                    body: const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
+                }
+                if (snapshot.data != null && snapshot.hasData) {
+                  final userType = snapshot.data;
+                  log("usertype:$userType");
+                  if (userType == 'admin') {
+                    return const AdminHome();
+                  } else if (userType == 'coach') {
+                    return const CoachHome();
+                  } else if (userType == 'student') {
+                    return const StudentHome();
+                  } else {
+                    return Container();
+                  }
+                } else {
+                  return SignIn();
+                }
+              }),
+            );
           }
         });
   }
 
-  Future getType() async {
+  Future<String?> getType() async {
     userType = "loading";
     log("getType executed : usertype = $userType");
     if (FirebaseAuth.instance.currentUser != null) {
       String uid = FirebaseAuth.instance.currentUser!.uid;
       userType = await DatabaseService.getUserType(uid);
       log("main.dart : getType : userType = $userType");
+      return userType;
     }
-  }
-
-  @override
-  void initState() {
-    Future.wait([
-      getType(),
-    ]);
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      getType();
-    });
-    super.initState();
+    return null;
   }
 }

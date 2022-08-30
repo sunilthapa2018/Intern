@@ -18,9 +18,6 @@ class _AdminHomeState extends State<AdminHome> {
         appBar: AppBar(
           title: const Text("Admin"),
           backgroundColor: const Color(0xFFF2811D),
-          // toolbarHeight: 20,
-          // backgroundColor: Colors.transparent,
-          // elevation: 0.0,
           systemOverlayStyle: SystemUiOverlayStyle.dark,
         ),
         body: Column(
