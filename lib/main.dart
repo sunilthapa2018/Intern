@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:motivational_leadership/Coach/coach_home.dart';
+import 'package:motivational_leadership/Student/home.dart';
+import 'package:motivational_leadership/Utility/colors.dart';
 import 'package:motivational_leadership/Utility/utils.dart';
 import 'package:motivational_leadership/providers/autonomy_provider.dart';
 import 'package:motivational_leadership/providers/belonging_provider.dart';
@@ -13,15 +16,10 @@ import 'package:motivational_leadership/screen/signin.dart';
 import 'package:motivational_leadership/services/database.dart';
 import 'package:provider/provider.dart';
 
-import 'Student/home.dart';
-
 String userType = "loading";
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    systemNavigationBarColor: Colors.black45,
-  ));
   runApp(const MyApp());
 }
 
@@ -41,21 +39,45 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => CompetenceProvider()),
       ],
       child: ScreenUtilInit(
-        designSize: const Size(392, 802),
+        designSize: const Size(360, 592),
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (BuildContext context, Widget? child) {
-          return MaterialApp(
-            scaffoldMessengerKey: Utils.messengerKey,
-            navigatorKey: navigatorKey,
-            debugShowCheckedModeBanner: false,
-            title: _title,
-            theme: ThemeData.light(),
-            home: const StudentHome(),
-          );
+          return buildMaterialApp();
         },
       ),
     );
+  }
+
+  MaterialApp buildMaterialApp() {
+    return MaterialApp(
+      scaffoldMessengerKey: Utils.messengerKey,
+      navigatorKey: navigatorKey,
+      debugShowCheckedModeBanner: false,
+      title: _title,
+      theme: ThemeData(
+          colorScheme:
+              ColorScheme.fromSwatch().copyWith(secondary: backgroundColor)),
+      home: SignIn,
+    );
+  }
+
+  Future<Widget> openRespectivePage() async {
+    final User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      String uid = user.uid;
+      userType = await DatabaseService.getUserType(uid);
+      log("main.dart : openRespectivePage : userType = $userType");
+      if (userType == 'admin') {
+        return const AdminHome();
+      } else if (userType == 'coach') {
+        return const CoachHome();
+      } else if (userType == 'student') {
+        return const StudentHome();
+      } else {
+        return Utils.showSnackBar("Cant find this user type in database");
+      }
+    } else {}
   }
 }
 
@@ -69,35 +91,37 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
-    bool entered = false;
     return StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
+          Future.wait([
+            getType(),
+          ]);
           if (snapshot.hasData) {
-            //getType();
-            // Future.wait([getType(),]);
-            print('MYTAG : From main.dart UserType = $userType');
+            log('main.dart : StreamBuilder UserType = $userType');
             if (userType == 'admin') {
-              entered = true;
               return const AdminHome();
             } else if (userType == 'coach') {
-              entered = true;
               return const CoachHome();
-            } else {
+            } else if (userType == 'student') {
               return const StudentHome();
+            } else {
+              return Container();
             }
           } else {
-            entered;
             return SignIn();
           }
         });
   }
 
   Future getType() async {
-    String uid = FirebaseAuth.instance.currentUser!.uid;
-    userType = await DatabaseService.getUserType(uid);
-    print("MYTAG : getType : userType = $userType");
-    //return userType.toString();
+    userType = "loading";
+    log("getType executed : usertype = $userType");
+    if (FirebaseAuth.instance.currentUser != null) {
+      String uid = FirebaseAuth.instance.currentUser!.uid;
+      userType = await DatabaseService.getUserType(uid);
+      log("main.dart : getType : userType = $userType");
+    }
   }
 
   @override
@@ -108,10 +132,6 @@ class _MainPageState extends State<MainPage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       getType();
     });
-    // userType = getType().toString();
-    // if(userType!='admin' && userType!='coach' && userType != 'student'){
-    //   userType = getType().toString();
-    // }
     super.initState();
   }
 }

@@ -11,6 +11,7 @@ class StudentAutonomyTile extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
+  @override
   Widget build(BuildContext context) {
     final completedText = context.watch<AutonomyProvider>().completedText;
     final isLoading = context.watch<AutonomyProvider>().isLoading;
@@ -22,9 +23,9 @@ class StudentAutonomyTile extends StatelessWidget {
             color: itemColor,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(5.0.r),
-              topRight: Radius.circular(25.0),
-              bottomLeft: Radius.circular(25.0),
-              bottomRight: Radius.circular(5.0),
+              topRight: Radius.circular(25.0.r),
+              bottomLeft: Radius.circular(25.0.r),
+              bottomRight: Radius.circular(5.0.r),
             )),
         // color: Color(0xFF52adc8),
         child: Column(
@@ -32,7 +33,7 @@ class StudentAutonomyTile extends StatelessWidget {
             Align(
               alignment: Alignment.centerLeft,
               child: Padding(
-                padding: EdgeInsets.fromLTRB(30, 20, 0, 20),
+                padding: const EdgeInsets.fromLTRB(30, 20, 0, 20),
                 child: Text(
                   'AUTONOMY',
                   style: TextStyle(

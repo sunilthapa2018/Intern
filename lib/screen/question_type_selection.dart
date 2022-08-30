@@ -1,12 +1,14 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:motivational_leadership/Utility/colors.dart';
+import 'package:motivational_leadership/Utility/utils.dart';
 import 'package:motivational_leadership/screen/question.dart';
 import 'package:motivational_leadership/services/database.dart';
 import 'package:page_transition/page_transition.dart';
-
-import '../Utility/utils.dart';
 
 class QuestionTypeSelection extends StatefulWidget {
   final String questionType;
@@ -18,58 +20,18 @@ class QuestionTypeSelection extends StatefulWidget {
 
 class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
   late String _questionType = "";
-  Color backgroundColor = const Color(0xFFD9D9D9);
-  Color itemColor = const Color(0xFF417CA9);
-  Color appBarColor = const Color(0xFFF2811D);
-
   late Future<String> dataAFuture;
   late Future<String> dataBFuture;
   late Future<String> dataCFuture;
   late Future<String> dataDFuture;
   late Future<String> dataEFuture;
   late Future<String> dataFFuture;
-  Text txtA = const Text(
-    "Loading...",
-    style: TextStyle(
-      color: Colors.white,
-      fontSize: 16,
-    ),
-  );
-  Text txtB = const Text(
-    "Loading...",
-    style: TextStyle(
-      color: Colors.white,
-      fontSize: 16,
-    ),
-  );
-  Text txtC = const Text(
-    "Loading...",
-    style: TextStyle(
-      color: Colors.white,
-      fontSize: 16,
-    ),
-  );
-  Text txtD = const Text(
-    "Loading...",
-    style: TextStyle(
-      color: Colors.white,
-      fontSize: 16,
-    ),
-  );
-  Text txtE = const Text(
-    "Loading...",
-    style: TextStyle(
-      color: Colors.white,
-      fontSize: 16,
-    ),
-  );
-  Text txtF = const Text(
-    "Loading...",
-    style: TextStyle(
-      color: Colors.white,
-      fontSize: 16,
-    ),
-  );
+  late Text txtA;
+  late Text txtB;
+  late Text txtC;
+  late Text txtD;
+  late Text txtE;
+  late Text txtF;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -339,33 +301,31 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
                             bool aCompleted = getCompletedStatus(txtAValue);
                             bool bCompleted = getCompletedStatus(txtBValue);
                             bool cCompleted = getCompletedStatus(txtCValue);
-                            print(
-                                "MYTAG : $aCompleted , $bCompleted , $cCompleted");
+                            log("MYTAG : $aCompleted , $bCompleted , $cCompleted");
                             String uid = FirebaseAuth.instance.currentUser!.uid;
                             if (aCompleted & bCompleted & cCompleted) {
                               String dataAlreadyPresent =
                                   await DatabaseService.hasThisDocument(
                                       "submissions", uid);
-                              print(
-                                  "Mytag : dataAlreadyPresent = $dataAlreadyPresent");
+                              log("Mytag : dataAlreadyPresent = $dataAlreadyPresent");
                               if (dataAlreadyPresent == "true") {
                                 //edit data in database
                                 DatabaseService.updateSubmissions(
                                     "plan", "true");
                                 Utils.showSnackBar(
                                     "Your answer has been Edited and re-submitted for PLAN section");
-                                // print("MYTAG : updateSubmissions Completed ...");
+                                // log("MYTAG : updateSubmissions Completed ...");
                               } else {
                                 //write new data to database
                                 DatabaseService.addSubmissions("true", "false");
                                 Utils.showSnackBar(
                                     "Your answer has been submitted for PLAN section");
-                                // print("MYTAG : addSubmissions Completed ...");
+                                // log("MYTAG : addSubmissions Completed ...");
                               }
                             } else {
                               Utils.showSnackBar(
                                   "Please complete all sections of PLAN before you can submit");
-                              // print("MYTAG : Not Completed");
+                              // log("MYTAG : Not Completed");
                             }
                           },
                           child: UnconstrainedBox(
@@ -651,34 +611,31 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
                             bool dCompleted = getCompletedStatus(txtDValue);
                             bool eCompleted = getCompletedStatus(txtEValue);
                             bool fCompleted = getCompletedStatus(txtFValue);
-                            print(
-                                "MYTAG : $dCompleted , $eCompleted , $fCompleted");
+                            log("MYTAG : $dCompleted , $eCompleted , $fCompleted");
                             String uid = FirebaseAuth.instance.currentUser!.uid;
                             if (dCompleted & eCompleted & fCompleted) {
                               String dataAlreadyPresent =
                                   await DatabaseService.hasThisDocument(
                                       "submissions", uid);
-                              print(
-                                  "Mytag : dataAlreadyPresent = $dataAlreadyPresent");
+                              log("Mytag : dataAlreadyPresent = $dataAlreadyPresent");
                               if (dataAlreadyPresent == "true") {
                                 //edit data in database
                                 DatabaseService.updateSubmissions(
                                     "reflect", "true");
                                 Utils.showSnackBar(
                                     "Your answer has been Edited and re-submitted for Reflect section");
-                                print(
-                                    "MYTAG : updateSubmissions Completed ...");
+                                log("MYTAG : updateSubmissions Completed ...");
                               } else {
                                 //write new data to database
                                 DatabaseService.addSubmissions("false", "true");
                                 Utils.showSnackBar(
                                     "Your answer has been submitted for Reflect section");
-                                print("MYTAG : addSubmissions Completed ...");
+                                log("MYTAG : addSubmissions Completed ...");
                               }
                             } else {
                               Utils.showSnackBar(
                                   "Please complete all sections of REFLECT before you can submit");
-                              print("MYTAG : Not Completed");
+                              log("MYTAG : Not Completed");
                             }
                           },
                           child: UnconstrainedBox(
@@ -742,13 +699,20 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
         .get();
     final int aDocuments = aSnapshot.docs.length;
     String returnText = "Completed : $aDocuments/$qDocuments";
-    // print('MYTAG : From Question_type_selection.dart/getData/Type = $_questionType , sub type = $subType , Completed = $aDocuments, Total = $qDocuments' );
+    // log('MYTAG : From Question_type_selection.dart/getData/Type = $_questionType , sub type = $subType , Completed = $aDocuments, Total = $qDocuments' );
     return returnText;
   }
 
   @override
   initState() {
     super.initState();
+    txtA = loadingText();
+    txtB = loadingText();
+    txtC = loadingText();
+    txtD = loadingText();
+    txtE = loadingText();
+    txtF = loadingText();
+
     _questionType = widget.questionType;
     dataAFuture = getData("Actions");
     dataBFuture = getData("Overcoming Challenges");
@@ -780,8 +744,8 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
     setState(() {});
   }
 
-  bool getCompletedStatus(String Value) {
-    final split = Value.split(':');
+  bool getCompletedStatus(String value) {
+    final split = value.split(':');
     final split2 = split[1].split('/');
     String completed = split2[0].trim();
     String total = split2[1].trim();
@@ -790,5 +754,15 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
     } else {
       return false;
     }
+  }
+
+  Text loadingText() {
+    return const Text(
+      "Loading...",
+      style: TextStyle(
+        color: Colors.white,
+        fontSize: 16,
+      ),
+    );
   }
 }

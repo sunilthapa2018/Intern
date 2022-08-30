@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -98,7 +100,7 @@ class _SignUpState extends State<SignUp> {
                   GestureDetector(
                     onTap: () {
                       if (formKey.currentState!.validate()) {
-                        RegisterUser();
+                        registerUser();
                       } else {
                         Utils.showSnackBar(
                             "Please make sure everything on this form is valid !");
@@ -193,7 +195,7 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
-  Future RegisterUser() async {
+  Future registerUser() async {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -217,7 +219,7 @@ class _SignUpState extends State<SignUp> {
       //print("MYTAG : uid = " + user.uid);
 
     } on FirebaseAuthException catch (e) {
-      print(e);
+      log(e.toString());
       Utils.showSnackBar(e.message);
     }
     navigatorKey.currentState!.popUntil((route) => route.isFirst);

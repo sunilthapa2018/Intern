@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:motivational_leadership/Utility/colors.dart';
 import 'package:motivational_leadership/providers/competence_provider.dart';
 import 'package:motivational_leadership/screen/video.dart';
@@ -25,6 +26,7 @@ class _StudentCompetenceTileState extends State<StudentCompetenceTile> {
     super.initState();
   }
 
+  @override
   Widget build(BuildContext context) {
     final completedText = context.watch<CompetenceProvider>().completedText;
     final isLoading = context.watch<CompetenceProvider>().isLoading;
@@ -32,21 +34,21 @@ class _StudentCompetenceTileState extends State<StudentCompetenceTile> {
     return GestureDetector(
       child: Container(
         //color: Color(0xFF6495ED),
-        margin: const EdgeInsets.fromLTRB(10, 20, 10, 5),
+        margin: const EdgeInsets.fromLTRB(10, 10, 10, 5),
         //height: 120,
         decoration: BoxDecoration(
             // color: Color(0xFFF2811D),
             color: itemColor,
             borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(5.0),
-              topRight: Radius.circular(25.0),
-              bottomLeft: Radius.circular(25.0),
-              bottomRight: Radius.circular(5.0),
+              topLeft: Radius.circular(5.0.r),
+              topRight: Radius.circular(25.0.r),
+              bottomLeft: Radius.circular(25.0.r),
+              bottomRight: Radius.circular(5.0.r),
             )),
         // color: Color(0xFF52adc8),
         child: Column(
           children: [
-            Align(
+            const Align(
               alignment: Alignment.centerLeft,
               child: Padding(
                 padding: EdgeInsets.fromLTRB(30, 20, 0, 20),

@@ -1,15 +1,15 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:motivational_leadership/Utility/base_utils.dart';
 import 'package:motivational_leadership/Utility/utils.dart';
-import 'package:motivational_leadership/screen/forget_password.dart';
+import 'package:motivational_leadership/main.dart';
+import 'package:motivational_leadership/screen/forget_password_page.dart';
 import 'package:motivational_leadership/screen/signup.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../main.dart';
 
 class SignIn extends StatefulWidget {
   @override
@@ -22,176 +22,32 @@ class _SignInState extends State<SignIn> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
-  void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
-
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-        const SystemUiOverlayStyle(statusBarColor: Colors.white));
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        toolbarHeight: 0,
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
-        systemOverlayStyle: SystemUiOverlayStyle.dark,
-      ),
+      appBar: appBar(),
       body: Container(
-        //color: Colors.deepOrange,
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
         child: Form(
           key: formKey,
           child: Column(
             children: [
-              Container(
-                child: Column(
-                  children: [
-                    Container(
-                      color: Colors.white,
-                      child: Row(children: const [
-                        Text(
-                          'Welcome!',
-                          style: TextStyle(
-                            color: Color(0xFFff6600),
-                            //color: Color(0xFF2e3c96),
-                            fontWeight: FontWeight.w900,
-                            fontSize: 36,
-                          ),
-                        ),
-                        // Text(
-                        //   ' back!',
-                        //   style: TextStyle(
-                        //     color: Color(0xFFff6600),
-                        //     fontWeight: FontWeight.w900,
-                        //     fontSize: 36,
-                        //   ),
-                        // ),
-                      ]),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 0, vertical: 10),
-                      child: Image.asset(
-                        'assets/logo.png',
-                        height: 100,
-                        width: 130,
-                        fit: BoxFit.contain,
-                      ),
-                    ),
-                    TextFormField(
-                      controller: emailController,
-                      decoration: const InputDecoration(
-                          labelText: "Email",
-                          hintText: "Enter your Email Address"),
-                      //validator: EmailValidator(errorText: "Not A Valid Email"),
-                      validator: MultiValidator([
-                        MinLengthValidator(1,
-                            errorText: "Please enter your email address"),
-                        EmailValidator(errorText: "Not A Valid Email"),
-                      ]),
-                    ),
-                    const SizedBox(
-                      height: 6,
-                    ),
-                    TextFormField(
-                      controller: passwordController,
-                      decoration: const InputDecoration(
-                          labelText: "Password",
-                          hintText: "Enter your Password"),
-                      obscureText: true,
-                      validator: MultiValidator([
-                        MinLengthValidator(6,
-                            errorText: "It should be at least 6 characters"),
-                        MaxLengthValidator(15,
-                            errorText: "It should be Max 15 characters"),
-                      ]),
-                    ),
-                    const SizedBox(
-                      height: 24,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        if (formKey.currentState!.validate()) {
-                          signIn();
-                        }
-                      },
-                      child: Container(
-                        alignment: Alignment.center,
-                        width: MediaQuery.of(context).size.width,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 24, vertical: 20),
-                        decoration: BoxDecoration(
-                            color: const Color(0xFF2e3c96),
-                            borderRadius: BorderRadius.circular(30)),
-                        child: const Text(
-                          "Sign In",
-                          style: TextStyle(fontSize: 16, color: Colors.white),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        NavigateTo(
-                          context: context,
-                          nextPage: ForgotPassword(),
-                          currentPage: widget,
-                        );
-                      },
-                      child: Container(
-                        child: const Text('Forgot Password?',
-                            style: TextStyle(
-                                color: Colors.black87,
-                                decoration: TextDecoration.underline,
-                                fontSize: 17)),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text('Don\'t have an account? ',
-                            style:
-                                TextStyle(color: Colors.black87, fontSize: 17)),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).push(PageTransition(
-                                type: PageTransitionType.rightToLeftJoined,
-                                childCurrent: widget,
-                                duration: const Duration(milliseconds: 300),
-                                reverseDuration:
-                                    const Duration(milliseconds: 300),
-                                child: SignUp()));
-                            //HomePage();
-                          },
-                          child: Container(
-                            child: const Text('Sign Up',
-                                style: TextStyle(
-                                    color: Colors.black87,
-                                    decoration: TextDecoration.underline,
-                                    fontSize: 17)),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+              Column(
+                children: [
+                  welcomeTitle(),
+                  companyLogo(),
+                  txtEmail(),
+                  spacerSixPixel(),
+                  txtPassword(),
+                  spacerTwentyPixel(),
+                  signInButton(context),
+                  spacerTwentyPixel(),
+                  forgotPassword(context),
+                  spacerTwentyPixel(),
+                  signUp(context),
+                ],
               ),
-              const SizedBox(
-                height: 80,
-              ),
-              const Spacer(),
             ],
           ),
         ),
@@ -199,11 +55,158 @@ class _SignInState extends State<SignIn> {
     );
   }
 
+  AppBar appBar() {
+    return AppBar(
+      toolbarHeight: 0,
+      backgroundColor: Colors.transparent,
+      elevation: 0.0,
+      systemOverlayStyle: SystemUiOverlayStyle.dark,
+    );
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  SizedBox spacerTwentyPixel() {
+    return const SizedBox(
+      height: 24,
+    );
+  }
+
+  SizedBox spacerSixPixel() {
+    return const SizedBox(
+      height: 24,
+    );
+  }
+
+  Row signUp(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Text('Don\'t have an account? ',
+            style: TextStyle(color: Colors.black87, fontSize: 17)),
+        GestureDetector(
+          onTap: () {
+            navigateTo(
+                context: context, nextPage: SignUp(), currentPage: widget);
+          },
+          child: const Text('Sign Up',
+              style: TextStyle(
+                  color: Colors.black87,
+                  decoration: TextDecoration.underline,
+                  fontSize: 17)),
+        ),
+      ],
+    );
+  }
+
+  GestureDetector forgotPassword(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        navigateTo(
+          context: context,
+          nextPage: const ForgotPassword(),
+          currentPage: widget,
+        );
+      },
+      child: const Text('Forgot Password?',
+          style: TextStyle(
+              color: Colors.black87,
+              decoration: TextDecoration.underline,
+              fontSize: 17)),
+    );
+  }
+
+  GestureDetector signInButton(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        if (formKey.currentState!.validate()) {
+          signIn();
+        }
+      },
+      child: Container(
+        alignment: Alignment.center,
+        width: MediaQuery.of(context).size.width,
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+        decoration: BoxDecoration(
+            color: const Color(0xFF2e3c96),
+            borderRadius: BorderRadius.circular(30)),
+        child: const Text(
+          "Sign In",
+          style: TextStyle(fontSize: 16, color: Colors.white),
+        ),
+      ),
+    );
+  }
+
+  TextFormField txtPassword() {
+    return TextFormField(
+      controller: passwordController,
+      decoration: const InputDecoration(
+          labelText: "Password", hintText: "Enter your Password"),
+      obscureText: true,
+      validator: MultiValidator([
+        MinLengthValidator(6, errorText: "It should be at least 6 characters"),
+        MaxLengthValidator(15, errorText: "It should be Max 15 characters"),
+      ]),
+    );
+  }
+
+  TextFormField txtEmail() {
+    return TextFormField(
+      controller: emailController,
+      decoration: const InputDecoration(
+          labelText: "Email", hintText: "Enter your Email Address"),
+      //validator: EmailValidator(errorText: "Not A Valid Email"),
+      validator: MultiValidator([
+        MinLengthValidator(1, errorText: "Please enter your email address"),
+        EmailValidator(errorText: "Not A Valid Email"),
+      ]),
+    );
+  }
+
+  Padding companyLogo() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
+      child: Image.asset(
+        'assets/logo.png',
+        height: 100,
+        width: 130,
+        fit: BoxFit.contain,
+      ),
+    );
+  }
+
+  Container welcomeTitle() {
+    return Container(
+      color: Colors.white,
+      child: Row(children: const [
+        Text(
+          'Welcome!',
+          style: TextStyle(
+            color: Color(0xFFff6600),
+            //color: Color(0xFF2e3c96),
+            fontWeight: FontWeight.w900,
+            fontSize: 36,
+          ),
+        ),
+      ]),
+    );
+  }
+
   Future signIn() async {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => const Center(child: CircularProgressIndicator()),
+    // showDialog(
+    //   context: context,
+    //   barrierDismissible: false,
+    //   builder: (context) => const Center(child: CircularProgressIndicator()),
+    // );
+    const Center(
+      child: CircularProgressIndicator(
+          valueColor: AlwaysStoppedAnimation<Color>(Colors.white)),
     );
     try {
       String email = emailController.text.trim();
@@ -218,11 +221,45 @@ class _SignInState extends State<SignIn> {
 
       // set value
       await prefs.setString('password', password);
-      print("mytag $password is saved as password\n");
+      log("mytag $password is saved as password\n");
     } on FirebaseAuthException catch (e) {
-      print(e);
+      log(e.toString());
       Utils.showSnackBar(e.message);
     }
+
+    // final User? user = FirebaseAuth.instance.currentUser;
+    // String uid = user!.uid;
+    // userType = await DatabaseService.getUserType(uid);
+
+    // if (userType == 'admin') {
+    //   return const AdminHome();
+    // } else if (userType == 'coach') {
+    //   return const CoachHome();
+    // } else if (userType == 'student') {
+    //   return const StudentHome();
+    // } else {
+    //   return Utils.showSnackBar("Cant find this user type in database");
+    // }
+
+    log("Sign IN executed sucessfully");
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
+    // Navigator.pop(this.context);
+    // NavigateTo(
+    // context: context, nextPage: const MainPage(), currentPage: this.widget);
+    //const MainPage();
+  }
+}
+
+class SpacerSixPixel extends StatelessWidget {
+  const SpacerSixPixel(
+    int i, {
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const SizedBox(
+      height: 6,
+    );
   }
 }

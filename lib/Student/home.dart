@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:motivational_leadership/Student/widgets/student_autonomy_tile.dart';
 import 'package:motivational_leadership/Student/widgets/student_belonging.dart';
 import 'package:motivational_leadership/Student/widgets/student_competence.dart';
@@ -23,26 +24,24 @@ class StudentHome extends StatefulWidget {
 class _StudentHomeState extends State<StudentHome> {
   @override
   Widget build(BuildContext context) {
-    log("Studetn home build ");
+    log("Student home build ");
     log(MediaQuery.of(context).size.height.toString());
     log(MediaQuery.of(context).size.width.toString());
 
-    return RefreshIndicator(
-      onRefresh: () => _refresh(context),
-      child: Scaffold(
-        drawer: const NavigationDrawerWidget(),
-        appBar: _buildAppBar(context),
-        body: FutureBuilder(
-            future: _loadInitialData(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-              return _buildMainBody(context);
-            }),
-      ),
+    return Scaffold(
+      drawer: const NavigationDrawerWidget(),
+      appBar: _buildAppBar(context),
+      body: FutureBuilder(
+          future: _loadInitialData(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white)),
+              );
+            }
+            return _buildMainBody(context);
+          }),
     );
   }
 
@@ -56,7 +55,7 @@ class _StudentHomeState extends State<StudentHome> {
             onPressed: () {
               _refresh(context);
             },
-            icon: Icon(Icons.refresh)),
+            icon: const Icon(Icons.refresh)),
       ],
     );
   }
@@ -78,11 +77,11 @@ class _StudentHomeState extends State<StudentHome> {
 
   Padding _buildButtonLogo() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
+      padding: const EdgeInsets.only(),
       child: Image.asset(
         'assets/complete_logo.png',
-        height: 80,
-        width: 120,
+        // height: 50.h,
+        width: 350.w,
         fit: BoxFit.contain,
       ),
     );

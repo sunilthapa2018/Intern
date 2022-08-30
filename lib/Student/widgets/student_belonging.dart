@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:motivational_leadership/Utility/colors.dart';
 import 'package:motivational_leadership/providers/belonging_provider.dart';
 import 'package:motivational_leadership/screen/video.dart';
@@ -23,25 +24,26 @@ class _StudentBelongingTileState extends State<StudentBelongingTile> {
     super.initState();
   }
 
+  @override
   Widget build(BuildContext context) {
     final completedText = context.watch<BelongingProvider>().completedText;
     final isLoading = context.watch<BelongingProvider>().isLoading;
     log("first belog tile");
     return GestureDetector(
       child: Container(
-        margin: EdgeInsets.fromLTRB(10, 20, 10, 5),
+        margin: const EdgeInsets.fromLTRB(10, 10, 10, 5),
         decoration: BoxDecoration(
             color: itemColor,
             borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(5.0),
-              topRight: Radius.circular(25.0),
-              bottomLeft: Radius.circular(25.0),
-              bottomRight: Radius.circular(5.0),
+              topLeft: Radius.circular(5.0.r),
+              topRight: Radius.circular(25.0.r),
+              bottomLeft: Radius.circular(25.0.r),
+              bottomRight: Radius.circular(5.0.r),
             )),
         // color: Color(0xFF52adc8),
         child: Column(
           children: [
-            Align(
+            const Align(
               alignment: Alignment.centerLeft,
               child: Padding(
                 padding: EdgeInsets.fromLTRB(30, 20, 0, 20),
@@ -60,10 +62,10 @@ class _StudentBelongingTileState extends State<StudentBelongingTile> {
             Align(
               alignment: Alignment.centerRight,
               child: Padding(
-                padding: EdgeInsets.fromLTRB(0, 0, 20, 20),
+                padding: const EdgeInsets.fromLTRB(0, 0, 20, 20),
                 child: Text(
                   (isLoading) ? "Loading..." : completedText,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 16,
                   ),

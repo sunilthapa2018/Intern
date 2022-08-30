@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
-void NavigateTo(
+void navigateTo(
     {required BuildContext context,
     required Widget nextPage,
     required Widget currentPage}) {
