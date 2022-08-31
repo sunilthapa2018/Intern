@@ -8,8 +8,8 @@ import 'package:page_transition/page_transition.dart';
 
 String uid = FirebaseAuth.instance.currentUser!.uid;
 
-class NavigationDrawerWidget extends StatelessWidget {
-  const NavigationDrawerWidget({Key? key}) : super(key: key);
+class StudentNavigationDrawerWidget extends StatelessWidget {
+  const StudentNavigationDrawerWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

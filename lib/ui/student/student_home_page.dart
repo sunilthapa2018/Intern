@@ -3,16 +3,15 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:motivational_leadership/Student/widgets/student_autonomy_tile.dart';
-import 'package:motivational_leadership/Student/widgets/student_belonging.dart';
-import 'package:motivational_leadership/Student/widgets/student_competence.dart';
 import 'package:motivational_leadership/Utility/colors.dart';
 import 'package:motivational_leadership/providers/autonomy_provider.dart';
 import 'package:motivational_leadership/providers/belonging_provider.dart';
 import 'package:motivational_leadership/providers/competence_provider.dart';
+import 'package:motivational_leadership/ui/student/widgets/student_autonomy_tile.dart';
+import 'package:motivational_leadership/ui/student/widgets/student_belonging.dart';
+import 'package:motivational_leadership/ui/student/widgets/student_competence.dart';
+import 'package:motivational_leadership/ui/student/widgets/student_navigation_drawer.dart';
 import 'package:provider/provider.dart';
-
-import '../Widget/navigation_drawer.dart';
 
 class StudentHome extends StatefulWidget {
   const StudentHome({Key? key}) : super(key: key);
@@ -29,7 +28,7 @@ class _StudentHomeState extends State<StudentHome> {
     log(MediaQuery.of(context).size.width.toString());
 
     return Scaffold(
-      drawer: const NavigationDrawerWidget(),
+      drawer: const StudentNavigationDrawerWidget(),
       appBar: _buildAppBar(context),
       body: FutureBuilder(
           future: _loadInitialData(),

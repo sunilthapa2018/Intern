@@ -8,7 +8,8 @@ import 'package:motivational_leadership/Utility/base_utils.dart';
 import 'package:motivational_leadership/Utility/colors.dart';
 import 'package:motivational_leadership/Utility/utils.dart';
 import 'package:motivational_leadership/main.dart';
-import 'package:motivational_leadership/ui/auth/signup.dart';
+import 'package:motivational_leadership/ui/auth/forget_password_page.dart';
+import 'package:motivational_leadership/ui/auth/sign_up_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SignIn extends StatefulWidget {

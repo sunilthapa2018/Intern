@@ -1,25 +1,27 @@
+import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:motivational_leadership/Utility/base_utils.dart';
-import 'package:motivational_leadership/Utility/colors.dart';
-import 'package:motivational_leadership/ui/coach/feedback_page_page.dart';
+import 'package:motivational_leadership/utility/base_utils.dart';
+import 'package:motivational_leadership/utility/colors.dart';
+import 'package:motivational_leadership/ui/coach/coach_feedback_page.dart';
 
-class FeedbackSelection extends StatefulWidget {
+class FeedbackTypeSelection extends StatefulWidget {
   final String userID;
-  const FeedbackSelection({required this.userID});
+  const FeedbackTypeSelection({required this.userID});
   @override
-  _FeedbackSelectionState createState() => _FeedbackSelectionState();
+  _FeedbackTypeSelectionState createState() => _FeedbackTypeSelectionState();
 }
 
-class _FeedbackSelectionState extends State<FeedbackSelection> {
+class _FeedbackTypeSelectionState extends State<FeedbackTypeSelection> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
     ]);
+    log(widget.userID);
     return Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: backgroundColor,
@@ -107,6 +109,7 @@ class _FeedbackSelectionState extends State<FeedbackSelection> {
             nextPage: FeedbackPage(
               questionType: _questionType,
               questionSubType: 'Future',
+              uId: '',
             ),
             currentPage: widget);
       },
@@ -182,6 +185,7 @@ class _FeedbackSelectionState extends State<FeedbackSelection> {
             nextPage: FeedbackPage(
               questionType: _questionType,
               questionSubType: 'Impact and Outcome',
+              uId: '',
             ),
             currentPage: widget);
       },
@@ -257,6 +261,7 @@ class _FeedbackSelectionState extends State<FeedbackSelection> {
             nextPage: FeedbackPage(
               questionType: _questionType,
               questionSubType: 'Implementation',
+              uId: '',
             ),
             currentPage: widget);
       },
@@ -351,6 +356,7 @@ class _FeedbackSelectionState extends State<FeedbackSelection> {
             nextPage: FeedbackPage(
               questionType: _questionType,
               questionSubType: 'Success Indicators (KPIs)',
+              uId: '',
             ),
             currentPage: widget);
       },
@@ -427,6 +433,7 @@ class _FeedbackSelectionState extends State<FeedbackSelection> {
             nextPage: FeedbackPage(
               questionType: _questionType,
               questionSubType: 'Overcoming Challenges',
+              uId: '',
             ),
             currentPage: widget);
       },
@@ -503,6 +510,7 @@ class _FeedbackSelectionState extends State<FeedbackSelection> {
             nextPage: FeedbackPage(
               questionType: _questionType,
               questionSubType: 'Actions',
+              uId: '',
             ),
             currentPage: widget);
       },

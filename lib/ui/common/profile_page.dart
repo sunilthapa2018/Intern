@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:motivational_leadership/Utility/utils.dart';
+import 'package:motivational_leadership/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../main.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);

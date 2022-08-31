@@ -3,19 +3,19 @@ import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:motivational_leadership/Coach/coach_home.dart';
-import 'package:motivational_leadership/Student/home.dart';
-import 'package:motivational_leadership/Utility/colors.dart';
-import 'package:motivational_leadership/Utility/utils.dart';
 import 'package:motivational_leadership/providers/autonomy_provider.dart';
 import 'package:motivational_leadership/providers/belonging_provider.dart';
 import 'package:motivational_leadership/providers/competence_provider.dart';
-import 'package:motivational_leadership/screen/signin.dart';
 import 'package:motivational_leadership/services/database.dart';
+import 'package:motivational_leadership/ui/admin/admin_home_page.dart';
+import 'package:motivational_leadership/ui/auth/sign_in_page.dart';
+import 'package:motivational_leadership/ui/coach/coach_home_page.dart';
+import 'package:motivational_leadership/ui/student/student_home_page.dart';
+import 'package:motivational_leadership/utility/colors.dart';
+import 'package:motivational_leadership/utility/utils.dart';
 import 'package:provider/provider.dart';
-
-import 'screen/admin_home.dart';
 
 String userType = "loading";
 Future main() async {
@@ -85,7 +85,7 @@ class _MainPageState extends State<MainPage> {
               builder: ((context, AsyncSnapshot<String?> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Scaffold(
-                    appBar: AppBar(),
+                    appBar: newAppBar(),
                     body: const Center(
                       child: CircularProgressIndicator(),
                     ),
@@ -122,5 +122,12 @@ class _MainPageState extends State<MainPage> {
       return userType;
     }
     return null;
+  }
+
+  newAppBar() {
+    return AppBar(
+      backgroundColor: appBarColor,
+      systemOverlayStyle: SystemUiOverlayStyle.dark,
+    );
   }
 }

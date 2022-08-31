@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:motivational_leadership/Utility/colors.dart';
 import 'package:motivational_leadership/Utility/utils.dart';
-import 'package:motivational_leadership/screen/question.dart';
 import 'package:motivational_leadership/services/database.dart';
+import 'package:motivational_leadership/ui/student/question_page.dart';
 import 'package:page_transition/page_transition.dart';
 
 class QuestionTypeSelection extends StatefulWidget {
