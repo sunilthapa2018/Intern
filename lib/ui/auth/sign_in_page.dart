@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:motivational_leadership/Utility/base_utils.dart';
+import 'package:motivational_leadership/Utility/colors.dart';
 import 'package:motivational_leadership/Utility/utils.dart';
 import 'package:motivational_leadership/main.dart';
-import 'package:motivational_leadership/screen/forget_password_page.dart';
-import 'package:motivational_leadership/screen/signup.dart';
+import 'package:motivational_leadership/ui/auth/signup.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SignIn extends StatefulWidget {
@@ -33,21 +33,17 @@ class _SignInState extends State<SignIn> {
           key: formKey,
           child: Column(
             children: [
-              Column(
-                children: [
-                  welcomeTitle(),
-                  companyLogo(),
-                  txtEmail(),
-                  spacerSixPixel(),
-                  txtPassword(),
-                  spacerTwentyPixel(),
-                  signInButton(context),
-                  spacerTwentyPixel(),
-                  forgotPassword(context),
-                  spacerTwentyPixel(),
-                  signUp(context),
-                ],
-              ),
+              welcomeTitle(),
+              companyLogo(),
+              txtEmail(),
+              spacerSixPixel(),
+              txtPassword(),
+              spacerTwentyPixel(),
+              signInButton(context),
+              spacerTwentyPixel(),
+              forgotPassword(context),
+              spacerTwentyPixel(),
+              signUp(context),
             ],
           ),
         ),
@@ -199,14 +195,10 @@ class _SignInState extends State<SignIn> {
   }
 
   Future signIn() async {
-    // showDialog(
-    //   context: context,
-    //   barrierDismissible: false,
-    //   builder: (context) => const Center(child: CircularProgressIndicator()),
-    // );
-    const Center(
-      child: CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation<Color>(Colors.white)),
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => const Center(child: CircularProgressIndicator()),
     );
     try {
       String email = emailController.text.trim();
@@ -227,26 +219,15 @@ class _SignInState extends State<SignIn> {
       Utils.showSnackBar(e.message);
     }
 
-    // final User? user = FirebaseAuth.instance.currentUser;
-    // String uid = user!.uid;
-    // userType = await DatabaseService.getUserType(uid);
-
-    // if (userType == 'admin') {
-    //   return const AdminHome();
-    // } else if (userType == 'coach') {
-    //   return const CoachHome();
-    // } else if (userType == 'student') {
-    //   return const StudentHome();
-    // } else {
-    //   return Utils.showSnackBar("Cant find this user type in database");
-    // }
-
     log("Sign IN executed sucessfully");
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
-    // Navigator.pop(this.context);
-    // NavigateTo(
-    // context: context, nextPage: const MainPage(), currentPage: this.widget);
-    //const MainPage();
+  }
+
+  AppBar newAppBar() {
+    return AppBar(
+      backgroundColor: appBarColor,
+      systemOverlayStyle: SystemUiOverlayStyle.dark,
+    );
   }
 }
 

@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:motivational_leadership/Coach/feedback_page.dart';
+import 'package:motivational_leadership/Coach/feedback_page_page.dart';
 import 'package:motivational_leadership/Utility/base_utils.dart';
 import 'package:motivational_leadership/Utility/colors.dart';
 

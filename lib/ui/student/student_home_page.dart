@@ -24,7 +24,7 @@ class StudentHome extends StatefulWidget {
 class _StudentHomeState extends State<StudentHome> {
   @override
   Widget build(BuildContext context) {
-    log("Student home build ");
+    log("student home build ");
     log(MediaQuery.of(context).size.height.toString());
     log(MediaQuery.of(context).size.width.toString());
 

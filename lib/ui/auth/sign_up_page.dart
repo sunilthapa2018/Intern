@@ -7,7 +7,7 @@ import 'package:form_field_validator/form_field_validator.dart';
 import 'package:motivational_leadership/Utility/utils.dart';
 import 'package:motivational_leadership/services/database.dart';
 
-import '../main.dart';
+import '../../main.dart';
 
 class SignUp extends StatefulWidget {
   @override

@@ -1,12 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:motivational_leadership/Coach/coach_home.dart';
-import 'package:motivational_leadership/Coach/feedback_page.dart';
-import 'package:motivational_leadership/screen/signin.dart';
+import 'package:motivational_leadership/Coach/coach_home_page.dart';
+import 'package:motivational_leadership/Coach/feedback_page_page.dart';
+import 'package:motivational_leadership/pages/profile.dart';
+import 'package:motivational_leadership/common/signin.dart';
+import 'package:motivational_leadership/services/get_user_name.dart';
 import 'package:page_transition/page_transition.dart';
-
-import '../screen/profile.dart';
-import '../services/get_user_name.dart';
 
 String uid = FirebaseAuth.instance.currentUser!.uid;
 
@@ -79,7 +78,7 @@ class CoachNavigationDrawerWidget extends StatelessWidget {
               Navigator.of(context).push(PageTransition(
                   type: PageTransitionType.rightToLeftJoined,
                   childCurrent: this,
-                  child: Profile()));
+                  child: const Profile()));
             },
           ),
           ListTile(

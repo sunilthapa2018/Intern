@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:motivational_leadership/Student/home.dart';
-import 'package:motivational_leadership/screen/profile.dart';
-import 'package:motivational_leadership/screen/signin.dart';
 import 'package:motivational_leadership/services/get_user_name.dart';
+import 'package:motivational_leadership/ui/auth/sign_in_page.dart';
+import 'package:motivational_leadership/ui/common/profile_page.dart';
+import 'package:motivational_leadership/ui/student/student_home_page.dart';
 import 'package:page_transition/page_transition.dart';
 
 String uid = FirebaseAuth.instance.currentUser!.uid;

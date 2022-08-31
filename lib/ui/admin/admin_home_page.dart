@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import '../Widget/navigation_drawer.dart';
+import 'package:motivational_leadership/ui/admin/widgets/admin_navigation_drawer.dart';
 
 class AdminHome extends StatefulWidget {
   const AdminHome({Key? key}) : super(key: key);
@@ -14,7 +13,7 @@ class _AdminHomeState extends State<AdminHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        drawer: const NavigationDrawerWidget(),
+        drawer: const AdminNavigationDrawerWidget(),
         appBar: AppBar(
           title: const Text("Admin"),
           backgroundColor: const Color(0xFFF2811D),
