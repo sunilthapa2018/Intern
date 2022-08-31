@@ -4,12 +4,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-import 'package:motivational_leadership/Utility/base_utils.dart';
-import 'package:motivational_leadership/Utility/colors.dart';
-import 'package:motivational_leadership/Utility/utils.dart';
 import 'package:motivational_leadership/main.dart';
 import 'package:motivational_leadership/ui/auth/forget_password_page.dart';
 import 'package:motivational_leadership/ui/auth/sign_up_page.dart';
+import 'package:motivational_leadership/utility/base_utils.dart';
+import 'package:motivational_leadership/utility/colors.dart';
+import 'package:motivational_leadership/utility/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SignIn extends StatefulWidget {

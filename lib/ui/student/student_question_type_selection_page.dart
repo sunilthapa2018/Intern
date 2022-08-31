@@ -4,10 +4,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:motivational_leadership/Utility/colors.dart';
-import 'package:motivational_leadership/Utility/utils.dart';
+import 'package:motivational_leadership/utility/colors.dart';
+import 'package:motivational_leadership/utility/utils.dart';
 import 'package:motivational_leadership/services/database.dart';
-import 'package:motivational_leadership/ui/student/question_page.dart';
+import 'package:motivational_leadership/ui/student/student_question_page.dart';
 import 'package:page_transition/page_transition.dart';
 
 class QuestionTypeSelection extends StatefulWidget {

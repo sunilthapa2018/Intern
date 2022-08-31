@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:motivational_leadership/Utility/colors.dart';
+import 'package:motivational_leadership/utility/colors.dart';
 import 'package:motivational_leadership/providers/autonomy_provider.dart';
 import 'package:motivational_leadership/providers/belonging_provider.dart';
 import 'package:motivational_leadership/providers/competence_provider.dart';

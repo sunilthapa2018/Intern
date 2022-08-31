@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:motivational_leadership/ui/student/question_type_selection_page.dart';
+import 'package:motivational_leadership/ui/student/student_question_type_selection_page.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 

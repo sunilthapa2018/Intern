@@ -1,12 +1,11 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:motivational_leadership/Utility/colors.dart';
-import 'package:motivational_leadership/Utility/utils.dart';
+import 'package:motivational_leadership/utility/colors.dart';
+import 'package:motivational_leadership/utility/utils.dart';
 
 class FeedbackPage extends StatefulWidget {
   final String questionType;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:motivational_leadership/Utility/colors.dart';
-import 'package:motivational_leadership/ui/student/video_display_page.dart';
+import 'package:motivational_leadership/utility/colors.dart';
+import 'package:motivational_leadership/ui/student/student_video_display_page.dart';
 import 'package:motivational_leadership/providers/autonomy_provider.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
