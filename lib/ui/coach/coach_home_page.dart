@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:motivational_leadership/services/database.dart';
 import 'package:motivational_leadership/ui/coach/coach_feedback_type_selection_page.dart';
 import 'package:motivational_leadership/ui/coach/widgets/coach_navigation_drawer.dart';
+import 'package:motivational_leadership/utility/base_utils.dart';
 import 'package:motivational_leadership/utility/colors.dart';
 
 String uid = FirebaseAuth.instance.currentUser!.uid;
@@ -34,6 +35,8 @@ class _AdminHomeState extends State<CoachHome> {
       child: Container(
         padding: const EdgeInsets.only(top: 5, bottom: 5),
         child: ListView.builder(
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true,
           itemCount: userSubmissionList.length,
           itemBuilder: (context, index) {
             return Padding(
@@ -49,12 +52,27 @@ class _AdminHomeState extends State<CoachHome> {
                         },
                       ),
                       onTap: () async {
-                        String userId =
-                            await DatabaseService.getUserId("fullName");
-                        FeedbackTypeSelection(
-                          userID: userId,
-                        );
-                        log("ListTile");
+                        String userId = userSubmissionList
+                            .elementAt(index)
+                            .toString()
+                            .trim();
+                        navigateTo(
+                            context: context,
+                            nextPage: CoachFeedbackTypeSelection(
+                              userID: userId,
+                            ),
+                            currentPage: widget);
+                        // navigateTo(
+                        //     context: context,
+                        //     nextPage: CoachFeedbackSubTypeSelection(
+                        //       userID: userId,
+                        //       questionType: 'Autonomy',
+                        //     ),
+                        //     currentPage: widget);
+                        // FeedbackTypeSelection(
+                        //   userID: userId,
+                        //   questionType: 'Actions',
+                        // );
                       }),
                 ),
               ),

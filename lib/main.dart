@@ -5,9 +5,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:motivational_leadership/providers/autonomy_provider.dart';
-import 'package:motivational_leadership/providers/belonging_provider.dart';
-import 'package:motivational_leadership/providers/competence_provider.dart';
+import 'package:motivational_leadership/providers/student/autonomy_provider.dart';
+import 'package:motivational_leadership/providers/student/belonging_provider.dart';
+import 'package:motivational_leadership/providers/student/competence_provider.dart';
 import 'package:motivational_leadership/services/database.dart';
 import 'package:motivational_leadership/ui/admin/admin_home_page.dart';
 import 'package:motivational_leadership/ui/auth/sign_in_page.dart';
@@ -101,7 +101,7 @@ class _MainPageState extends State<MainPage> {
                   } else if (userType == 'student') {
                     return const StudentHome();
                   } else {
-                    return Container();
+                    return SignIn();
                   }
                 } else {
                   return SignIn();

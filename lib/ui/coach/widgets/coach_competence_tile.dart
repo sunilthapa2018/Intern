@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:motivational_leadership/providers/competence_provider.dart';
+import 'package:motivational_leadership/providers/student/competence_provider.dart';
 import 'package:motivational_leadership/ui/coach/coach_feedback_sub_type_selection_page.dart';
 import 'package:motivational_leadership/ui/coach/widgets/align_completed.dart';
 import 'package:motivational_leadership/ui/coach/widgets/align_title.dart';

@@ -64,7 +64,7 @@ class CoachNavigationDrawerWidget extends StatelessWidget {
               Navigator.of(context).push(PageTransition(
                   type: PageTransitionType.rightToLeftJoined,
                   childCurrent: this,
-                  child: const FeedbackPage(
+                  child: const CoachFeedbackPage(
                     questionType: '',
                     questionSubType: '',
                     uId: '',

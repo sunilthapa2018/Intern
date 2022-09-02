@@ -215,13 +215,13 @@ class _SignInState extends State<SignIn> {
       // set value
       await prefs.setString('password', password);
       log("mytag $password is saved as password\n");
+      log("Sign IN executed sucessfully");
+      navigatorKey.currentState!.popUntil((route) => route.isFirst);
     } on FirebaseAuthException catch (e) {
       log(e.toString());
       Utils.showSnackBar(e.message);
+      Navigator.pop(context);
     }
-
-    log("Sign IN executed sucessfully");
-    navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 
   AppBar newAppBar() {

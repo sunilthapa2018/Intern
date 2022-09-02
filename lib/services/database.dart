@@ -19,23 +19,6 @@ class DatabaseService {
     });
   }
 
-  // List<String> docIDs = [];
-  // Future getUserId(String uid) async{
-  //   await FirebaseFirestore.instance.collection('users').get().then(
-  //           (snapshot) => snapshot.docs.forEach((document) {
-  //             docIDs.add(document.reference.id);
-  //       })
-  //   );
-  // }
-
-  // Future getUserType(String uid) async{
-  //   await FirebaseFirestore.instance.collection('users').get().then(
-  //       (snapshot) => snapshot.docs.forEach((element) {
-  //         log(element.reference);
-  //       })
-  //   );
-  // }
-
   static Future<String> getUserName(String uid) async {
     final docRef = FirebaseFirestore.instance.collection('users').doc(uid);
     DocumentSnapshot doc = await docRef.get();
@@ -61,16 +44,6 @@ class DatabaseService {
   }
 
   static Future<String> getUserId(String fullName) async {
-    // final docRef = await FirebaseFirestore.instance.collection('users').doc(uid);
-    // DocumentSnapshot doc = await docRef.get();
-    // if(doc.exists){
-    //   String name = await doc.get("full name");
-    //   log('MYTAG getUserName NAME = $name');
-    //   return name;
-    // }else{
-    //   return "";
-    // }
-
     final QuerySnapshot qSnapshot = await FirebaseFirestore.instance
         .collection('users')
         .where('full name', isEqualTo: fullName)
@@ -80,7 +53,7 @@ class DatabaseService {
     return userId;
   }
 
-  Future<String> getTotalQuestion(
+  static Future<String> getTotalQuestion(
     String questionType,
     String questionSubType,
   ) async {
@@ -90,6 +63,7 @@ class DatabaseService {
         .where('sub type', isEqualTo: questionSubType)
         .get();
     final int qDocuments = qSnapshot.docs.length;
+    log("questionType = $questionType and questionSubType = $questionSubType");
     return qDocuments.toString();
   }
 

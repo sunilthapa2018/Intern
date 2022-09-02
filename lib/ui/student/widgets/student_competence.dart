@@ -2,9 +2,9 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:motivational_leadership/utility/colors.dart';
-import 'package:motivational_leadership/providers/competence_provider.dart';
+import 'package:motivational_leadership/providers/student/competence_provider.dart';
 import 'package:motivational_leadership/ui/student/student_video_display_page.dart';
+import 'package:motivational_leadership/utility/colors.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
@@ -84,7 +84,7 @@ class _StudentCompetenceTileState extends State<StudentCompetenceTile> {
         Navigator.of(context).push(PageTransition(
             type: PageTransitionType.rightToLeftJoined,
             childCurrent: widget,
-            child: const VideoPlayback(questionType: 'Autonomy')));
+            child: const VideoPlayback(questionType: 'Competence')));
       },
     );
   }
