@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:motivational_leadership/ui/student/student_question_type_selection_page.dart';
+import 'package:motivational_leadership/utility/colors.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -48,6 +49,7 @@ class _VideoPlaybackState extends State<VideoPlayback> {
 
   @override
   Widget build(BuildContext context) {
+    //resetOrientation();
     return YoutubePlayerBuilder(
         player: YoutubePlayer(
           controller: controller,
@@ -56,7 +58,7 @@ class _VideoPlaybackState extends State<VideoPlayback> {
           return Scaffold(
             appBar: AppBar(
               title: const Text("Introduction"),
-              backgroundColor: const Color(0xFFF2811D),
+              backgroundColor: appBarColor,
               systemOverlayStyle: SystemUiOverlayStyle.dark,
             ),
             body: ListView(

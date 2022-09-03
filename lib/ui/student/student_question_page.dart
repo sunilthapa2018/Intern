@@ -12,7 +12,8 @@ class Question extends StatefulWidget {
   final String questionSubType;
   final int questionNumber;
   const Question(
-      {required this.questionType,
+      {super.key,
+      required this.questionType,
       required this.questionSubType,
       required this.questionNumber});
   @override

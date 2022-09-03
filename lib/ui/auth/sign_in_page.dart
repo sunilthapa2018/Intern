@@ -13,6 +13,8 @@ import 'package:motivational_leadership/utility/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SignIn extends StatefulWidget {
+  const SignIn({super.key});
+
   @override
   _SignInState createState() => _SignInState();
 }
@@ -89,7 +91,9 @@ class _SignInState extends State<SignIn> {
         GestureDetector(
           onTap: () {
             navigateTo(
-                context: context, nextPage: SignUp(), currentPage: widget);
+                context: context,
+                nextPage: const SignUp(),
+                currentPage: widget);
           },
           child: const Text('Sign Up',
               style: TextStyle(

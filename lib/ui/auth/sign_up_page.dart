@@ -4,12 +4,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-import 'package:motivational_leadership/utility/utils.dart';
 import 'package:motivational_leadership/services/database.dart';
+import 'package:motivational_leadership/utility/utils.dart';
 
 import '../../main.dart';
 
 class SignUp extends StatefulWidget {
+  const SignUp({super.key});
+
   @override
   _SignUpState createState() => _SignUpState();
 }

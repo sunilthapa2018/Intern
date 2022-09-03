@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:motivational_leadership/providers/student/autonomy_provider.dart';
-import 'package:motivational_leadership/providers/student/belonging_provider.dart';
-import 'package:motivational_leadership/providers/student/competence_provider.dart';
-import 'package:motivational_leadership/ui/coach/widgets/coach_autonomy_tile.dart';
-import 'package:motivational_leadership/ui/coach/widgets/coach_belonging_tile.dart';
-import 'package:motivational_leadership/ui/coach/widgets/coach_competence_tile.dart';
+import 'package:motivational_leadership/providers/coach/type/coach_autonomy_provider.dart';
+import 'package:motivational_leadership/providers/coach/type/coach_belonging_provider.dart';
+import 'package:motivational_leadership/providers/coach/type/coach_competence_provider.dart';
+import 'package:motivational_leadership/ui/coach/widgets/type/coach_autonomy_tile.dart';
+import 'package:motivational_leadership/ui/coach/widgets/type/coach_belonging_tile.dart';
+import 'package:motivational_leadership/ui/coach/widgets/type/coach_competence_tile.dart';
 import 'package:motivational_leadership/utility/colors.dart';
 import 'package:provider/provider.dart';
 
@@ -31,8 +31,11 @@ class _CoachFeedbackTypeSelectionState
           future: _loadInitialData(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: CircularProgressIndicator(),
+              return Container(
+                color: backgroundColor,
+                child: const Center(
+                  child: CircularProgressIndicator(),
+                ),
               );
             }
             return _buildMainBody(context);
@@ -84,22 +87,26 @@ class _CoachFeedbackTypeSelectionState
   }
 
   _refresh(BuildContext context) async {
-    context.read<AutonomyProvider>().getData(type: "Autonomy", notify: true);
-    context.read<BelongingProvider>().getData(type: "Belonging", notify: true);
     context
-        .read<CompetenceProvider>()
-        .getData(type: "Competence", notify: true);
+        .read<CoachAutonomyProvider>()
+        .getData(studentId: widget.userID, type: "Autonomy", notify: true);
+    context
+        .read<CoachBelongingProvider>()
+        .getData(studentId: widget.userID, type: "Belonging", notify: true);
+    context
+        .read<CoachCompetenceProvider>()
+        .getData(studentId: widget.userID, type: "Competence", notify: true);
   }
 
   _loadInitialData() async {
     await context
-        .read<AutonomyProvider>()
-        .getData(type: "Autonomy", notify: false);
+        .read<CoachAutonomyProvider>()
+        .getData(studentId: widget.userID, type: "Autonomy", notify: false);
     await context
-        .read<BelongingProvider>()
-        .getData(type: "Belonging", notify: false);
+        .read<CoachBelongingProvider>()
+        .getData(studentId: widget.userID, type: "Belonging", notify: false);
     await context
-        .read<CompetenceProvider>()
-        .getData(type: "Competence", notify: false);
+        .read<CoachCompetenceProvider>()
+        .getData(studentId: widget.userID, type: "Competence", notify: false);
   }
 }

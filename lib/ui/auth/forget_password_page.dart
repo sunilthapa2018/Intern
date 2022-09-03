@@ -3,8 +3,8 @@ import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-import 'package:motivational_leadership/utility/utils.dart';
 import 'package:motivational_leadership/main.dart';
+import 'package:motivational_leadership/utility/utils.dart';
 
 class ForgotPassword extends StatefulWidget {
   const ForgotPassword({Key? key}) : super(key: key);
@@ -126,7 +126,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     );
   }
 
-  Future ForgotPassword() async {
+  Future forgotPassword() async {
     showDialog(
       context: context,
       barrierDismissible: false,

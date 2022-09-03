@@ -4,16 +4,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:motivational_leadership/utility/colors.dart';
-import 'package:motivational_leadership/utility/utils.dart';
 import 'package:motivational_leadership/services/database.dart';
 import 'package:motivational_leadership/ui/student/student_question_page.dart';
+import 'package:motivational_leadership/utility/colors.dart';
+import 'package:motivational_leadership/utility/utils.dart';
 import 'package:page_transition/page_transition.dart';
 
 class QuestionTypeSelection extends StatefulWidget {
   final String questionType;
 
-  const QuestionTypeSelection({required this.questionType});
+  const QuestionTypeSelection({super.key, required this.questionType});
   @override
   _QuestionTypeSelectionState createState() => _QuestionTypeSelectionState();
 }
@@ -37,13 +37,9 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: backgroundColor,
-        // drawer: const NavigationDrawerWidget(),
         appBar: AppBar(
           title: const Text("Question Type Selection"),
-          backgroundColor: const Color(0xFFF2811D),
-          // toolbarHeight: 0,
-          // backgroundColor: Colors.transparent,
-          // elevation: 0.0,
+          backgroundColor: appBarColor,
           systemOverlayStyle: SystemUiOverlayStyle.dark,
         ),
         body: RefreshIndicator(
@@ -304,11 +300,11 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
                             log("MYTAG : $aCompleted , $bCompleted , $cCompleted");
                             String uid = FirebaseAuth.instance.currentUser!.uid;
                             if (aCompleted & bCompleted & cCompleted) {
-                              String dataAlreadyPresent =
+                              bool dataAlreadyPresent =
                                   await DatabaseService.hasThisDocument(
                                       "submissions", uid);
                               log("Mytag : dataAlreadyPresent = $dataAlreadyPresent");
-                              if (dataAlreadyPresent == "true") {
+                              if (dataAlreadyPresent) {
                                 //edit data in database
                                 DatabaseService.updateSubmissions(
                                     "plan", "true");
@@ -614,11 +610,11 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
                             log("MYTAG : $dCompleted , $eCompleted , $fCompleted");
                             String uid = FirebaseAuth.instance.currentUser!.uid;
                             if (dCompleted & eCompleted & fCompleted) {
-                              String dataAlreadyPresent =
+                              bool dataAlreadyPresent =
                                   await DatabaseService.hasThisDocument(
                                       "submissions", uid);
                               log("Mytag : dataAlreadyPresent = $dataAlreadyPresent");
-                              if (dataAlreadyPresent == "true") {
+                              if (dataAlreadyPresent) {
                                 //edit data in database
                                 DatabaseService.updateSubmissions(
                                     "reflect", "true");

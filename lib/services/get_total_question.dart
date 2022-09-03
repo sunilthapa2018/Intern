@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class GetUserName extends StatelessWidget {
   final String documentId;
-  const GetUserName({required this.documentId});
+  const GetUserName({super.key, required this.documentId});
 
   Future<int> getQuestionCount(String type) async {
     final QuerySnapshot snapshot = await FirebaseFirestore.instance

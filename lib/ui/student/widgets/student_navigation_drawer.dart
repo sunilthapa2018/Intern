@@ -4,9 +4,10 @@ import 'package:motivational_leadership/services/get_user_name.dart';
 import 'package:motivational_leadership/ui/auth/sign_in_page.dart';
 import 'package:motivational_leadership/ui/common/profile_page.dart';
 import 'package:motivational_leadership/ui/student/student_home_page.dart';
-import 'package:page_transition/page_transition.dart';
+import 'package:motivational_leadership/utility/base_utils.dart';
 
 String uid = FirebaseAuth.instance.currentUser!.uid;
+int currentNavigation = 0;
 
 class StudentNavigationDrawerWidget extends StatelessWidget {
   const StudentNavigationDrawerWidget({Key? key}) : super(key: key);
@@ -32,13 +33,7 @@ class StudentNavigationDrawerWidget extends StatelessWidget {
       contentPadding: const EdgeInsets.symmetric(horizontal: 50.0),
       leading: const Icon(Icons.logout_outlined),
       title: const Text('Logout'),
-      onTap: () {
-        FirebaseAuth.instance.signOut();
-        Navigator.of(context).push(PageTransition(
-            type: PageTransitionType.rightToLeftJoined,
-            childCurrent: this,
-            child: SignIn()));
-      },
+      onTap: () => selectedItem(context, 3),
     );
   }
 
@@ -47,12 +42,7 @@ class StudentNavigationDrawerWidget extends StatelessWidget {
       contentPadding: const EdgeInsets.symmetric(horizontal: 50.0),
       leading: const Icon(Icons.supervised_user_circle_outlined),
       title: const Text('Profile'),
-      onTap: () {
-        Navigator.of(context).push(PageTransition(
-            type: PageTransitionType.rightToLeftJoined,
-            childCurrent: this,
-            child: Profile()));
-      },
+      onTap: () => selectedItem(context, 2),
     );
   }
 
@@ -61,12 +51,7 @@ class StudentNavigationDrawerWidget extends StatelessWidget {
       contentPadding: const EdgeInsets.symmetric(horizontal: 50.0),
       leading: const Icon(Icons.feedback_outlined),
       title: const Text('Feedback'),
-      onTap: () {
-        Navigator.of(context).push(PageTransition(
-            type: PageTransitionType.rightToLeftJoined,
-            childCurrent: this,
-            child: const StudentHome()));
-      },
+      onTap: () => selectedItem(context, 1),
     );
   }
 
@@ -75,12 +60,7 @@ class StudentNavigationDrawerWidget extends StatelessWidget {
       contentPadding: const EdgeInsets.symmetric(horizontal: 50.0),
       leading: const Icon(Icons.home_outlined),
       title: const Text('Home'),
-      onTap: () {
-        Navigator.of(context).push(PageTransition(
-            type: PageTransitionType.rightToLeftJoined,
-            childCurrent: this,
-            child: const StudentHome()));
-      },
+      onTap: () => selectedItem(context, 0),
     );
   }
 
@@ -109,6 +89,33 @@ class StudentNavigationDrawerWidget extends StatelessWidget {
         ]),
       ),
     );
+  }
+
+  selectedItem(BuildContext context, int index) {
+    Navigator.of(context).pop();
+    switch (index) {
+      case 0:
+        if (currentNavigation != 0) {
+          navigateTo(
+              context: context,
+              nextPage: const StudentHome(),
+              currentPage: this);
+        }
+        currentNavigation = 0;
+        break;
+      case 1:
+        navigateTo(
+            context: context, nextPage: const StudentHome(), currentPage: this);
+        break;
+      case 2:
+        navigateTo(
+            context: context, nextPage: const Profile(), currentPage: this);
+        break;
+      case 3:
+        FirebaseAuth.instance.signOut();
+        navigateTo(
+            context: context, nextPage: const SignIn(), currentPage: this);
+    }
   }
 }
 

@@ -91,7 +91,7 @@ class AdminNavigationDrawerWidget extends StatelessWidget {
               Navigator.of(context).push(PageTransition(
                   type: PageTransitionType.rightToLeftJoined,
                   childCurrent: this,
-                  child: SignIn()));
+                  child: const SignIn()));
             },
           ),
         ],

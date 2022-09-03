@@ -2,8 +2,6 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:motivational_leadership/utility/colors.dart';
 import 'package:motivational_leadership/providers/student/autonomy_provider.dart';
 import 'package:motivational_leadership/providers/student/belonging_provider.dart';
 import 'package:motivational_leadership/providers/student/competence_provider.dart';
@@ -11,6 +9,7 @@ import 'package:motivational_leadership/ui/student/widgets/student_autonomy_tile
 import 'package:motivational_leadership/ui/student/widgets/student_belonging.dart';
 import 'package:motivational_leadership/ui/student/widgets/student_competence.dart';
 import 'package:motivational_leadership/ui/student/widgets/student_navigation_drawer.dart';
+import 'package:motivational_leadership/utility/colors.dart';
 import 'package:provider/provider.dart';
 
 class StudentHome extends StatefulWidget {
@@ -27,6 +26,7 @@ class _StudentHomeState extends State<StudentHome> {
     log(MediaQuery.of(context).size.height.toString());
     log(MediaQuery.of(context).size.width.toString());
 
+    // setPortraitOnlyOrientation();
     return Scaffold(
       drawer: const StudentNavigationDrawerWidget(),
       appBar: _buildAppBar(context),
@@ -74,12 +74,12 @@ class _StudentHomeState extends State<StudentHome> {
   }
 
   Padding _buildButtonLogo() {
+    double width = MediaQuery.of(context).size.width;
     return Padding(
       padding: const EdgeInsets.only(),
       child: Image.asset(
         'assets/complete_logo.png',
-        // height: 50.h,
-        width: 350.w,
+        width: width - (20 / 100 * width),
         fit: BoxFit.contain,
       ),
     );

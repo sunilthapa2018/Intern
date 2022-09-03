@@ -10,6 +10,8 @@ import 'package:motivational_leadership/utility/base_utils.dart';
 import 'package:motivational_leadership/utility/colors.dart';
 
 String uid = FirebaseAuth.instance.currentUser!.uid;
+String selectedStatus = "Feedback Not Given";
+final coachNavigatorKey = GlobalKey<NavigatorState>();
 
 class CoachHome extends StatefulWidget {
   const CoachHome({Key? key}) : super(key: key);
@@ -22,63 +24,63 @@ class _AdminHomeState extends State<CoachHome> {
   List userSubmissionList = [];
   @override
   Widget build(BuildContext context) {
+    setLandscapeOnlyOrientation();
     return Scaffold(
         backgroundColor: backgroundColor,
         drawer: const CoachNavigationDrawerWidget(),
         appBar: myAppBar(),
-        body: myBody());
+        body: myBody(context));
   }
 
-  RefreshIndicator myBody() {
-    return RefreshIndicator(
-      onRefresh: _refresh,
-      child: Container(
-        padding: const EdgeInsets.only(top: 5, bottom: 5),
-        child: ListView.builder(
-          scrollDirection: Axis.vertical,
-          shrinkWrap: true,
-          itemCount: userSubmissionList.length,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-              child: Card(
-                child: GestureDetector(
-                  child: ListTile(
-                      // title: Text(getName(index).toString()),
-                      title: FutureBuilder(
-                        future: getName(index),
-                        builder: (context, snapshot) {
-                          return Text(snapshot.data.toString());
-                        },
-                      ),
-                      onTap: () async {
-                        String userId = userSubmissionList
-                            .elementAt(index)
-                            .toString()
-                            .trim();
-                        navigateTo(
-                            context: context,
-                            nextPage: CoachFeedbackTypeSelection(
-                              userID: userId,
-                            ),
-                            currentPage: widget);
-                        // navigateTo(
-                        //     context: context,
-                        //     nextPage: CoachFeedbackSubTypeSelection(
-                        //       userID: userId,
-                        //       questionType: 'Autonomy',
-                        //     ),
-                        //     currentPage: widget);
-                        // FeedbackTypeSelection(
-                        //   userID: userId,
-                        //   questionType: 'Actions',
-                        // );
-                      }),
-                ),
+  FutureBuilder myBody(BuildContext context) {
+    return FutureBuilder(
+        future: fetchDatabaseList(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Container(
+              color: backgroundColor,
+              child: const Center(
+                child: CircularProgressIndicator(),
               ),
             );
-          },
-        ),
+          }
+          return bodyContainer();
+        });
+  }
+
+  Container bodyContainer() {
+    return Container(
+      padding: const EdgeInsets.only(top: 5, bottom: 5),
+      child: ListView.builder(
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        itemCount: userSubmissionList.length,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+            child: Card(
+              child: GestureDetector(
+                child: ListTile(
+                    title: FutureBuilder(
+                      future: getName(index),
+                      builder: (context, snapshot) {
+                        return Text(snapshot.data.toString());
+                      },
+                    ),
+                    onTap: () async {
+                      String userId =
+                          userSubmissionList.elementAt(index).toString().trim();
+                      navigateTo(
+                          context: context,
+                          nextPage: CoachFeedbackTypeSelection(
+                            userID: userId,
+                          ),
+                          currentPage: widget);
+                    }),
+              ),
+            ),
+          );
+        },
       ),
     );
   }
@@ -88,29 +90,63 @@ class _AdminHomeState extends State<CoachHome> {
       title: const Text("Students"),
       backgroundColor: appBarColor,
       systemOverlayStyle: SystemUiOverlayStyle.dark,
+      actions: [
+        IconButton(
+            onPressed: () {
+              _refresh(context);
+            },
+            icon: const Icon(Icons.refresh)),
+        PopupMenuButton<String>(
+          icon: const Icon(Icons.sort),
+          onSelected: handleClick,
+          itemBuilder: (BuildContext context) {
+            return {'Feedback Given', 'Feedback Not Given'}
+                .map((String choice) {
+              return PopupMenuItem<String>(
+                value: choice,
+                child: Text(choice),
+              );
+            }).toList();
+          },
+        ),
+      ],
     );
   }
 
-  @override
-  void initState() {
-    super.initState();
-    fetchDatabaseList();
-    // print(userSubmissionList);
-  }
-
-  Future<void> fetchDatabaseList() async {
-    dynamic resultant = await DatabaseService.getUserList();
-    if (resultant == null) {
-      log("MYTAG: unable to retreive");
-    } else {
-      setState(() {
-        userSubmissionList = resultant;
-      });
+  void handleClick(String value) {
+    switch (value) {
+      case 'Feedback Given':
+        selectedStatus = "Feedback Given";
+        fetchDatabaseList();
+        setState(() {});
+        break;
+      case 'Feedback Not Given':
+        selectedStatus = "Feedback Not Given";
+        fetchDatabaseList();
+        setState(() {});
+        break;
     }
   }
 
-  Future<void> _refresh() async {
-    await fetchDatabaseList();
+  Future<List> fetchDatabaseList() async {
+    dynamic resultant;
+    if (selectedStatus == "Feedback Given") {
+      resultant = await DatabaseService.getFeedbackGivenUserList();
+    } else {
+      resultant = await DatabaseService.getFeedbackNotGivenUserList();
+    }
+
+    if (resultant == null) {
+      log("MYTAG: unable to retreive");
+      return userSubmissionList;
+    } else {
+      userSubmissionList = resultant;
+      return userSubmissionList;
+    }
+  }
+
+  Future<void> _refresh(BuildContext context) async {
+    fetchDatabaseList();
     setState(() {});
   }
 

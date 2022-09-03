@@ -5,6 +5,15 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:motivational_leadership/providers/coach/subtype/coach_action_provider.dart';
+import 'package:motivational_leadership/providers/coach/subtype/coach_future_provider.dart';
+import 'package:motivational_leadership/providers/coach/subtype/coach_imp_provider.dart';
+import 'package:motivational_leadership/providers/coach/subtype/coach_io_provider.dart';
+import 'package:motivational_leadership/providers/coach/subtype/coach_oc_provider.dart';
+import 'package:motivational_leadership/providers/coach/subtype/coach_si_provider.dart';
+import 'package:motivational_leadership/providers/coach/type/coach_autonomy_provider.dart';
+import 'package:motivational_leadership/providers/coach/type/coach_belonging_provider.dart';
+import 'package:motivational_leadership/providers/coach/type/coach_competence_provider.dart';
 import 'package:motivational_leadership/providers/student/autonomy_provider.dart';
 import 'package:motivational_leadership/providers/student/belonging_provider.dart';
 import 'package:motivational_leadership/providers/student/competence_provider.dart';
@@ -38,6 +47,15 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AutonomyProvider()),
         ChangeNotifierProvider(create: (_) => BelongingProvider()),
         ChangeNotifierProvider(create: (_) => CompetenceProvider()),
+        ChangeNotifierProvider(create: (_) => CoachAutonomyProvider()),
+        ChangeNotifierProvider(create: (_) => CoachBelongingProvider()),
+        ChangeNotifierProvider(create: (_) => CoachCompetenceProvider()),
+        ChangeNotifierProvider(create: (_) => CoachActionProvider()),
+        ChangeNotifierProvider(create: (_) => CoachOCProvider()),
+        ChangeNotifierProvider(create: (_) => CoachSIProvider()),
+        ChangeNotifierProvider(create: (_) => CoachImplementationProvider()),
+        ChangeNotifierProvider(create: (_) => CoachIOProvider()),
+        ChangeNotifierProvider(create: (_) => CoachFutureProvider()),
       ],
       child: ScreenUtilInit(
         designSize: const Size(360, 592),
@@ -78,7 +96,7 @@ class _MainPageState extends State<MainPage> {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, AsyncSnapshot<User?> snapshot) {
           if (snapshot.data == null) {
-            return SignIn();
+            return const SignIn();
           } else {
             return FutureBuilder(
               future: getType(),
@@ -101,10 +119,10 @@ class _MainPageState extends State<MainPage> {
                   } else if (userType == 'student') {
                     return const StudentHome();
                   } else {
-                    return SignIn();
+                    return const SignIn();
                   }
                 } else {
-                  return SignIn();
+                  return const SignIn();
                 }
               }),
             );

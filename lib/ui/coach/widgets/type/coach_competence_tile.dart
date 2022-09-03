@@ -1,5 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:motivational_leadership/providers/student/autonomy_provider.dart';
+import 'package:motivational_leadership/providers/coach/type/coach_competence_provider.dart';
 import 'package:motivational_leadership/ui/coach/coach_feedback_sub_type_selection_page.dart';
 import 'package:motivational_leadership/ui/coach/widgets/align_completed.dart';
 import 'package:motivational_leadership/ui/coach/widgets/align_title.dart';
@@ -7,18 +9,19 @@ import 'package:motivational_leadership/ui/coach/widgets/box_decoration.dart';
 import 'package:motivational_leadership/utility/base_utils.dart';
 import 'package:provider/provider.dart';
 
-class CoachAutonomyTile extends StatelessWidget {
+class CoachCompetenceTile extends StatelessWidget {
   final String userID;
-  const CoachAutonomyTile({
+  const CoachCompetenceTile({
     Key? key,
     required this.userID,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final completedText = context.watch<AutonomyProvider>().completedText;
-    final isLoading = context.watch<AutonomyProvider>().isLoading;
-
+    final completedText =
+        context.watch<CoachCompetenceProvider>().completedText;
+    final isLoading = context.watch<CoachCompetenceProvider>().isLoading;
+    log("Coach comp tile");
     return GestureDetector(
       child: Container(
         width: MediaQuery.of(context).size.width / 2,
@@ -26,7 +29,7 @@ class CoachAutonomyTile extends StatelessWidget {
         decoration: boxDecoration(),
         child: Column(
           children: [
-            alignTitle("Autonomy"),
+            alignTitle("Competence"),
             alignCompleted(isLoading, completedText),
           ],
         ),
@@ -35,7 +38,7 @@ class CoachAutonomyTile extends StatelessWidget {
         navigateTo(
             context: context,
             nextPage: CoachFeedbackSubTypeSelection(
-                userID: userID, questionType: "Autonomy"),
+                userID: userID, questionType: "Competence"),
             currentPage: this);
       },
     );

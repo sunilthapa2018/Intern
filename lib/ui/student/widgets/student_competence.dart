@@ -20,9 +20,6 @@ class StudentCompetenceTile extends StatefulWidget {
 class _StudentCompetenceTileState extends State<StudentCompetenceTile> {
   @override
   void initState() {
-    // context
-    //     .read<CompetenceProvider>()
-    //     .getData(type: "Competence", notify: true);
     super.initState();
   }
 
@@ -33,11 +30,8 @@ class _StudentCompetenceTileState extends State<StudentCompetenceTile> {
     log("first comp tile");
     return GestureDetector(
       child: Container(
-        //color: Color(0xFF6495ED),
         margin: const EdgeInsets.fromLTRB(10, 10, 10, 5),
-        //height: 120,
         decoration: BoxDecoration(
-            // color: Color(0xFFF2811D),
             color: itemColor,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(5.0.r),
@@ -45,21 +39,19 @@ class _StudentCompetenceTileState extends State<StudentCompetenceTile> {
               bottomLeft: Radius.circular(25.0.r),
               bottomRight: Radius.circular(5.0.r),
             )),
-        // color: Color(0xFF52adc8),
         child: Column(
           children: [
-            const Align(
+            Align(
               alignment: Alignment.centerLeft,
               child: Padding(
-                padding: EdgeInsets.fromLTRB(30, 20, 0, 20),
+                padding: const EdgeInsets.fromLTRB(30, 20, 0, 20),
                 child: Text(
-                  'Competence',
+                  'COMPETENCE',
                   style: TextStyle(
-                    //color: Color(0xFFff6600),
                     color: Colors.white,
                     fontWeight: FontWeight.w800,
-                    fontSize: 24,
-                    letterSpacing: 2,
+                    fontSize: 24.sp,
+                    letterSpacing: 2.sp,
                   ),
                 ),
               ),
@@ -70,9 +62,9 @@ class _StudentCompetenceTileState extends State<StudentCompetenceTile> {
                 padding: const EdgeInsets.fromLTRB(0, 0, 20, 20),
                 child: Text(
                   (isLoading) ? "Loading..." : completedText,
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Colors.white,
-                    fontSize: 16,
+                    fontSize: 16.sp,
                   ),
                 ),
               ),

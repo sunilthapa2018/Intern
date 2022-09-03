@@ -2,9 +2,9 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:motivational_leadership/utility/colors.dart';
 import 'package:motivational_leadership/providers/student/belonging_provider.dart';
 import 'package:motivational_leadership/ui/student/student_video_display_page.dart';
+import 'package:motivational_leadership/utility/colors.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
@@ -43,18 +43,17 @@ class _StudentBelongingTileState extends State<StudentBelongingTile> {
         // color: Color(0xFF52adc8),
         child: Column(
           children: [
-            const Align(
+            Align(
               alignment: Alignment.centerLeft,
               child: Padding(
-                padding: EdgeInsets.fromLTRB(30, 20, 0, 20),
+                padding: const EdgeInsets.fromLTRB(30, 20, 0, 20),
                 child: Text(
-                  'Belonging',
+                  'BELONGING',
                   style: TextStyle(
-                    //color: Color(0xFFff6600),
                     color: Colors.white,
                     fontWeight: FontWeight.w800,
-                    fontSize: 24,
-                    letterSpacing: 2,
+                    fontSize: 24.sp,
+                    letterSpacing: 2.sp,
                   ),
                 ),
               ),
@@ -65,9 +64,9 @@ class _StudentBelongingTileState extends State<StudentBelongingTile> {
                 padding: const EdgeInsets.fromLTRB(0, 0, 20, 20),
                 child: Text(
                   (isLoading) ? "Loading..." : completedText,
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Colors.white,
-                    fontSize: 16,
+                    fontSize: 16.sp,
                   ),
                 ),
               ),

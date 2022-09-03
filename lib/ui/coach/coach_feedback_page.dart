@@ -13,7 +13,8 @@ class CoachFeedbackPage extends StatefulWidget {
   final String questionSubType;
   final String uId;
   const CoachFeedbackPage(
-      {required this.questionType,
+      {super.key,
+      required this.questionType,
       required this.questionSubType,
       required this.uId});
   @override
@@ -394,7 +395,6 @@ class _CoachFeedbackPageState extends State<CoachFeedbackPage> {
         .get();
     final int qDocuments = qSnapshot.docs.length;
     totalQuestion = qDocuments;
-    // log('MYTAG : totalQuestion = $totalQuestion');
     return qDocuments.toString();
   }
 
@@ -466,8 +466,6 @@ class _CoachFeedbackPageState extends State<CoachFeedbackPage> {
         .where('type', isEqualTo: _questionType)
         .where('sub type', isEqualTo: _questionSubType)
         .get();
-    final int documents = snapshot.docs.length;
-    // log('MYTAG : From Question/loadDataToTextbox/, uid = $uid , qid = $questionId , total answer = $documents');
     for (var doc in snapshot.docs) {
       if (snapshot.docs.isNotEmpty) {
         _feedback = doc.get('feedback');
