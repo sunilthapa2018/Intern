@@ -61,9 +61,7 @@ class _CoachFeedbackPageState extends State<CoachFeedbackPage> {
                 future: getQuestionCount(),
                 builder: (context, snapshot) {
                   String questionCount = snapshot.data.toString().trim();
-                  log("questionCount = $questionCount");
                   int qCount = int.tryParse(questionCount) ?? 0;
-                  log("qCount = $qCount");
 
                   return ListView.builder(
                       itemCount: qCount,

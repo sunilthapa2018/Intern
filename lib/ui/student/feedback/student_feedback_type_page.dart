@@ -2,32 +2,30 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:motivational_leadership/providers/student/type/student_autonomy_provider.dart';
-import 'package:motivational_leadership/providers/student/type/student_belonging_provider.dart';
-import 'package:motivational_leadership/providers/student/type/student_competence_provider.dart';
-import 'package:motivational_leadership/ui/student/widgets/student_navigation_drawer.dart';
-import 'package:motivational_leadership/ui/student/widgets/type/student_autonomy_tile.dart';
-import 'package:motivational_leadership/ui/student/widgets/type/student_belonging.dart';
-import 'package:motivational_leadership/ui/student/widgets/type/student_competence.dart';
+import 'package:motivational_leadership/providers/student/feedback/type/student_feedback_autonomy_provider.dart';
+import 'package:motivational_leadership/providers/student/feedback/type/student_feedback_belonging_provider.dart';
+import 'package:motivational_leadership/providers/student/feedback/type/student_feedback_competence_provider.dart';
+import 'package:motivational_leadership/ui/student/feedback/type/student_feedback_autonomy_tile.dart';
+import 'package:motivational_leadership/ui/student/feedback/type/student_feedback_belonging.dart';
+import 'package:motivational_leadership/ui/student/feedback/type/student_feedback_competence.dart';
 import 'package:motivational_leadership/utility/colors.dart';
 import 'package:provider/provider.dart';
 
-class StudentHome extends StatefulWidget {
-  const StudentHome({Key? key}) : super(key: key);
+class StudentFeedbackType extends StatefulWidget {
+  const StudentFeedbackType({Key? key}) : super(key: key);
   @override
-  State<StudentHome> createState() => _StudentHomeState();
+  State<StudentFeedbackType> createState() => _StudentFeedbackTypeState();
 }
 
-class _StudentHomeState extends State<StudentHome> {
+class _StudentFeedbackTypeState extends State<StudentFeedbackType> {
   @override
   Widget build(BuildContext context) {
-    log("student home build ");
+    log("Student Feedback Type Selection Page build ");
     log(MediaQuery.of(context).size.height.toString());
     log(MediaQuery.of(context).size.width.toString());
 
     // setPortraitOnlyOrientation();
     return Scaffold(
-      drawer: const StudentNavigationDrawerWidget(),
       appBar: _buildAppBar(context),
       body: FutureBuilder(
           future: _loadInitialData(),
@@ -44,7 +42,7 @@ class _StudentHomeState extends State<StudentHome> {
 
   AppBar _buildAppBar(BuildContext context) {
     return AppBar(
-      title: const Text("Home"),
+      title: const Text("Type Selection"),
       backgroundColor: appBarColor,
       systemOverlayStyle: SystemUiOverlayStyle.dark,
       actions: [
@@ -65,9 +63,9 @@ class _StudentHomeState extends State<StudentHome> {
         padding: const EdgeInsets.only(left: 5, right: 5),
         child: Column(
           children: [
-            const StudentAutonomyTile(),
-            const StudentBelongingTile(),
-            const StudentCompetenceTile(),
+            const StudentFeedbackAutonomyTile(),
+            const StudentFeedbackBelongingTile(),
+            const StudentFeedbackCompetenceTile(),
             _buildButtonLogo()
           ],
         ),
@@ -89,25 +87,25 @@ class _StudentHomeState extends State<StudentHome> {
 
   _refresh(BuildContext context) async {
     context
-        .read<StudentAutonomyProvider>()
+        .read<StudentFeedbackAutonomyProvider>()
         .getData(type: "Autonomy", notify: true);
     context
-        .read<StudentBelongingProvider>()
+        .read<StudentFeedbackBelongingProvider>()
         .getData(type: "Belonging", notify: true);
     context
-        .read<StudentCompetenceProvider>()
+        .read<StudentFeedbackCompetenceProvider>()
         .getData(type: "Competence", notify: true);
   }
 
   _loadInitialData() async {
     await context
-        .read<StudentAutonomyProvider>()
+        .read<StudentFeedbackAutonomyProvider>()
         .getData(type: "Autonomy", notify: false);
     await context
-        .read<StudentBelongingProvider>()
+        .read<StudentFeedbackBelongingProvider>()
         .getData(type: "Belonging", notify: false);
     await context
-        .read<StudentCompetenceProvider>()
+        .read<StudentFeedbackCompetenceProvider>()
         .getData(type: "Competence", notify: false);
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:motivational_leadership/services/get_user_name.dart';
 import 'package:motivational_leadership/ui/auth/sign_in_page.dart';
 import 'package:motivational_leadership/ui/common/profile_page.dart';
+import 'package:motivational_leadership/ui/student/feedback/student_feedback_type_page.dart';
 import 'package:motivational_leadership/ui/student/student_home_page.dart';
 import 'package:motivational_leadership/utility/base_utils.dart';
 
@@ -105,11 +106,15 @@ class StudentNavigationDrawerWidget extends StatelessWidget {
         break;
       case 1:
         navigateTo(
-            context: context, nextPage: const StudentHome(), currentPage: this);
+            context: context,
+            nextPage: const StudentFeedbackType(),
+            currentPage: const StudentHome());
         break;
       case 2:
         navigateTo(
-            context: context, nextPage: const Profile(), currentPage: this);
+            context: context,
+            nextPage: const Profile(),
+            currentPage: const StudentHome());
         break;
       case 3:
         FirebaseAuth.instance.signOut();

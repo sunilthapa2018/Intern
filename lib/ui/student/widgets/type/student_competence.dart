@@ -1,24 +1,37 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:motivational_leadership/providers/student/autonomy_provider.dart';
+import 'package:motivational_leadership/providers/student/type/student_competence_provider.dart';
 import 'package:motivational_leadership/ui/student/student_video_display_page.dart';
 import 'package:motivational_leadership/utility/colors.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
-class StudentAutonomyTile extends StatelessWidget {
-  const StudentAutonomyTile({
+class StudentCompetenceTile extends StatefulWidget {
+  const StudentCompetenceTile({
     Key? key,
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final completedText = context.watch<AutonomyProvider>().completedText;
-    final isLoading = context.watch<AutonomyProvider>().isLoading;
+  State<StudentCompetenceTile> createState() => _StudentCompetenceTileState();
+}
 
+class _StudentCompetenceTileState extends State<StudentCompetenceTile> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final completedText =
+        context.watch<StudentCompetenceProvider>().completedText;
+    final isLoading = context.watch<StudentCompetenceProvider>().isLoading;
+    log("first comp tile");
     return GestureDetector(
       child: Container(
-        margin: const EdgeInsets.fromLTRB(10, 20, 10, 5),
+        margin: const EdgeInsets.fromLTRB(10, 10, 10, 5),
         decoration: BoxDecoration(
             color: itemColor,
             borderRadius: BorderRadius.only(
@@ -32,9 +45,9 @@ class StudentAutonomyTile extends StatelessWidget {
             Align(
               alignment: Alignment.centerLeft,
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(30, 20, 0, 20),
+                padding: const EdgeInsets.fromLTRB(30, 10, 0, 10),
                 child: Text(
-                  'AUTONOMY',
+                  'COMPETENCE',
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.w800,
@@ -63,8 +76,8 @@ class StudentAutonomyTile extends StatelessWidget {
       onTap: () {
         Navigator.of(context).push(PageTransition(
             type: PageTransitionType.rightToLeftJoined,
-            childCurrent: this,
-            child: const VideoPlayback(questionType: 'Autonomy')));
+            childCurrent: widget,
+            child: const VideoPlayback(questionType: 'Competence')));
       },
     );
   }

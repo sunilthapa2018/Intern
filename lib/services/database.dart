@@ -67,6 +67,38 @@ class DatabaseService {
     return qDocuments.toString();
   }
 
+  static Future<String> getTotalFeedbackGivenByType(
+    String studentId,
+    String questionType,
+  ) async {
+    final QuerySnapshot qSnapshot = await FirebaseFirestore.instance
+        .collection('feedbacks')
+        .where('student_id', isEqualTo: studentId)
+        .where('type', isEqualTo: questionType)
+        .get();
+    final int qDocuments = qSnapshot.docs.length;
+    return qDocuments.toString();
+  }
+
+  static Future<String> getTotalFeedbackGivenBySubtype(
+    String studentId,
+    String questionType,
+    String questionSubType,
+  ) async {
+    final QuerySnapshot qSnapshot = await FirebaseFirestore.instance
+        .collection('feedbacks')
+        .where('student_id', isEqualTo: studentId)
+        .where('type', isEqualTo: questionType)
+        .where('sub type', isEqualTo: questionSubType)
+        .get();
+    final int qDocuments = qSnapshot.docs.length;
+    if (qDocuments > 0) {
+      return "Feedback Given";
+    } else {
+      return "Feedback Not Given Yet";
+    }
+  }
+
   static Future<bool> hasThisDocument(String collectionName, String id) async {
     try {
       final docRef =
@@ -224,6 +256,27 @@ class DatabaseService {
     } else {
       returnText = "NO Feedback Given";
     }
+    return returnText;
+  }
+
+  static Future<String> getStudentSubTypeReturnData(
+      String type, String subType) async {
+    String uid = FirebaseAuth.instance.currentUser!.uid;
+    final QuerySnapshot qSnapshot = await FirebaseFirestore.instance
+        .collection('questions')
+        .where('type', isEqualTo: type)
+        .where('sub type', isEqualTo: subType)
+        .get();
+    final int qDocuments = qSnapshot.docs.length;
+
+    final QuerySnapshot aSnapshot = await FirebaseFirestore.instance
+        .collection('answers')
+        .where('uid', isEqualTo: uid)
+        .where('type', isEqualTo: type)
+        .where('sub type', isEqualTo: subType)
+        .get();
+    final int aDocuments = aSnapshot.docs.length;
+    String returnText = "Completed : $aDocuments/$qDocuments";
     return returnText;
   }
 }

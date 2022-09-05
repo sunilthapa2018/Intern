@@ -89,12 +89,14 @@ class CoachNavigationDrawerWidget extends StatelessWidget {
               questionSubType: '',
               uId: '',
             ),
-            currentPage: this);
+            currentPage: const CoachHome());
 
         break;
       case 2:
         navigateTo(
-            context: context, nextPage: const Profile(), currentPage: this);
+            context: context,
+            nextPage: const Profile(),
+            currentPage: const CoachHome());
 
         break;
       case 3:

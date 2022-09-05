@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class AutonomyProvider extends ChangeNotifier {
+class StudentBelongingProvider extends ChangeNotifier {
   String completedText = '';
   bool isLoading = false;
 
@@ -24,9 +24,8 @@ class AutonomyProvider extends ChangeNotifier {
         .get();
     final int aDocuments = aSnapshot.docs.length;
     String returnText = "Completed : $aDocuments/$qDocuments";
-    isLoading = false;
     completedText = returnText;
-
+    isLoading = false;
     if (notify) notifyListeners();
   }
 }

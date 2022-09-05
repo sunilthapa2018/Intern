@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:motivational_leadership/ui/student/student_question_type_selection_page.dart';
+import 'package:motivational_leadership/ui/student/student_question_subtype_selection_page.dart';
 import 'package:motivational_leadership/utility/colors.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -32,6 +32,7 @@ class _VideoPlaybackState extends State<VideoPlayback> {
         initialVideoId: YoutubePlayer.convertUrlToId(url)!,
         flags: const YoutubePlayerFlags(
           autoPlay: false,
+          showLiveFullscreenButton: true,
         ));
   }
 
@@ -49,6 +50,7 @@ class _VideoPlaybackState extends State<VideoPlayback> {
 
   @override
   Widget build(BuildContext context) {
+    // setPortraitOnlyOrientation();
     //resetOrientation();
     return YoutubePlayerBuilder(
         player: YoutubePlayer(

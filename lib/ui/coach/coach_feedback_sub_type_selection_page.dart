@@ -59,24 +59,6 @@ class _CoachFeedbackSubTypeSelectionState
   late double myWidth = 300;
   late String _questionType = "";
 
-  Positioned planBorder() {
-    return Positioned(
-        left: 50,
-        top: 12,
-        child: Container(
-          padding: const EdgeInsets.only(left: 10, right: 10),
-          color: backgroundColor,
-          child: Text(
-            'Plan',
-            style: TextStyle(
-              color: itemColor,
-              fontWeight: FontWeight.w800,
-              fontSize: 16,
-            ),
-          ),
-        ));
-  }
-
   AppBar appBar(BuildContext context) {
     return AppBar(
       title: const Text("Sub Type Selection"),
@@ -111,7 +93,6 @@ class _CoachFeedbackSubTypeSelectionState
           .get();
       final int aDocuments = aSnapshot.docs.length;
       String returnText = "Completed : $aDocuments/$qDocuments";
-      // print('MYTAG : From Question_type_selection.dart/getData/Type = $_questionType , sub type = $subType , Completed = $aDocuments, Total = $qDocuments' );
       return returnText;
     }
     return "nodata";
@@ -170,7 +151,7 @@ class _CoachFeedbackSubTypeSelectionState
                     ],
                   ),
                 ),
-                planBorder(),
+                planSection(),
               ],
             ),
           ),
@@ -201,27 +182,49 @@ class _CoachFeedbackSubTypeSelectionState
                     ],
                   ),
                 ),
-                Positioned(
-                    left: 50,
-                    top: 7,
-                    child: Container(
-                      padding: const EdgeInsets.only(left: 10, right: 10),
-                      color: backgroundColor,
-                      child: Text(
-                        'Reflect',
-                        style: TextStyle(
-                          color: itemColor,
-                          fontWeight: FontWeight.w800,
-                          fontSize: 16,
-                        ),
-                      ),
-                    )),
+                reflectSection(),
               ],
             ),
           ),
         ],
       ),
     );
+  }
+
+  Positioned planSection() {
+    return Positioned(
+        left: 50,
+        top: 12,
+        child: Container(
+          padding: const EdgeInsets.only(left: 10, right: 10),
+          color: backgroundColor,
+          child: Text(
+            'Plan',
+            style: TextStyle(
+              color: itemColor,
+              fontWeight: FontWeight.w800,
+              fontSize: 16,
+            ),
+          ),
+        ));
+  }
+
+  Positioned reflectSection() {
+    return Positioned(
+        left: 50,
+        top: 7,
+        child: Container(
+          padding: const EdgeInsets.only(left: 10, right: 10),
+          color: backgroundColor,
+          child: Text(
+            'Reflect',
+            style: TextStyle(
+              color: itemColor,
+              fontWeight: FontWeight.w800,
+              fontSize: 16,
+            ),
+          ),
+        ));
   }
 
   _refresh(BuildContext context) async {
@@ -258,32 +261,32 @@ class _CoachFeedbackSubTypeSelectionState
   }
 
   _loadInitialData() async {
-    context.read<CoachActionProvider>().getData(
+    await context.read<CoachActionProvider>().getData(
         studentId: widget.userID,
         type: widget.questionType,
         notify: false,
         subType: "Actions");
-    context.read<CoachOCProvider>().getData(
+    await context.read<CoachOCProvider>().getData(
         studentId: widget.userID,
         type: widget.questionType,
         notify: false,
         subType: "Overcoming Challenges");
-    context.read<CoachSIProvider>().getData(
+    await context.read<CoachSIProvider>().getData(
         studentId: widget.userID,
         type: widget.questionType,
         notify: false,
         subType: "Success Indicators (KPIs)");
-    context.read<CoachImplementationProvider>().getData(
+    await context.read<CoachImplementationProvider>().getData(
         studentId: widget.userID,
         type: widget.questionType,
         notify: false,
         subType: "Implementation");
-    context.read<CoachIOProvider>().getData(
+    await context.read<CoachIOProvider>().getData(
         studentId: widget.userID,
         type: widget.questionType,
         notify: false,
         subType: "Impact and Outcome");
-    context.read<CoachFutureProvider>().getData(
+    await context.read<CoachFutureProvider>().getData(
         studentId: widget.userID,
         type: widget.questionType,
         notify: false,

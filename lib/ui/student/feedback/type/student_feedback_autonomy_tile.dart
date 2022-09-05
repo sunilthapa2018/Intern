@@ -1,37 +1,26 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:motivational_leadership/providers/student/belonging_provider.dart';
-import 'package:motivational_leadership/ui/student/student_video_display_page.dart';
+import 'package:motivational_leadership/providers/student/feedback/type/student_feedback_autonomy_provider.dart';
+import 'package:motivational_leadership/ui/student/feedback/student_feedback_subtype_selection_page.dart';
 import 'package:motivational_leadership/utility/colors.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
-class StudentBelongingTile extends StatefulWidget {
-  const StudentBelongingTile({
+class StudentFeedbackAutonomyTile extends StatelessWidget {
+  const StudentFeedbackAutonomyTile({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<StudentBelongingTile> createState() => _StudentBelongingTileState();
-}
-
-class _StudentBelongingTileState extends State<StudentBelongingTile> {
-  @override
-  void initState() {
-    // context.read<BelongingProvider>().getData(type: "Belonging", notify: true);
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final completedText = context.watch<BelongingProvider>().completedText;
-    final isLoading = context.watch<BelongingProvider>().isLoading;
-    log("first belog tile");
+    final completedText =
+        context.watch<StudentFeedbackAutonomyProvider>().completedText;
+    final isLoading =
+        context.watch<StudentFeedbackAutonomyProvider>().isLoading;
+
     return GestureDetector(
       child: Container(
-        margin: const EdgeInsets.fromLTRB(10, 10, 10, 5),
+        margin: const EdgeInsets.fromLTRB(10, 20, 10, 5),
         decoration: BoxDecoration(
             color: itemColor,
             borderRadius: BorderRadius.only(
@@ -40,15 +29,14 @@ class _StudentBelongingTileState extends State<StudentBelongingTile> {
               bottomLeft: Radius.circular(25.0.r),
               bottomRight: Radius.circular(5.0.r),
             )),
-        // color: Color(0xFF52adc8),
         child: Column(
           children: [
             Align(
               alignment: Alignment.centerLeft,
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(30, 20, 0, 20),
+                padding: const EdgeInsets.fromLTRB(30, 10, 0, 10),
                 child: Text(
-                  'BELONGING',
+                  'AUTONOMY',
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.w800,
@@ -77,8 +65,9 @@ class _StudentBelongingTileState extends State<StudentBelongingTile> {
       onTap: () {
         Navigator.of(context).push(PageTransition(
             type: PageTransitionType.rightToLeftJoined,
-            childCurrent: widget,
-            child: const VideoPlayback(questionType: 'Autonomy')));
+            childCurrent: this,
+            child: const StudentFeedbackSubTypeSelection(
+                questionType: 'Autonomy')));
       },
     );
   }
