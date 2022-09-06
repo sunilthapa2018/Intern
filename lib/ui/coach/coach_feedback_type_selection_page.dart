@@ -99,14 +99,16 @@ class _CoachFeedbackTypeSelectionState
   }
 
   _loadInitialData() async {
-    await context
-        .read<CoachAutonomyProvider>()
-        .getData(studentId: widget.userID, type: "Autonomy", notify: false);
-    await context
-        .read<CoachBelongingProvider>()
-        .getData(studentId: widget.userID, type: "Belonging", notify: false);
-    await context
-        .read<CoachCompetenceProvider>()
-        .getData(studentId: widget.userID, type: "Competence", notify: false);
+    Future.wait([
+      context
+          .read<CoachAutonomyProvider>()
+          .getData(studentId: widget.userID, type: "Autonomy", notify: false),
+      context
+          .read<CoachBelongingProvider>()
+          .getData(studentId: widget.userID, type: "Belonging", notify: false),
+      context
+          .read<CoachCompetenceProvider>()
+          .getData(studentId: widget.userID, type: "Competence", notify: false),
+    ]);
   }
 }

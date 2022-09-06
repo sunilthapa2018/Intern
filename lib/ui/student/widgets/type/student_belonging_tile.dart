@@ -1,10 +1,11 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:motivational_leadership/providers/student/type/student_belonging_provider.dart';
+import 'package:motivational_leadership/ui/common/widget/type_decoration_box_2.dart';
+import 'package:motivational_leadership/ui/common/widget/type_decoration_box_4.dart';
+import 'package:motivational_leadership/ui/common/widget/verticle_spacer.dart';
 import 'package:motivational_leadership/ui/student/student_video_display_page.dart';
-import 'package:motivational_leadership/utility/colors.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
@@ -32,44 +33,35 @@ class _StudentBelongingTileState extends State<StudentBelongingTile> {
     log("first belog tile");
     return GestureDetector(
       child: Container(
-        margin: const EdgeInsets.fromLTRB(10, 10, 10, 5),
-        decoration: BoxDecoration(
-            color: itemColor,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(5.0.r),
-              topRight: Radius.circular(25.0.r),
-              bottomLeft: Radius.circular(25.0.r),
-              bottomRight: Radius.circular(5.0.r),
-            )),
-        // color: Color(0xFF52adc8),
+        padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+        decoration: myTypeBoxDecoration2(),
         child: Column(
           children: [
             Align(
-              alignment: Alignment.centerLeft,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(30, 10, 0, 10),
+              alignment: Alignment.topLeft,
+              child: Text(
+                'A wonderful serenity has taken possession of my entire soul.',
+                style: Theme.of(context).textTheme.headline2,
+              ),
+            ),
+            verticleSpacer(20),
+            Align(
+              alignment: Alignment.bottomLeft,
+              child: Container(
+                padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                decoration: myTypeBoxDecoration4(),
                 child: Text(
-                  'BELONGING',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w800,
-                    fontSize: 24.sp,
-                    letterSpacing: 2.sp,
-                  ),
+                  (isLoading) ? "Loading..." : completedText,
+                  style: Theme.of(context).textTheme.headline2,
                 ),
               ),
             ),
+            verticleSpacer(10),
             Align(
-              alignment: Alignment.centerRight,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 20, 20),
-                child: Text(
-                  (isLoading) ? "Loading..." : completedText,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16.sp,
-                  ),
-                ),
+              alignment: Alignment.bottomLeft,
+              child: Text(
+                'BELONGING',
+                style: Theme.of(context).textTheme.headline1,
               ),
             ),
           ],

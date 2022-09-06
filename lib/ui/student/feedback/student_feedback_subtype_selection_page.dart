@@ -328,25 +328,26 @@ class _StudentFeedbackSubTypeSelectionState
   }
 
   _loadInitialData() async {
-    await context
-        .read<StudentFeedbackActionProvider>()
-        .getData(type: widget.questionType, notify: false, subType: "Actions");
-    await context.read<StudentFeedbackOCProvider>().getData(
-        type: widget.questionType,
-        notify: false,
-        subType: "Overcoming Challenges");
-    await context.read<StudentFeedbackSIProvider>().getData(
-        type: widget.questionType,
-        notify: false,
-        subType: "Success Indicators (KPIs)");
-    await context.read<StudentFeedbackImplementationProvider>().getData(
-        type: widget.questionType, notify: false, subType: "Implementation");
-    await context.read<StudentFeedbackIOProvider>().getData(
-        type: widget.questionType,
-        notify: false,
-        subType: "Impact and Outcome");
-    await context
-        .read<StudentFeedbackFutureProvider>()
-        .getData(type: widget.questionType, notify: false, subType: "Future");
+    await Future.wait([
+      context.read<StudentFeedbackActionProvider>().getData(
+          type: widget.questionType, notify: false, subType: "Actions"),
+      context.read<StudentFeedbackOCProvider>().getData(
+          type: widget.questionType,
+          notify: false,
+          subType: "Overcoming Challenges"),
+      context.read<StudentFeedbackSIProvider>().getData(
+          type: widget.questionType,
+          notify: false,
+          subType: "Success Indicators (KPIs)"),
+      context.read<StudentFeedbackImplementationProvider>().getData(
+          type: widget.questionType, notify: false, subType: "Implementation"),
+      context.read<StudentFeedbackIOProvider>().getData(
+          type: widget.questionType,
+          notify: false,
+          subType: "Impact and Outcome"),
+      context
+          .read<StudentFeedbackFutureProvider>()
+          .getData(type: widget.questionType, notify: false, subType: "Future"),
+    ]);
   }
 }

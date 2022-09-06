@@ -261,35 +261,37 @@ class _CoachFeedbackSubTypeSelectionState
   }
 
   _loadInitialData() async {
-    await context.read<CoachActionProvider>().getData(
-        studentId: widget.userID,
-        type: widget.questionType,
-        notify: false,
-        subType: "Actions");
-    await context.read<CoachOCProvider>().getData(
-        studentId: widget.userID,
-        type: widget.questionType,
-        notify: false,
-        subType: "Overcoming Challenges");
-    await context.read<CoachSIProvider>().getData(
-        studentId: widget.userID,
-        type: widget.questionType,
-        notify: false,
-        subType: "Success Indicators (KPIs)");
-    await context.read<CoachImplementationProvider>().getData(
-        studentId: widget.userID,
-        type: widget.questionType,
-        notify: false,
-        subType: "Implementation");
-    await context.read<CoachIOProvider>().getData(
-        studentId: widget.userID,
-        type: widget.questionType,
-        notify: false,
-        subType: "Impact and Outcome");
-    await context.read<CoachFutureProvider>().getData(
-        studentId: widget.userID,
-        type: widget.questionType,
-        notify: false,
-        subType: "Future");
+    await Future.wait([
+      context.read<CoachActionProvider>().getData(
+          studentId: widget.userID,
+          type: widget.questionType,
+          notify: false,
+          subType: "Actions"),
+      context.read<CoachOCProvider>().getData(
+          studentId: widget.userID,
+          type: widget.questionType,
+          notify: false,
+          subType: "Overcoming Challenges"),
+      context.read<CoachSIProvider>().getData(
+          studentId: widget.userID,
+          type: widget.questionType,
+          notify: false,
+          subType: "Success Indicators (KPIs)"),
+      context.read<CoachImplementationProvider>().getData(
+          studentId: widget.userID,
+          type: widget.questionType,
+          notify: false,
+          subType: "Implementation"),
+      context.read<CoachIOProvider>().getData(
+          studentId: widget.userID,
+          type: widget.questionType,
+          notify: false,
+          subType: "Impact and Outcome"),
+      context.read<CoachFutureProvider>().getData(
+          studentId: widget.userID,
+          type: widget.questionType,
+          notify: false,
+          subType: "Future"),
+    ]);
   }
 }

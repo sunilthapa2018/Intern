@@ -98,14 +98,16 @@ class _StudentFeedbackTypeState extends State<StudentFeedbackType> {
   }
 
   _loadInitialData() async {
-    await context
-        .read<StudentFeedbackAutonomyProvider>()
-        .getData(type: "Autonomy", notify: false);
-    await context
-        .read<StudentFeedbackBelongingProvider>()
-        .getData(type: "Belonging", notify: false);
-    await context
-        .read<StudentFeedbackCompetenceProvider>()
-        .getData(type: "Competence", notify: false);
+    await Future.wait([
+      context
+          .read<StudentFeedbackAutonomyProvider>()
+          .getData(type: "Autonomy", notify: false),
+      context
+          .read<StudentFeedbackBelongingProvider>()
+          .getData(type: "Belonging", notify: false),
+      context
+          .read<StudentFeedbackCompetenceProvider>()
+          .getData(type: "Competence", notify: false),
+    ]);
   }
 }

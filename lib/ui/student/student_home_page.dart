@@ -5,10 +5,11 @@ import 'package:flutter/services.dart';
 import 'package:motivational_leadership/providers/student/type/student_autonomy_provider.dart';
 import 'package:motivational_leadership/providers/student/type/student_belonging_provider.dart';
 import 'package:motivational_leadership/providers/student/type/student_competence_provider.dart';
+import 'package:motivational_leadership/ui/common/widget/verticle_spacer.dart';
 import 'package:motivational_leadership/ui/student/widgets/student_navigation_drawer.dart';
 import 'package:motivational_leadership/ui/student/widgets/type/student_autonomy_tile.dart';
-import 'package:motivational_leadership/ui/student/widgets/type/student_belonging.dart';
-import 'package:motivational_leadership/ui/student/widgets/type/student_competence.dart';
+import 'package:motivational_leadership/ui/student/widgets/type/student_belonging_tile.dart';
+import 'package:motivational_leadership/ui/student/widgets/type/student_competence_tile.dart';
 import 'package:motivational_leadership/utility/colors.dart';
 import 'package:provider/provider.dart';
 
@@ -37,16 +38,22 @@ class _StudentHomeState extends State<StudentHome> {
                 child: CircularProgressIndicator(),
               );
             }
-            return _buildMainBody(context);
+            return buildMainBody(context);
           }),
     );
   }
 
   AppBar _buildAppBar(BuildContext context) {
     return AppBar(
-      title: const Text("Home"),
-      backgroundColor: appBarColor,
-      systemOverlayStyle: SystemUiOverlayStyle.dark,
+      // toolbarHeight: 10,
+      iconTheme: const IconThemeData(color: Color(0xFFF2811D)),
+      backgroundColor: Colors.white,
+      elevation: 0,
+      // systemOverlayStyle: SystemUiOverlayStyle.dark,
+      systemOverlayStyle: const SystemUiOverlayStyle(
+        // Status bar color
+        statusBarColor: Colors.transparent,
+      ),
       actions: [
         IconButton(
             onPressed: () {
@@ -57,17 +64,24 @@ class _StudentHomeState extends State<StudentHome> {
     );
   }
 
-  _buildMainBody(BuildContext context) {
+  buildMainBody(BuildContext context) {
+    double spacer = 16;
     return Container(
+      padding: const EdgeInsets.all(0),
       color: backgroundColor,
       height: double.infinity,
       child: SingleChildScrollView(
-        padding: const EdgeInsets.only(left: 5, right: 5),
+        padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
         child: Column(
           children: [
+            letsStart(),
+            verticleSpacer(spacer),
             const StudentAutonomyTile(),
+            verticleSpacer(spacer),
             const StudentBelongingTile(),
+            verticleSpacer(spacer),
             const StudentCompetenceTile(),
+            verticleSpacer(spacer),
             _buildButtonLogo()
           ],
         ),
@@ -87,6 +101,16 @@ class _StudentHomeState extends State<StudentHome> {
     );
   }
 
+  letsStart() {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Text(
+        "Let's Start",
+        style: Theme.of(context).textTheme.headline3,
+      ),
+    );
+  }
+
   _refresh(BuildContext context) async {
     context
         .read<StudentAutonomyProvider>()
@@ -100,14 +124,16 @@ class _StudentHomeState extends State<StudentHome> {
   }
 
   _loadInitialData() async {
-    await context
-        .read<StudentAutonomyProvider>()
-        .getData(type: "Autonomy", notify: false);
-    await context
-        .read<StudentBelongingProvider>()
-        .getData(type: "Belonging", notify: false);
-    await context
-        .read<StudentCompetenceProvider>()
-        .getData(type: "Competence", notify: false);
+    await Future.wait([
+      context
+          .read<StudentAutonomyProvider>()
+          .getData(type: "Autonomy", notify: false),
+      context
+          .read<StudentBelongingProvider>()
+          .getData(type: "Belonging", notify: false),
+      context
+          .read<StudentCompetenceProvider>()
+          .getData(type: "Competence", notify: false),
+    ]);
   }
 }

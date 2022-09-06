@@ -115,6 +115,28 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: _title,
       theme: ThemeData(
+          textTheme: TextTheme(
+            headline1: TextStyle(
+                fontWeight: FontWeight.w400,
+                fontFamily: 'Roboto',
+                fontSize: 24.sp,
+                color: Colors.white,
+                decoration: TextDecoration.none),
+            headline2: TextStyle(
+                fontWeight: FontWeight.w300,
+                fontFamily: 'Roboto',
+                fontSize: 16.sp,
+                color: Colors.white,
+                decoration: TextDecoration.none),
+            headline3: TextStyle(
+                fontWeight: FontWeight.w500,
+                fontFamily: 'Roboto',
+                fontSize: 36.sp,
+                color: const Color(0xFFF2811D),
+                decoration: TextDecoration.none),
+          ),
+          fontFamily: 'Roboto',
+          primarySwatch: Colors.deepPurple,
           colorScheme:
               ColorScheme.fromSwatch().copyWith(secondary: backgroundColor)),
       home: const MainPage(),
@@ -185,7 +207,7 @@ class _MainPageState extends State<MainPage> {
   newAppBar() {
     return AppBar(
       backgroundColor: appBarColor,
-      systemOverlayStyle: SystemUiOverlayStyle.dark,
+      systemOverlayStyle: SystemUiOverlayStyle.light,
     );
   }
 }

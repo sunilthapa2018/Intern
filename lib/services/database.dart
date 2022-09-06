@@ -99,6 +99,30 @@ class DatabaseService {
     }
   }
 
+  static Future<String> getFeedbackGiven(
+    String studentId,
+    String questionType,
+    String questionSubType,
+  ) async {
+    final QuerySnapshot qSnapshot = await FirebaseFirestore.instance
+        .collection('feedbacks')
+        .where('student_id', isEqualTo: studentId)
+        .where('type', isEqualTo: questionType)
+        .where('sub type', isEqualTo: questionSubType)
+        .get();
+    for (var doc in qSnapshot.docs) {
+      if (qSnapshot.docs.isNotEmpty) {
+        String feedback = doc.get('feedback');
+        log('MYTAG : Answer Found on the database');
+        return feedback;
+      } else {
+        log('MYTAG : Answer not Found on the database');
+        return "Feedback Not Given Yet";
+      }
+    }
+    return "Feedback Not Given Yet";
+  }
+
   static Future<bool> hasThisDocument(String collectionName, String id) async {
     try {
       final docRef =
