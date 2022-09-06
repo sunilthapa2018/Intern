@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:motivational_leadership/providers/student/feedback/type/student_feedback_autonomy_provider.dart';
 import 'package:motivational_leadership/ui/student/feedback/student_feedback_subtype_selection_page.dart';
+import 'package:motivational_leadership/utility/base_utils.dart';
 import 'package:motivational_leadership/utility/colors.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
 class StudentFeedbackAutonomyTile extends StatelessWidget {
@@ -63,11 +63,11 @@ class StudentFeedbackAutonomyTile extends StatelessWidget {
         ),
       ),
       onTap: () {
-        Navigator.of(context).push(PageTransition(
-            type: PageTransitionType.rightToLeftJoined,
-            childCurrent: this,
-            child: const StudentFeedbackSubTypeSelection(
-                questionType: 'Autonomy')));
+        navigateTo(
+            context: context,
+            nextPage:
+                const StudentFeedbackSubTypeSelection(questionType: 'Autonomy'),
+            currentPage: this);
       },
     );
   }

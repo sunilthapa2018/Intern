@@ -28,8 +28,8 @@ class StudentFeedbackOCTile extends StatelessWidget {
         decoration: boxSubDecoration(),
         child: Column(
           children: [
-            alignSubTitle("Overcoming Challenges"),
-            alignSubTypeCompleted(isLoading, completedText),
+            alignSubTitle("Overcoming Challenges", context),
+            alignSubTypeCompleted(isLoading, completedText, context),
           ],
         ),
       ),

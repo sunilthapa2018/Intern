@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:motivational_leadership/services/database.dart';
 import 'package:motivational_leadership/ui/common/app_bar.dart';
 import 'package:motivational_leadership/ui/common/widget/verticle_spacer.dart';
+import 'package:motivational_leadership/utility/colors.dart';
 
 class StudentFeedbackPage extends StatefulWidget {
   const StudentFeedbackPage({super.key});
@@ -28,8 +29,9 @@ class _StudentFeedbackPageState extends State<StudentFeedbackPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: backgroundColor,
       appBar: appBar(context, "Coach's Feedback"),
-      body: body(),
+      body: myBodySection(),
     );
   }
 
@@ -39,19 +41,37 @@ class _StudentFeedbackPageState extends State<StudentFeedbackPage> {
     notifyChanges();
   }
 
-  body() {
+  myBodySection() {
     double spacer = 10;
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Column(
-        children: [
-          typeSelectionMenu(),
-          verticleSpacer(spacer),
-          subTypeSelectionMenu(),
-          verticleSpacer(spacer),
-          verticleSpacer(spacer),
-          feebackSection(),
-        ],
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
+          children: [
+            textTitle(),
+            verticleSpacer(spacer),
+            typeSelectionMenu(),
+            verticleSpacer(spacer),
+            subTypeSelectionMenu(),
+            verticleSpacer(spacer),
+            verticleSpacer(spacer),
+            feebackSection(),
+            verticleSpacer(spacer),
+          ],
+        ),
+      ),
+    );
+  }
+
+  givenBySection() {
+    return const Align(
+      alignment: Alignment.centerRight,
+      child: Text(
+        "Feedback Given By:\nCoachName\nDate",
+        style: TextStyle(
+          color: Colors.orange,
+        ),
+        textAlign: TextAlign.end,
       ),
     );
   }
@@ -95,22 +115,41 @@ class _StudentFeedbackPageState extends State<StudentFeedbackPage> {
   BoxDecoration myBox() {
     return BoxDecoration(
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey, width: 2));
+        border: Border.all(color: iconColor, width: 1));
   }
 
   TextField feebackSection() {
     return TextField(
-      enableInteractiveSelection: false, // will disable paste operation
+      enableInteractiveSelection: false,
       readOnly: true,
       style: const TextStyle(fontSize: 16),
       keyboardType: TextInputType.multiline,
-      minLines: 20,
-      maxLines: 20,
+      minLines: 10,
+      maxLines: null,
       controller: feedbackController,
-      decoration: const InputDecoration(
+      decoration: InputDecoration(
         labelText: "Feedback",
-        contentPadding: EdgeInsets.fromLTRB(10, 30, 10, 0),
-        border: OutlineInputBorder(),
+        labelStyle: TextStyle(color: iconColor),
+        contentPadding: const EdgeInsets.fromLTRB(20, 30, 20, 0),
+        border: const OutlineInputBorder(),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: iconColor, width: 1.0),
+          borderRadius: BorderRadius.circular(25.0),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: iconColor, width: 1.0),
+          borderRadius: BorderRadius.circular(25.0),
+        ),
+      ),
+    );
+  }
+
+  textTitle() {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Text(
+        "Feedback",
+        style: Theme.of(context).textTheme.headline3,
       ),
     );
   }
@@ -123,6 +162,7 @@ class _StudentFeedbackPageState extends State<StudentFeedbackPage> {
       );
 
   void notifyChanges() {
+    feedbackController.text = "Searching Feedback in database";
     String selectedType = typeValue.toString();
     String selectedSubType = subTypeValue.toString();
     loadDataToTextbox(selectedType, selectedSubType);

@@ -28,8 +28,8 @@ class StudentFeedbackSITile extends StatelessWidget {
         decoration: boxSubDecoration(),
         child: Column(
           children: [
-            alignSubTitle("Success Indicators (KPIs)"),
-            alignSubTypeCompleted(isLoading, completedText),
+            alignSubTitle("Success Indicators (KPIs)", context),
+            alignSubTypeCompleted(isLoading, completedText, context),
           ],
         ),
       ),

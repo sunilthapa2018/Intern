@@ -12,6 +12,7 @@ import 'package:motivational_leadership/ui/student/widgets/type/student_belongin
 import 'package:motivational_leadership/ui/student/widgets/type/student_competence_tile.dart';
 import 'package:motivational_leadership/utility/colors.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class StudentHome extends StatefulWidget {
   const StudentHome({Key? key}) : super(key: key);
@@ -22,10 +23,11 @@ class StudentHome extends StatefulWidget {
 class _StudentHomeState extends State<StudentHome> {
   @override
   Widget build(BuildContext context) {
+    // String name = loadName().toString();
     log("student home build ");
     log(MediaQuery.of(context).size.height.toString());
     log(MediaQuery.of(context).size.width.toString());
-
+    // addAllQuestionsToDatabase();
     // setPortraitOnlyOrientation();
     return Scaffold(
       drawer: const StudentNavigationDrawerWidget(),
@@ -43,15 +45,20 @@ class _StudentHomeState extends State<StudentHome> {
     );
   }
 
+  Future<String> loadName() async {
+    final prefs = await SharedPreferences.getInstance();
+    final savedName = prefs.getString('name').toString();
+    return savedName;
+  }
+
   AppBar _buildAppBar(BuildContext context) {
     return AppBar(
-      // toolbarHeight: 10,
-      iconTheme: const IconThemeData(color: Color(0xFFF2811D)),
-      backgroundColor: Colors.white,
+      titleSpacing: 0,
+      toolbarHeight: 36,
+      iconTheme: IconThemeData(color: iconColor),
+      backgroundColor: Colors.transparent,
       elevation: 0,
-      // systemOverlayStyle: SystemUiOverlayStyle.dark,
       systemOverlayStyle: const SystemUiOverlayStyle(
-        // Status bar color
         statusBarColor: Colors.transparent,
       ),
       actions: [

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-BoxDecoration myTypeBoxDecoration4() {
+BoxDecoration mySubTypeBoxDecoration4() {
   return BoxDecoration(
     borderRadius: const BorderRadius.all(Radius.circular(30)),
     border: Border.all(

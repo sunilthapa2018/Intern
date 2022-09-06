@@ -29,8 +29,8 @@ class StudentFeedbackImplementationTile extends StatelessWidget {
         decoration: boxSubDecoration(),
         child: Column(
           children: [
-            alignSubTitle("Implementation"),
-            alignSubTypeCompleted(isLoading, completedText),
+            alignSubTitle("Implementation", context),
+            alignSubTypeCompleted(isLoading, completedText, context),
           ],
         ),
       ),

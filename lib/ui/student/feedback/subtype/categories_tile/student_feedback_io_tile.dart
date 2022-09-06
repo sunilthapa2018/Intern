@@ -28,8 +28,8 @@ class StudentFeedbackIOTile extends StatelessWidget {
         decoration: boxSubDecoration(),
         child: Column(
           children: [
-            alignSubTitle("Impact and Outcome"),
-            alignSubTypeCompleted(isLoading, completedText),
+            alignSubTitle("Impact and Outcome", context),
+            alignSubTypeCompleted(isLoading, completedText, context),
           ],
         ),
       ),

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:motivational_leadership/ui/student/student_question_subtype_selection_page.dart';
+import 'package:motivational_leadership/ui/student/widgets/app_bar.dart';
+import 'package:motivational_leadership/ui/student/widgets/my_button_box.dart';
+import 'package:motivational_leadership/utility/base_utils.dart';
 import 'package:motivational_leadership/utility/colors.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class VideoPlayback extends StatefulWidget {
@@ -14,6 +15,43 @@ class VideoPlayback extends StatefulWidget {
 }
 
 class _VideoPlaybackState extends State<VideoPlayback> {
+  @override
+  Widget build(BuildContext context) {
+    return YoutubePlayerBuilder(
+        player: YoutubePlayer(
+          controller: controller,
+        ),
+        builder: (context, player) {
+          return Scaffold(
+            backgroundColor: backgroundColor,
+            appBar: buildAppBar(context),
+            body: Padding(
+              padding: const EdgeInsets.only(left: 20, right: 20),
+              child: Column(
+                children: [
+                  Column(
+                    children: [
+                      const SizedBox(height: 10),
+                      mainTitle(),
+                      const SizedBox(height: 10),
+                      player,
+                      const SizedBox(height: 10),
+                      saveButton(context),
+                    ],
+                  ),
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: _buildButtonLogo(),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
   late String _questionType = "";
   late YoutubePlayerController controller;
   @override
@@ -48,52 +86,49 @@ class _VideoPlaybackState extends State<VideoPlayback> {
     super.dispose();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    // setPortraitOnlyOrientation();
-    //resetOrientation();
-    return YoutubePlayerBuilder(
-        player: YoutubePlayer(
-          controller: controller,
+  Padding _buildButtonLogo() {
+    double width = MediaQuery.of(context).size.width;
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 30),
+      child: Image.asset(
+        'assets/complete_logo.png',
+        width: width - (20 / 100 * width),
+        fit: BoxFit.contain,
+      ),
+    );
+  }
+
+  mainTitle() {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Text(
+        "Introduction",
+        style: Theme.of(context).textTheme.headline3,
+      ),
+    );
+  }
+
+  GestureDetector saveButton(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        controller.pause();
+        navigateTo(
+            context: context,
+            nextPage: QuestionTypeSelection(questionType: _questionType),
+            currentPage: widget);
+      },
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width / 2,
+        child: Container(
+          alignment: Alignment.center,
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          decoration: myButtonBox(),
+          child: const Text(
+            "Skip >>",
+            style: TextStyle(fontSize: 16, color: Colors.white),
+          ),
         ),
-        builder: (context, player) {
-          return Scaffold(
-            appBar: AppBar(
-              title: const Text("Introduction"),
-              backgroundColor: appBarColor,
-              systemOverlayStyle: SystemUiOverlayStyle.dark,
-            ),
-            body: ListView(
-              padding: const EdgeInsets.fromLTRB(10, 20, 10, 20),
-              children: [
-                player,
-                const SizedBox(height: 10),
-                GestureDetector(
-                  onTap: () {
-                    controller.pause();
-                    Navigator.of(context).push(PageTransition(
-                        type: PageTransitionType.rightToLeftJoined,
-                        childCurrent: widget,
-                        child: QuestionTypeSelection(
-                            questionType: _questionType)));
-                  },
-                  child: Container(
-                    alignment: Alignment.center,
-                    width: MediaQuery.of(context).size.width,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 24, vertical: 20),
-                    decoration: BoxDecoration(
-                        color: const Color(0xFF2e3c96),
-                        borderRadius: BorderRadius.circular(30)),
-                    child: const Text(
-                      "Skip >>",
-                      style: TextStyle(fontSize: 16, color: Colors.white),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          );
-        });
+      ),
+    );
   }
 }

@@ -10,6 +10,8 @@ import 'package:motivational_leadership/providers/student/subtype/student_feedba
 import 'package:motivational_leadership/providers/student/subtype/student_feedback_oc_provider.dart';
 import 'package:motivational_leadership/providers/student/subtype/student_feedback_si_provider.dart';
 import 'package:motivational_leadership/services/database.dart';
+import 'package:motivational_leadership/ui/common/widget/verticle_spacer.dart';
+import 'package:motivational_leadership/ui/student/widgets/my_button_box.dart';
 import 'package:motivational_leadership/ui/student/widgets/subtype/categories_tile/student_action_tile.dart';
 import 'package:motivational_leadership/ui/student/widgets/subtype/categories_tile/student_future_tile.dart';
 import 'package:motivational_leadership/ui/student/widgets/subtype/categories_tile/student_imp_tile.dart';
@@ -24,7 +26,7 @@ class QuestionTypeSelection extends StatefulWidget {
   final String questionType;
   const QuestionTypeSelection({super.key, required this.questionType});
   @override
-  _QuestionTypeSelectionState createState() => _QuestionTypeSelectionState();
+  State<QuestionTypeSelection> createState() => _QuestionTypeSelectionState();
 }
 
 class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
@@ -69,12 +71,13 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
           margin: const EdgeInsets.fromLTRB(10, 15, 10, 10),
           padding: const EdgeInsets.only(bottom: 10),
           decoration: BoxDecoration(
-            border: Border.all(color: itemColor, width: 1),
+            border: Border.all(color: orangeColor, width: 1),
             borderRadius: BorderRadius.circular(10),
             shape: BoxShape.rectangle,
           ),
           child: Column(
             children: [
+              verticleSpacer(5),
               StudentImplementationTile(questionType: _questionType),
               StudentIOTile(questionType: _questionType),
               StudentFutureTile(questionType: _questionType),
@@ -95,12 +98,13 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
           margin: const EdgeInsets.fromLTRB(10, 20, 10, 10),
           padding: const EdgeInsets.only(bottom: 10),
           decoration: BoxDecoration(
-            border: Border.all(color: itemColor, width: 1),
+            border: Border.all(color: orangeColor, width: 1),
             borderRadius: BorderRadius.circular(10),
             shape: BoxShape.rectangle,
           ),
           child: Column(
             children: [
+              verticleSpacer(5),
               StudentActionTile(questionType: _questionType),
               StudentOCTile(questionType: _questionType),
               StudentSITile(questionType: _questionType),
@@ -116,17 +120,13 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
   Positioned reflectBorder() {
     return Positioned(
         left: 50,
-        top: 7,
+        top: 5,
         child: Container(
           padding: const EdgeInsets.only(left: 10, right: 10),
           color: backgroundColor,
           child: Text(
             'Reflect',
-            style: TextStyle(
-              color: itemColor,
-              fontWeight: FontWeight.w800,
-              fontSize: 16,
-            ),
+            style: Theme.of(context).textTheme.headline4,
           ),
         ));
   }
@@ -172,11 +172,10 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
           width: MediaQuery.of(context).size.width / 3,
           margin: const EdgeInsets.fromLTRB(0, 5, 0, 5),
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-          decoration: BoxDecoration(
-              color: appBarColor, borderRadius: BorderRadius.circular(30)),
-          child: const Text(
+          decoration: myButtonBox(),
+          child: Text(
             "Submit",
-            style: TextStyle(fontSize: 16, color: Colors.white),
+            style: Theme.of(context).textTheme.headline2,
           ),
         ),
       ),
@@ -186,17 +185,13 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
   Positioned planBorder() {
     return Positioned(
         left: 50,
-        top: 12,
+        top: 10,
         child: Container(
           padding: const EdgeInsets.only(left: 10, right: 10),
           color: backgroundColor,
           child: Text(
             'Plan',
-            style: TextStyle(
-              color: itemColor,
-              fontWeight: FontWeight.w800,
-              fontSize: 16,
-            ),
+            style: Theme.of(context).textTheme.headline4,
           ),
         ));
   }
@@ -242,11 +237,10 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
           width: MediaQuery.of(context).size.width / 3,
           margin: const EdgeInsets.fromLTRB(0, 5, 0, 5),
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-          decoration: BoxDecoration(
-              color: appBarColor, borderRadius: BorderRadius.circular(30)),
-          child: const Text(
+          decoration: myButtonBox(),
+          child: Text(
             "Submit",
-            style: TextStyle(fontSize: 16, color: Colors.white),
+            style: Theme.of(context).textTheme.headline2,
           ),
         ),
       ),
@@ -255,9 +249,18 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
 
   AppBar appBar(BuildContext context) {
     return AppBar(
-      title: const Text("Question Type Selection"),
-      backgroundColor: appBarColor,
-      systemOverlayStyle: SystemUiOverlayStyle.dark,
+      title: Text(
+        "Sub-Type Selection",
+        style: Theme.of(context).textTheme.headline4,
+      ),
+      titleSpacing: 0,
+      toolbarHeight: 36,
+      iconTheme: IconThemeData(color: iconColor),
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      systemOverlayStyle: const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+      ),
       actions: [
         IconButton(
             onPressed: () {

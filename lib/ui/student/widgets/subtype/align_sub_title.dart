@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-Align alignSubTitle(String title) {
+Align alignSubTitle(String title, BuildContext context) {
   return Align(
     alignment: Alignment.centerLeft,
     child: Padding(
-      padding: const EdgeInsets.fromLTRB(20, 10, 0, 0),
+      padding: const EdgeInsets.fromLTRB(24, 10, 20, 5),
       child: Text(
         title,
-        style: TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.w800,
-          fontSize: 24.sp,
-        ),
+        style: Theme.of(context).textTheme.headline6,
       ),
     ),
   );

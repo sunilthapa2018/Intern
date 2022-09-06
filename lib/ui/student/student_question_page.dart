@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:motivational_leadership/ui/common/widget/type_decoration_box_1.dart';
+import 'package:motivational_leadership/ui/common/widget/verticle_spacer.dart';
 import 'package:motivational_leadership/utility/base_utils.dart';
 import 'package:motivational_leadership/utility/colors.dart';
 import 'package:motivational_leadership/utility/utils.dart';
@@ -18,12 +20,57 @@ class Question extends StatefulWidget {
       required this.questionSubType,
       required this.questionNumber});
   @override
-  _QuestionState createState() => _QuestionState();
+  State<Question> createState() => _QuestionState();
 }
 
 int totalQuestion = 0;
 
 class _QuestionState extends State<Question> {
+  @override
+  Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+        const SystemUiOverlayStyle(statusBarColor: Colors.white));
+    return WillPopScope(
+      onWillPop: () async {
+        String anwerField = answerController.text.toString();
+        final isEditedPage = _answer != answerController.text.toString();
+        if (isEditedPage && anwerField != "") {
+          final shouldPop = await showWarning(context);
+          return shouldPop ?? false;
+        } else {
+          return true;
+        }
+      },
+      child: Scaffold(
+        backgroundColor: backgroundColor,
+        appBar: appBar(context),
+        body: myBody(context),
+      ),
+    );
+  }
+
+  Future<bool?> showWarning(BuildContext context) async => showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+            title: const Text("Discard Changes"),
+            content: const Text("Changes on this page will not be saved."),
+            actions: [
+              ElevatedButton(
+                onPressed: () => Navigator.pop(context, false),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: buttonColor,
+                ),
+                child: const Text("Cancel"),
+              ),
+              ElevatedButton(
+                onPressed: () => Navigator.pop(context, true),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: buttonColor,
+                ),
+                child: const Text("Discard"),
+              ),
+            ],
+          ));
   late String _questionType;
   late String _questionSubType;
   late int _questionNumber;
@@ -38,29 +85,16 @@ class _QuestionState extends State<Question> {
   late String questionId;
   late String answerId;
 
-  @override
-  Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-        const SystemUiOverlayStyle(statusBarColor: Colors.white));
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: whiteBackgroundColor,
-      appBar: appBar(context),
-      body: myBody(context),
-    );
-  }
-
   myBody(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
-        padding: const EdgeInsets.fromLTRB(12, 10, 12, 0),
+        padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
         child: Column(
           children: [
             question(),
-            const SizedBox(
-              height: 16,
-            ),
+            verticleSpacer(32),
             answer(),
+            verticleSpacer(6),
             saveButton(context),
           ],
         ),
@@ -75,9 +109,11 @@ class _QuestionState extends State<Question> {
           try {
             if (hasAnswer) {
               updateAnswer();
+              loadDataToTextbox();
               Utils.showSnackBar('Your Answer has been updated');
             } else {
               saveAnswer();
+              loadDataToTextbox();
               Utils.showSnackBar('Your answer has been saved');
             }
           } on FirebaseAuthException catch (e) {
@@ -91,11 +127,9 @@ class _QuestionState extends State<Question> {
       child: Container(
         margin: const EdgeInsets.fromLTRB(0, 8, 0, 8),
         alignment: Alignment.center,
-        width: MediaQuery.of(context).size.width,
+        width: MediaQuery.of(context).size.width / 2,
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-        decoration: BoxDecoration(
-            color: const Color(0xFF2e3c96),
-            borderRadius: BorderRadius.circular(30)),
+        decoration: myTypeBoxDecoration1(),
         child: const Text(
           "Save",
           style: TextStyle(fontSize: 16, color: Colors.white),
@@ -106,93 +140,47 @@ class _QuestionState extends State<Question> {
 
   TextField answer() {
     return TextField(
-      //style: Theme.of(context).textTheme.bodyText1,
       keyboardType: TextInputType.multiline,
-      minLines: 20,
-      maxLines: 20,
+      minLines: 16,
+      maxLines: null,
       controller: answerController,
-      decoration: const InputDecoration(
-        contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-        border: OutlineInputBorder(),
-        // labelText: "Enter your Answer here",
+      style: myTextStyle2(),
+      decoration: InputDecoration(
+        contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+        border: const OutlineInputBorder(),
         hintText: "Enter your Answer here",
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: iconColor, width: 1.0),
+          // borderRadius: BorderRadius.circular(20.0),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: iconColor, width: 1.0),
+          // borderRadius: BorderRadius.circular(20.0),
+        ),
+        prefixIconColor: iconColor,
       ),
     );
   }
 
-  FutureBuilder<String> question() {
-    return FutureBuilder<String>(
-        future: dataFuture,
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.waiting:
-              if (snapshot.hasData) {
-                String data = snapshot.data!;
-                return Text(
-                  data,
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 20,
-                  ),
-                );
-              } else {
-                return const Text(
-                  "Loading question from database...",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 20,
-                  ),
-                );
-              }
-            case ConnectionState.done:
-            default:
-              if (snapshot.hasError) {
-                final error = snapshot.error;
-                return Text("$error");
-              } else if (snapshot.hasData) {
-                String data = snapshot.data!;
-                if (data.isEmpty) {
-                  return const Text(
-                    "Question field error!!! Question missing some fields. Report Admin",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 20,
-                    ),
-                  );
-                } else {
-                  return Text(
-                    data,
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 20,
-                    ),
-                  );
-                }
-              } else {
-                return const Text("No Data");
-              }
-          }
-        });
-  }
-
-  AppBar appBar(BuildContext context) {
-    return AppBar(
-      title: FutureBuilder<String>(
-          future: totalFuture,
+  Align question() {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: FutureBuilder<String>(
+          future: dataFuture,
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
                 if (snapshot.hasData) {
                   String data = snapshot.data!;
                   return Text(
-                    "Question $_questionNumber/$data",
+                    data,
+                    style: myTextStyle(),
                   );
                 } else {
-                  return const Text("Question 0/0");
+                  return Text(
+                    "Loading question from database...",
+                    style: myTextStyle(),
+                  );
                 }
               case ConnectionState.done:
               default:
@@ -201,17 +189,49 @@ class _QuestionState extends State<Question> {
                   return Text("$error");
                 } else if (snapshot.hasData) {
                   String data = snapshot.data!;
-                  return Text(
-                    "Question $_questionNumber/$data",
-                    style: const TextStyle(color: Colors.white),
-                  );
+                  if (data.isEmpty) {
+                    return Text(
+                      "Question field error!!! Question missing some fields. Report Admin",
+                      style: myTextStyle(),
+                    );
+                  } else {
+                    return Text(
+                      data,
+                      style: myTextStyle(),
+                    );
+                  }
                 } else {
                   return const Text("No Data");
                 }
             }
           }),
+    );
+  }
+
+  TextStyle myTextStyle() {
+    return const TextStyle(
+      fontFamily: 'Roboto',
+      color: Colors.black87,
+      fontWeight: FontWeight.w400,
+      fontSize: 20,
+    );
+  }
+
+  TextStyle myTextStyle2() {
+    return const TextStyle(
+      fontFamily: 'Roboto',
+      color: Colors.black87,
+      fontWeight: FontWeight.w300,
+      fontSize: 16,
+    );
+  }
+
+  AppBar appBar(BuildContext context) {
+    return AppBar(
+      title: appBarTitle(),
+      elevation: 0,
       backgroundColor: appBarColor,
-      iconTheme: const IconThemeData(color: Colors.white),
+      iconTheme: IconThemeData(color: iconColor),
       actions: <Widget>[
         Padding(
             padding: const EdgeInsets.only(right: 20.0),
@@ -231,13 +251,83 @@ class _QuestionState extends State<Question> {
                       "No more questions! You can always go back.");
                 }
               },
-              child: const Icon(
-                Icons.arrow_forward,
-                size: 26.0,
-              ),
+              // child: const Icon(
+              //   Icons.arrow_forward,
+              //   size: 26.0,
+              // ),
+              child: appBarNextButton(),
             )),
       ],
     );
+  }
+
+  FutureBuilder<void> appBarNextButton() {
+    return FutureBuilder<String>(
+        future: totalFuture,
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+            case ConnectionState.done:
+            default:
+              if (snapshot.hasError) {
+                final error = snapshot.error;
+                return Text("$error");
+              } else if (snapshot.hasData) {
+                String data = snapshot.data!;
+                int dataTemp = int.tryParse(data) ?? 0;
+                if (_questionNumber < dataTemp) {
+                  return myIcon();
+                }
+              }
+              return Container();
+          }
+        });
+  }
+
+  Icon myIcon() {
+    return const Icon(
+      Icons.arrow_forward,
+      size: 26.0,
+    );
+  }
+
+  FutureBuilder<String> appBarTitle() {
+    return FutureBuilder<String>(
+        future: totalFuture,
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              if (snapshot.hasData) {
+                String data = snapshot.data!;
+                return Text(
+                  "Question $_questionNumber/$data",
+                  style: Theme.of(context).textTheme.headline4,
+                );
+              } else {
+                return Text(
+                  "Question 0/0",
+                  style: Theme.of(context).textTheme.headline4,
+                );
+              }
+            case ConnectionState.done:
+            default:
+              if (snapshot.hasError) {
+                final error = snapshot.error;
+                return Text("$error");
+              } else if (snapshot.hasData) {
+                String data = snapshot.data!;
+                return Text(
+                  "Question $_questionNumber/$data",
+                  style: Theme.of(context).textTheme.headline4,
+                );
+              } else {
+                return Text(
+                  "No Data",
+                  style: Theme.of(context).textTheme.headline4,
+                );
+              }
+          }
+        });
   }
 
   @override

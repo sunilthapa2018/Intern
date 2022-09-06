@@ -28,8 +28,8 @@ class StudentFeedbackFutureTile extends StatelessWidget {
         decoration: boxSubDecoration(),
         child: Column(
           children: [
-            alignSubTitle("Future"),
-            alignSubTypeCompleted(isLoading, completedText),
+            alignSubTitle("Future", context),
+            alignSubTypeCompleted(isLoading, completedText, context),
           ],
         ),
       ),

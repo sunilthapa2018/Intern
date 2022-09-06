@@ -132,13 +132,31 @@ class MyApp extends StatelessWidget {
                 fontWeight: FontWeight.w500,
                 fontFamily: 'Roboto',
                 fontSize: 36.sp,
-                color: const Color(0xFFF2811D),
+                color: orangeColor,
+                decoration: TextDecoration.none),
+            headline4: TextStyle(
+                fontWeight: FontWeight.w500,
+                fontFamily: 'Roboto',
+                fontSize: 16.sp,
+                color: orangeColor,
+                decoration: TextDecoration.none),
+            headline5: TextStyle(
+                fontWeight: FontWeight.w300,
+                fontFamily: 'Roboto',
+                fontSize: 12.sp,
+                color: Colors.white,
+                decoration: TextDecoration.none),
+            headline6: TextStyle(
+                fontWeight: FontWeight.w300,
+                fontFamily: 'Roboto',
+                fontSize: 20.sp,
+                color: Colors.white,
                 decoration: TextDecoration.none),
           ),
           fontFamily: 'Roboto',
           primarySwatch: Colors.deepPurple,
-          colorScheme:
-              ColorScheme.fromSwatch().copyWith(secondary: backgroundColor)),
+          colorScheme: ColorScheme.fromSwatch()
+              .copyWith(primary: orangeColor, secondary: backgroundColor)),
       home: const MainPage(),
     );
   }
@@ -164,9 +182,9 @@ class _MainPageState extends State<MainPage> {
               future: getType(),
               builder: ((context, AsyncSnapshot<String?> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Scaffold(
-                    appBar: newAppBar(),
-                    body: const Center(
+                  return const Scaffold(
+                    // appBar: newAppBar(),
+                    body: Center(
                       child: CircularProgressIndicator(),
                     ),
                   );

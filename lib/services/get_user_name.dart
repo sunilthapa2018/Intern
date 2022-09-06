@@ -21,7 +21,7 @@ class GetUserName extends StatelessWidget {
           return Text(
             firstName,
             style: const TextStyle(
-              color: Color(0xFFff6600),
+              color: Colors.white,
               fontWeight: FontWeight.w900,
               fontSize: 36,
             ),
@@ -29,9 +29,9 @@ class GetUserName extends StatelessWidget {
         }
         //return Text('Anonymous');
         return const Text(
-          'User',
+          '',
           style: TextStyle(
-            color: Color(0xFFff6600),
+            color: Colors.white,
             fontWeight: FontWeight.w900,
             fontSize: 36,
           ),

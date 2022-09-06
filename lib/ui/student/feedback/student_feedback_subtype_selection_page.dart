@@ -32,7 +32,7 @@ class StudentFeedbackSubTypeSelection extends StatefulWidget {
   const StudentFeedbackSubTypeSelection(
       {super.key, required this.questionType});
   @override
-  _StudentFeedbackSubTypeSelectionState createState() =>
+  State<StudentFeedbackSubTypeSelection> createState() =>
       _StudentFeedbackSubTypeSelectionState();
 }
 

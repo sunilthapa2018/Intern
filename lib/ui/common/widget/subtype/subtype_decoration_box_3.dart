@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:motivational_leadership/utility/colors.dart';
 
-BoxDecoration myTypeBoxDecoration3() {
+BoxDecoration mySubTypeBoxDecoration3() {
   return BoxDecoration(
     gradient: LinearGradient(
       begin: Alignment.centerLeft,

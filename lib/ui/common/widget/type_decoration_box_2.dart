@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:motivational_leadership/utility/colors.dart';
 
 BoxDecoration myTypeBoxDecoration2() {
-  return const BoxDecoration(
+  return BoxDecoration(
     gradient: LinearGradient(
       begin: Alignment.centerLeft,
       end: Alignment.centerRight,
       colors: [
-        Color(0xFF5771ec),
-        Color(0xFF05bcfe),
+        tile2Color1,
+        tile2Color2,
       ],
     ),
-    borderRadius: BorderRadius.all(Radius.circular(30)),
+    borderRadius: const BorderRadius.all(Radius.circular(30)),
   );
 }

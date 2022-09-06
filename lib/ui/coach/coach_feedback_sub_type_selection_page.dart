@@ -24,7 +24,7 @@ class CoachFeedbackSubTypeSelection extends StatefulWidget {
   const CoachFeedbackSubTypeSelection(
       {super.key, required this.userID, required this.questionType});
   @override
-  _CoachFeedbackSubTypeSelectionState createState() =>
+  State<CoachFeedbackSubTypeSelection> createState() =>
       _CoachFeedbackSubTypeSelectionState();
 }
 

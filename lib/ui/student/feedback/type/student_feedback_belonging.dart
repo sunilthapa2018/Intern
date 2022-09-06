@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:motivational_leadership/providers/student/feedback/type/student_feedback_belonging_provider.dart';
 import 'package:motivational_leadership/ui/student/feedback/student_feedback_subtype_selection_page.dart';
+import 'package:motivational_leadership/utility/base_utils.dart';
 import 'package:motivational_leadership/utility/colors.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
 class StudentFeedbackBelongingTile extends StatefulWidget {
@@ -78,11 +78,11 @@ class _StudentFeedbackBelongingTileState
         ),
       ),
       onTap: () {
-        Navigator.of(context).push(PageTransition(
-            type: PageTransitionType.rightToLeftJoined,
-            childCurrent: widget,
-            child: const StudentFeedbackSubTypeSelection(
-                questionType: 'Belonging')));
+        navigateTo(
+            context: context,
+            nextPage: const StudentFeedbackSubTypeSelection(
+                questionType: 'Belonging'),
+            currentPage: widget);
       },
     );
   }

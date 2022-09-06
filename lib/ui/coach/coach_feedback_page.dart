@@ -18,7 +18,7 @@ class CoachFeedbackPage extends StatefulWidget {
       required this.questionSubType,
       required this.uId});
   @override
-  _CoachFeedbackPageState createState() => _CoachFeedbackPageState();
+  State<CoachFeedbackPage> createState() => _CoachFeedbackPageState();
 }
 
 int totalQuestion = 0;
@@ -186,8 +186,8 @@ class _CoachFeedbackPageState extends State<CoachFeedbackPage> {
         color: Colors.black,
         fontSize: 20.sp,
       ),
-      minLines: 10,
-      maxLines: 10,
+      // minLines: 10,
+      maxLines: null,
       controller: feedbackController,
       decoration: const InputDecoration(
         border: OutlineInputBorder(),

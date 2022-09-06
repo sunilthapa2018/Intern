@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:motivational_leadership/main.dart';
+import 'package:motivational_leadership/services/database.dart';
 import 'package:motivational_leadership/ui/auth/forget_password_page.dart';
 import 'package:motivational_leadership/ui/auth/sign_up_page.dart';
 import 'package:motivational_leadership/utility/base_utils.dart';
@@ -16,7 +17,7 @@ class SignIn extends StatefulWidget {
   const SignIn({super.key});
 
   @override
-  _SignInState createState() => _SignInState();
+  State<SignIn> createState() => _SignInState();
 }
 
 class _SignInState extends State<SignIn> {
@@ -218,6 +219,10 @@ class _SignInState extends State<SignIn> {
 
       // set value
       await prefs.setString('password', password);
+
+      String uid = FirebaseAuth.instance.currentUser!.uid;
+      String name = await DatabaseService.getUserName(uid);
+      await prefs.setString('name', name);
       log("mytag $password is saved as password\n");
       log("Sign IN executed sucessfully");
       navigatorKey.currentState!.popUntil((route) => route.isFirst);
