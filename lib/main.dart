@@ -14,15 +14,6 @@ import 'package:motivational_leadership/providers/coach/subtype/coach_si_provide
 import 'package:motivational_leadership/providers/coach/type/coach_autonomy_provider.dart';
 import 'package:motivational_leadership/providers/coach/type/coach_belonging_provider.dart';
 import 'package:motivational_leadership/providers/coach/type/coach_competence_provider.dart';
-import 'package:motivational_leadership/providers/student/feedback/subtype/student_feedback_action_provider.dart';
-import 'package:motivational_leadership/providers/student/feedback/subtype/student_feedback_future_provider.dart';
-import 'package:motivational_leadership/providers/student/feedback/subtype/student_feedback_imp_provider.dart';
-import 'package:motivational_leadership/providers/student/feedback/subtype/student_feedback_io_provider.dart';
-import 'package:motivational_leadership/providers/student/feedback/subtype/student_feedback_oc_provider.dart';
-import 'package:motivational_leadership/providers/student/feedback/subtype/student_feedback_si_provider.dart';
-import 'package:motivational_leadership/providers/student/feedback/type/student_feedback_autonomy_provider.dart';
-import 'package:motivational_leadership/providers/student/feedback/type/student_feedback_belonging_provider.dart';
-import 'package:motivational_leadership/providers/student/feedback/type/student_feedback_competence_provider.dart';
 import 'package:motivational_leadership/providers/student/subtype/student_feedback_action_provider.dart';
 import 'package:motivational_leadership/providers/student/subtype/student_feedback_future_provider.dart';
 import 'package:motivational_leadership/providers/student/subtype/student_feedback_imp_provider.dart';
@@ -70,21 +61,6 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => StudentImplementationProvider()),
         ChangeNotifierProvider(create: (_) => StudentIOProvider()),
         ChangeNotifierProvider(create: (_) => StudentFutureProvider()),
-        //Student feedback type providers
-        ChangeNotifierProvider(
-            create: (_) => StudentFeedbackAutonomyProvider()),
-        ChangeNotifierProvider(
-            create: (_) => StudentFeedbackBelongingProvider()),
-        ChangeNotifierProvider(
-            create: (_) => StudentFeedbackCompetenceProvider()),
-        //Student Feedback Sub type providers
-        ChangeNotifierProvider(create: (_) => StudentFeedbackActionProvider()),
-        ChangeNotifierProvider(create: (_) => StudentFeedbackOCProvider()),
-        ChangeNotifierProvider(create: (_) => StudentFeedbackSIProvider()),
-        ChangeNotifierProvider(
-            create: (_) => StudentFeedbackImplementationProvider()),
-        ChangeNotifierProvider(create: (_) => StudentFeedbackIOProvider()),
-        ChangeNotifierProvider(create: (_) => StudentFeedbackFutureProvider()),
         //Coach type providers
         ChangeNotifierProvider(create: (_) => CoachAutonomyProvider()),
         ChangeNotifierProvider(create: (_) => CoachBelongingProvider()),

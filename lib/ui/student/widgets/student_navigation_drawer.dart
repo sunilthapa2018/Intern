@@ -7,7 +7,7 @@ import 'package:motivational_leadership/ui/auth/sign_in_page.dart';
 import 'package:motivational_leadership/ui/common/profile_page.dart';
 import 'package:motivational_leadership/ui/common/widget/box_decoration.dart';
 import 'package:motivational_leadership/ui/common/widget/verticle_spacer.dart';
-import 'package:motivational_leadership/ui/student/student_feedback_new_page.dart';
+import 'package:motivational_leadership/ui/student/feedback/student_feedback_new_page.dart';
 import 'package:motivational_leadership/ui/student/student_home_page.dart';
 import 'package:motivational_leadership/utility/base_utils.dart';
 import 'package:motivational_leadership/utility/colors.dart';
