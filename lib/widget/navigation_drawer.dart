@@ -1,30 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-<<<<<<<< HEAD:lib/ui/admin/widgets/admin_navigation_drawer.dart
-import 'package:motivational_leadership/services/get_user_name.dart';
-import 'package:motivational_leadership/ui/auth/sign_in_page.dart';
-import 'package:motivational_leadership/ui/coach/coach_feedback_page.dart';
-import 'package:motivational_leadership/ui/coach/coach_home_page.dart';
-import 'package:motivational_leadership/ui/common/profile_page.dart';
-import 'package:page_transition/page_transition.dart';
-
-String uid = FirebaseAuth.instance.currentUser!.uid;
-
-class AdminNavigationDrawerWidget extends StatelessWidget {
-  const AdminNavigationDrawerWidget({Key? key}) : super(key: key);
-========
-import 'package:motivational_leadership/ui/coach/coach_home_page.dart';
+import 'package:motivational_leadership/UI/Student/student_home_page.dart';
 import 'package:motivational_leadership/services/get_user_name.dart';
 import 'package:motivational_leadership/ui/profile_page.dart';
 import 'package:motivational_leadership/ui/signin_page.dart';
 import 'package:page_transition/page_transition.dart';
 
-
 String uid = FirebaseAuth.instance.currentUser!.uid;
 
-class CoachNavigationDrawerWidget extends StatelessWidget {
-  const CoachNavigationDrawerWidget({Key? key}) : super(key: key);
->>>>>>>> 9f772799fada077ac3bf85a560783a919450460d:lib/ui/coach/coach_navigation_drawer_page.dart
+class NavigationDrawerWidget extends StatelessWidget {
+  const NavigationDrawerWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,16 +22,11 @@ class CoachNavigationDrawerWidget extends StatelessWidget {
           SizedBox(
             height: 120,
             child: Container(
-              color: const Color(0xFF6495ED),
+              color: Color(0xFF6495ED),
               // color: Color(0xFF52adc8),
               child: Row(children: [
-<<<<<<<< HEAD:lib/ui/admin/widgets/admin_navigation_drawer.dart
-                const Padding(
-                  padding: EdgeInsets.fromLTRB(20, 50, 0, 20),
-========
                 Padding(
                   padding: const EdgeInsets.fromLTRB(20, 50, 0, 20),
->>>>>>>> 9f772799fada077ac3bf85a560783a919450460d:lib/ui/coach/coach_navigation_drawer_page.dart
                   child: Text(
                     'Hey',
                     style: TextStyle(
@@ -72,11 +52,7 @@ class CoachNavigationDrawerWidget extends StatelessWidget {
               Navigator.of(context).push(PageTransition(
                   type: PageTransitionType.rightToLeftJoined,
                   childCurrent: this,
-<<<<<<<< HEAD:lib/ui/admin/widgets/admin_navigation_drawer.dart
-                  child: const CoachHome()));
-========
-                  child: CoachHome()));
->>>>>>>> 9f772799fada077ac3bf85a560783a919450460d:lib/ui/coach/coach_navigation_drawer_page.dart
+                  child: StudentHome()));
             },
           ),
           ListTile(
@@ -87,15 +63,7 @@ class CoachNavigationDrawerWidget extends StatelessWidget {
               Navigator.of(context).push(PageTransition(
                   type: PageTransitionType.rightToLeftJoined,
                   childCurrent: this,
-<<<<<<<< HEAD:lib/ui/admin/widgets/admin_navigation_drawer.dart
-                  child: const CoachFeedbackPage(
-                    questionType: '',
-                    questionSubType: '',
-                    uId: '',
-                  )));
-========
                   child: SignIn()));
->>>>>>>> 9f772799fada077ac3bf85a560783a919450460d:lib/ui/coach/coach_navigation_drawer_page.dart
             },
           ),
           ListTile(
@@ -106,11 +74,7 @@ class CoachNavigationDrawerWidget extends StatelessWidget {
               Navigator.of(context).push(PageTransition(
                   type: PageTransitionType.rightToLeftJoined,
                   childCurrent: this,
-<<<<<<<< HEAD:lib/ui/admin/widgets/admin_navigation_drawer.dart
-                  child: const Profile()));
-========
                   child: Profile()));
->>>>>>>> 9f772799fada077ac3bf85a560783a919450460d:lib/ui/coach/coach_navigation_drawer_page.dart
             },
           ),
           ListTile(
@@ -122,11 +86,7 @@ class CoachNavigationDrawerWidget extends StatelessWidget {
               Navigator.of(context).push(PageTransition(
                   type: PageTransitionType.rightToLeftJoined,
                   childCurrent: this,
-<<<<<<<< HEAD:lib/ui/admin/widgets/admin_navigation_drawer.dart
-                  child: const SignIn()));
-========
                   child: SignIn()));
->>>>>>>> 9f772799fada077ac3bf85a560783a919450460d:lib/ui/coach/coach_navigation_drawer_page.dart
             },
           ),
         ],
