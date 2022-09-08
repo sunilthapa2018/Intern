@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:motivational_leadership/main.dart';
+import 'package:motivational_leadership/ui/common/widget/verticle_spacer.dart';
+import 'package:motivational_leadership/utility/colors.dart';
 import 'package:motivational_leadership/utility/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -17,6 +19,17 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  @override
+  Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+        const SystemUiOverlayStyle(statusBarColor: Colors.white));
+    return Scaffold(
+      backgroundColor: backgroundColor,
+      appBar: appBar(),
+      body: myBody(context),
+    );
+  }
+
   String uid = FirebaseAuth.instance.currentUser!.uid;
   String name = "";
   String email = FirebaseAuth.instance.currentUser!.email.toString();
@@ -39,23 +52,10 @@ class _ProfileState extends State<Profile> {
     super.dispose();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-        const SystemUiOverlayStyle(statusBarColor: Colors.white));
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: const Text("Profile"),
-        backgroundColor: const Color(0xFFF2811D),
-        // toolbarHeight: 0,
-        // backgroundColor: Colors.transparent,
-        // elevation: 0.0,
-        systemOverlayStyle: SystemUiOverlayStyle.dark,
-      ),
-      body: Container(
-        //color: Colors.deepOrange,
+  SingleChildScrollView myBody(BuildContext context) {
+    double space = 6;
+    return SingleChildScrollView(
+      child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
         child: Form(
           key: formKey,
@@ -63,129 +63,147 @@ class _ProfileState extends State<Profile> {
             children: [
               Column(
                 children: [
-                  Container(
-                    color: Colors.white,
-                    child: Row(children: const [
-                      Text(
-                        'My',
-                        style: TextStyle(
-                          //color: Color(0xFFff6600),
-                          color: Color(0xFF2e3c96),
-                          fontWeight: FontWeight.w900,
-                          fontSize: 36,
-                        ),
-                      ),
-                      Text(
-                        ' Profile',
-                        style: TextStyle(
-                          color: Color(0xFFff6600),
-                          fontWeight: FontWeight.w900,
-                          fontSize: 36,
-                        ),
-                      ),
-                    ]),
-                  ),
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
-                    child: Image.asset(
-                      'assets/logo.png',
-                      height: 100,
-                      width: 130,
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 6,
-                  ),
-                  TextFormField(
-                    controller: nameController,
-                    //initialValue: 'Sunil',
-                    decoration: const InputDecoration(
-                        labelText: "Full Name",
-                        hintText: "Enter your Full Name"),
-                    validator: MultiValidator([
-                      RequiredValidator(errorText: 'Required'),
-                    ]),
-                  ),
-                  const SizedBox(
-                    height: 6,
-                  ),
-                  TextFormField(
-                    controller: emailController,
-                    decoration: const InputDecoration(
-                        labelText: "Email",
-                        hintText: "Enter your Email Address"),
-                    validator: MultiValidator([
-                      RequiredValidator(errorText: 'Required'),
-                      EmailValidator(errorText: "Not A Valid Email"),
-                    ]),
-                  ),
-                  const SizedBox(
-                    height: 6,
-                  ),
-                  TextFormField(
-                    controller: passwordController,
-                    decoration: const InputDecoration(
-                        labelText: "Password", hintText: "Enter your Password"),
-                    obscureText: true,
-                    validator: MultiValidator([
-                      MaxLengthValidator(15,
-                          errorText: "It should be Max 15 characters"),
-                    ]),
-                  ),
-                  const SizedBox(
-                    height: 6,
-                  ),
-                  TextFormField(
-                    controller: phoneController,
-                    decoration: const InputDecoration(
-                        //border: OutlineInputBorder(),
-                        labelText: "Phone No",
-                        hintText: "Enter your Phone Number"),
-                    validator: MultiValidator([
-                      MaxLengthValidator(10,
-                          errorText: "It should be at least 10 characters"),
-                    ]),
-                  ),
-                  const SizedBox(
-                    height: 24,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      if (formKey.currentState!.validate()) {
-                        updateUserDetails();
-                      } else {
-                        Utils.showSnackBar(
-                            "Please make sure everything on this form is valid !");
-                      }
-                    },
-                    child: Container(
-                      alignment: Alignment.center,
-                      width: MediaQuery.of(context).size.width,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 24, vertical: 20),
-                      decoration: BoxDecoration(
-                          color: const Color(0xFF2e3c96),
-                          borderRadius: BorderRadius.circular(30)),
-                      child: const Text(
-                        "Save Changes",
-                        style: TextStyle(fontSize: 16, color: Colors.white),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  myTitle(),
+                  myLogo(),
+                  verticleSpacer(space),
+                  firstName(),
+                  verticleSpacer(space),
+                  myEmail(),
+                  verticleSpacer(space),
+                  myPassword(),
+                  verticleSpacer(space),
+                  myPhoneNumber(),
+                  verticleSpacer(16),
+                  mySave(context),
                 ],
               ),
-              const SizedBox(
-                height: 80,
-              ),
-              const Spacer(),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  GestureDetector mySave(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        if (formKey.currentState!.validate()) {
+          updateUserDetails();
+        } else {
+          Utils.showSnackBar(
+              "Please make sure everything on this form is valid !");
+        }
+      },
+      child: Container(
+        alignment: Alignment.center,
+        width: MediaQuery.of(context).size.width / 2,
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+        decoration: BoxDecoration(
+            color: buttonColor, borderRadius: BorderRadius.circular(30)),
+        child: const Text(
+          "Save Changes",
+          style: TextStyle(fontSize: 16, color: Colors.white),
+        ),
+      ),
+    );
+  }
+
+  TextFormField myPhoneNumber() {
+    return TextFormField(
+      controller: phoneController,
+      decoration: const InputDecoration(
+          //border: OutlineInputBorder(),
+          labelText: "Phone No",
+          hintText: "Enter your Phone Number"),
+      validator: MultiValidator([
+        MaxLengthValidator(10,
+            errorText: "It should be at least 10 characters"),
+      ]),
+    );
+  }
+
+  TextFormField myPassword() {
+    return TextFormField(
+      controller: passwordController,
+      decoration: const InputDecoration(
+          labelText: "Password", hintText: "Enter your Password"),
+      obscureText: true,
+      validator: MultiValidator([
+        MaxLengthValidator(15, errorText: "It should be Max 15 characters"),
+      ]),
+    );
+  }
+
+  TextFormField myEmail() {
+    return TextFormField(
+      controller: emailController,
+      decoration: const InputDecoration(
+          labelText: "Email", hintText: "Enter your Email Address"),
+      validator: MultiValidator([
+        RequiredValidator(errorText: 'Required'),
+        EmailValidator(errorText: "Not A Valid Email"),
+      ]),
+    );
+  }
+
+  TextFormField firstName() {
+    return TextFormField(
+      controller: nameController,
+      //initialValue: 'Sunil',
+      decoration: const InputDecoration(
+          labelText: "Full Name", hintText: "Enter your Full Name"),
+      validator: MultiValidator([
+        RequiredValidator(errorText: 'Required'),
+      ]),
+    );
+  }
+
+  Padding myLogo() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
+      child: Image.asset(
+        'assets/logo.png',
+        height: 100,
+        width: 130,
+        fit: BoxFit.contain,
+      ),
+    );
+  }
+
+  Container myTitle() {
+    return Container(
+      color: Colors.white,
+      child: Row(children: const [
+        Text(
+          'My',
+          style: TextStyle(
+            //color: Color(0xFFff6600),
+            color: Colors.black87,
+            fontWeight: FontWeight.w900,
+            fontSize: 36,
+          ),
+        ),
+        Text(
+          ' Profile',
+          style: TextStyle(
+            color: Color(0xFFff6600),
+            fontWeight: FontWeight.w900,
+            fontSize: 36,
+          ),
+        ),
+      ]),
+    );
+  }
+
+  AppBar appBar() {
+    return AppBar(
+      titleSpacing: 0,
+      toolbarHeight: 36,
+      iconTheme: IconThemeData(color: iconColor),
+      backgroundColor: appBarColor,
+      elevation: 0,
+      systemOverlayStyle: const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
       ),
     );
   }

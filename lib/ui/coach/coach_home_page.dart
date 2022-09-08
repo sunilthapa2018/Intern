@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:motivational_leadership/services/database.dart';
 import 'package:motivational_leadership/ui/coach/coach_feedback_type_selection_page.dart';
 import 'package:motivational_leadership/ui/coach/widgets/coach_navigation_drawer.dart';
@@ -26,7 +26,7 @@ class _AdminHomeState extends State<CoachHome> {
   Widget build(BuildContext context) {
     setLandscapeOnlyOrientation();
     return Scaffold(
-        backgroundColor: backgroundColor,
+        backgroundColor: coachBackgroundColor,
         drawer: const CoachNavigationDrawerWidget(),
         appBar: myAppBar(),
         body: myBody(context));
@@ -38,7 +38,7 @@ class _AdminHomeState extends State<CoachHome> {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Container(
-              color: backgroundColor,
+              color: coachBackgroundColor,
               child: const Center(
                 child: CircularProgressIndicator(),
               ),
@@ -59,12 +59,16 @@ class _AdminHomeState extends State<CoachHome> {
           return Padding(
             padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
             child: Card(
+              color: Colors.white,
               child: GestureDetector(
                 child: ListTile(
                     title: FutureBuilder(
                       future: getName(index),
                       builder: (context, snapshot) {
-                        return Text(snapshot.data.toString());
+                        return Text(
+                          snapshot.data.toString(),
+                          style: TextStyle(fontSize: 16.sp),
+                        );
                       },
                     ),
                     onTap: () async {
@@ -88,8 +92,7 @@ class _AdminHomeState extends State<CoachHome> {
   AppBar myAppBar() {
     return AppBar(
       title: const Text("Students"),
-      backgroundColor: appBarColor,
-      systemOverlayStyle: SystemUiOverlayStyle.dark,
+      backgroundColor: coachAppBarColor,
       actions: [
         IconButton(
             onPressed: () {

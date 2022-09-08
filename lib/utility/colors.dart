@@ -21,3 +21,6 @@ Color tile3Color2 = const Color(0xFFE040FB);
 
 Color buttonColor1 = const Color(0xFFff6d00);
 Color buttonColor2 = const Color(0xFFff9100);
+
+Color coachAppBarColor = orangeColor;
+Color coachBackgroundColor = const Color(0xFFcccab7);

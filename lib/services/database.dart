@@ -117,10 +117,10 @@ class DatabaseService {
         return feedback;
       } else {
         log('MYTAG : Answer not Found on the database');
-        return "Feedback Not Given Yet";
+        return "Coach has not Given feedback yet";
       }
     }
-    return "Feedback Not Given Yet";
+    return "Coach has not Given feedback yet";
   }
 
   static Future<bool> hasThisDocument(String collectionName, String id) async {

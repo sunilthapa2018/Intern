@@ -1,5 +1,8 @@
 import 'dart:developer';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:motivational_leadership/providers/student/type/student_autonomy_provider.dart';
@@ -23,26 +26,41 @@ class StudentHome extends StatefulWidget {
 class _StudentHomeState extends State<StudentHome> {
   @override
   Widget build(BuildContext context) {
-    // String name = loadName().toString();
     log("student home build ");
     log(MediaQuery.of(context).size.height.toString());
     log(MediaQuery.of(context).size.width.toString());
-    // addAllQuestionsToDatabase();
-    // setPortraitOnlyOrientation();
-    return Scaffold(
-      drawer: const StudentNavigationDrawerWidget(),
-      appBar: _buildAppBar(context),
-      body: FutureBuilder(
-          future: _loadInitialData(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
+
+    return FutureBuilder(
+        future: _loadInitialData(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Container(
+              color: backgroundColor,
+              child: const Center(
                 child: CircularProgressIndicator(),
-              );
-            }
-            return buildMainBody(context);
-          }),
-    );
+              ),
+            );
+          }
+          return Scaffold(
+            drawer: const StudentNavigationDrawerWidget(),
+            appBar: _buildAppBar(context),
+            body: buildMainBody(context),
+          );
+        });
+  }
+
+  storeNotificationToken() async {
+    String? token = await FirebaseMessaging.instance.getToken();
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .set({'token': token}, SetOptions(merge: true));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    storeNotificationToken();
   }
 
   Future<String> loadName() async {
@@ -56,17 +74,20 @@ class _StudentHomeState extends State<StudentHome> {
       titleSpacing: 0,
       toolbarHeight: 36,
       iconTheme: IconThemeData(color: iconColor),
-      backgroundColor: Colors.transparent,
+      backgroundColor: appBarColor,
       elevation: 0,
       systemOverlayStyle: const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
       ),
       actions: [
-        IconButton(
-            onPressed: () {
-              _refresh(context);
-            },
-            icon: const Icon(Icons.refresh)),
+        Padding(
+          padding: const EdgeInsets.only(right: 5),
+          child: IconButton(
+              onPressed: () {
+                _refresh(context);
+              },
+              icon: const Icon(Icons.refresh)),
+        ),
       ],
     );
   }

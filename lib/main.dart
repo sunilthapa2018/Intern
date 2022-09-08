@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -24,6 +25,7 @@ import 'package:motivational_leadership/providers/student/type/student_autonomy_
 import 'package:motivational_leadership/providers/student/type/student_belonging_provider.dart';
 import 'package:motivational_leadership/providers/student/type/student_competence_provider.dart';
 import 'package:motivational_leadership/services/database.dart';
+import 'package:motivational_leadership/services/local_push_notification.dart';
 import 'package:motivational_leadership/ui/admin/admin_home_page.dart';
 import 'package:motivational_leadership/ui/auth/sign_in_page.dart';
 import 'package:motivational_leadership/ui/coach/coach_home_page.dart';
@@ -33,9 +35,18 @@ import 'package:motivational_leadership/utility/utils.dart';
 import 'package:provider/provider.dart';
 
 String userType = "loading";
+Future<void> backgroundHandler(RemoteMessage message) async {
+  log(message.data.toString());
+  log(message.notification!.title.toString());
+}
+
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  NotificationService().initNotification();
+  // LocalNotificationService.initialize();
+  //FirebaseMessaging.onBackgroundMessage(backgroundHandler);
+
   runApp(const MyApp());
 }
 

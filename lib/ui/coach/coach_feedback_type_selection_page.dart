@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:motivational_leadership/providers/coach/type/coach_autonomy_provider.dart';
 import 'package:motivational_leadership/providers/coach/type/coach_belonging_provider.dart';
 import 'package:motivational_leadership/providers/coach/type/coach_competence_provider.dart';
@@ -32,7 +31,7 @@ class _CoachFeedbackTypeSelectionState
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Container(
-                color: backgroundColor,
+                color: coachBackgroundColor,
                 child: const Center(
                   child: CircularProgressIndicator(),
                 ),
@@ -46,8 +45,7 @@ class _CoachFeedbackTypeSelectionState
   AppBar _buildAppBar(BuildContext context) {
     return AppBar(
       title: const Text("Type Selection"),
-      backgroundColor: appBarColor,
-      systemOverlayStyle: SystemUiOverlayStyle.dark,
+      backgroundColor: coachAppBarColor,
       actions: [
         IconButton(
             onPressed: () {
@@ -61,7 +59,7 @@ class _CoachFeedbackTypeSelectionState
   _buildMainBody(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
-      color: backgroundColor,
+      color: coachBackgroundColor,
       height: double.infinity,
       child: Column(
         children: [

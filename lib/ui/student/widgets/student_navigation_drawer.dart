@@ -7,7 +7,8 @@ import 'package:motivational_leadership/ui/auth/sign_in_page.dart';
 import 'package:motivational_leadership/ui/common/profile_page.dart';
 import 'package:motivational_leadership/ui/common/widget/box_decoration.dart';
 import 'package:motivational_leadership/ui/common/widget/verticle_spacer.dart';
-import 'package:motivational_leadership/ui/student/feedback/student_feedback_new_page.dart';
+import 'package:motivational_leadership/ui/student/feedback/student_feedback_page.dart';
+import 'package:motivational_leadership/ui/student/student_contact_us_page.dart';
 import 'package:motivational_leadership/ui/student/student_home_page.dart';
 import 'package:motivational_leadership/utility/base_utils.dart';
 import 'package:motivational_leadership/utility/colors.dart';
@@ -31,21 +32,24 @@ class _StudentNavigationDrawerWidgetState
       backgroundColor: appBarColor,
       child: Column(
         children: [
-          title(context),
+          title(),
           verticleSpacer(20),
           home(context),
           feedback(context),
           profile(context),
           contactUs(context),
           const Expanded(child: SizedBox()),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Divider(color: Colors.black),
-          ),
+          line(),
           signOut(context),
+          line(),
+          verticleSpacer(60),
         ],
       ),
     );
+  }
+
+  Divider line() {
+    return const Divider(color: Colors.black);
   }
 
   ListTile signOut(BuildContext context) {
@@ -55,7 +59,7 @@ class _StudentNavigationDrawerWidgetState
         FontAwesomeIcons.arrowRightFromBracket,
         color: iconColor,
       ),
-      title: myText('Logout'),
+      title: myText('Sign Out'),
       onTap: () => selectedItem(context, 4),
     );
   }
@@ -108,7 +112,7 @@ class _StudentNavigationDrawerWidgetState
     );
   }
 
-  EdgeInsets myPadding() => const EdgeInsets.symmetric(horizontal: 20.0);
+  EdgeInsets myPadding() => const EdgeInsets.symmetric(horizontal: 24.0);
 
   Text myText(String title) {
     return Text(
@@ -121,19 +125,18 @@ class _StudentNavigationDrawerWidgetState
     );
   }
 
-  SizedBox title(BuildContext context) {
+  SizedBox title() {
     return SizedBox(
-      height: 120,
+      height: 140,
       child: Container(
         decoration: myBoxDecoration(),
-        // color: orangeColor,
         child: Row(children: [
           const Padding(
-            padding: EdgeInsets.fromLTRB(20, 50, 0, 20),
+            padding: EdgeInsets.fromLTRB(24, 50, 0, 20),
             child: Text(
               'Hey',
               style: TextStyle(
-                // color: Color(0xFF2e3c96),
+                fontFamily: 'Roboto',
                 color: Colors.black87,
                 fontWeight: FontWeight.w900,
                 fontSize: 36,
@@ -176,7 +179,7 @@ class _StudentNavigationDrawerWidgetState
       case 3:
         navigateTo(
             context: context,
-            nextPage: const Profile(),
+            nextPage: const StudentContactUs(),
             currentPage: const StudentHome());
         break;
       case 4:
@@ -184,39 +187,5 @@ class _StudentNavigationDrawerWidgetState
         navigateTo(
             context: context, nextPage: const SignIn(), currentPage: widget);
     }
-  }
-}
-
-class Title extends StatelessWidget {
-  const Title({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 120,
-      child: Container(
-        color: orangeColor,
-        // color: Color(0xFF52adc8),
-        child: Row(children: [
-          const Padding(
-            padding: EdgeInsets.fromLTRB(20, 50, 0, 20),
-            child: Text(
-              'Hey',
-              style: TextStyle(
-                color: Color(0xFF2e3c96),
-                fontWeight: FontWeight.w900,
-                fontSize: 36,
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(10, 50, 0, 20),
-            child: GetUserName(documentId: uid),
-          ),
-        ]),
-      ),
-    );
   }
 }

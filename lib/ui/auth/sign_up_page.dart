@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:motivational_leadership/services/database.dart';
+import 'package:motivational_leadership/utility/colors.dart';
 import 'package:motivational_leadership/utility/utils.dart';
 
 import '../../main.dart';
@@ -37,104 +38,110 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
-        const SystemUiOverlayStyle(statusBarColor: Colors.white));
+        SystemUiOverlayStyle(statusBarColor: backgroundColor));
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        toolbarHeight: 0,
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
-        systemOverlayStyle: SystemUiOverlayStyle.dark,
-      ),
-      body: Container(
-        //color: Colors.deepOrange,
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-        child: Form(
-          //autovalidateMode: AutovalidateMode.always,
-          key: formKey,
-          child: Column(
-            children: [
-              Column(
-                children: [
-                  Container(
-                    color: Colors.white,
-                    child: _buildHeaderText(),
-                  ),
-                  _buildLogo(),
-                  const SizedBox(height: 6),
-                  _buildNameTextField(),
-                  const SizedBox(height: 6),
-                  _buildEmailTextField(),
-                  const SizedBox(
-                    height: 6,
-                  ),
-                  TextFormField(
-                    controller: passwordController,
-                    decoration: const InputDecoration(
-                        labelText: "Password", hintText: "Enter your Password"),
-                    obscureText: true,
-                    validator: MultiValidator([
-                      RequiredValidator(errorText: 'Required'),
-                      MinLengthValidator(6,
-                          errorText: "It should be at least 6 characters"),
-                      MaxLengthValidator(15,
-                          errorText: "It should be Max 15 characters"),
-                    ]),
-                  ),
-                  const SizedBox(
-                    height: 6,
-                  ),
-                  TextFormField(
-                    controller: phoneController,
-                    decoration: const InputDecoration(
-                        //border: OutlineInputBorder(),
-                        labelText: "Phone No",
-                        hintText: "Enter your Phone Number"),
-                    validator: MultiValidator([
-                      MaxLengthValidator(10,
-                          errorText: "It should be at least 10 characters"),
-                    ]),
-                  ),
-                  const SizedBox(
-                    height: 24,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      if (formKey.currentState!.validate()) {
-                        registerUser();
-                      } else {
-                        Utils.showSnackBar(
-                            "Please make sure everything on this form is valid !");
-                      }
-                    },
-                    child: Container(
-                      alignment: Alignment.center,
-                      width: MediaQuery.of(context).size.width,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 24, vertical: 20),
-                      decoration: BoxDecoration(
-                          color: const Color(0xFF2e3c96),
-                          borderRadius: BorderRadius.circular(30)),
-                      child: const Text(
-                        "Sign Up",
-                        style: TextStyle(fontSize: 16, color: Colors.white),
-                      ),
+      backgroundColor: backgroundColor,
+      appBar: appBar(),
+      body: myBody(context),
+    );
+  }
+
+  Container myBody(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+      child: Form(
+        //autovalidateMode: AutovalidateMode.always,
+        key: formKey,
+        child: Column(
+          children: [
+            Column(
+              children: [
+                Container(
+                  color: Colors.white,
+                  child: _buildHeaderText(),
+                ),
+                _buildLogo(),
+                const SizedBox(height: 6),
+                _buildNameTextField(),
+                const SizedBox(height: 6),
+                _buildEmailTextField(),
+                const SizedBox(
+                  height: 6,
+                ),
+                TextFormField(
+                  controller: passwordController,
+                  decoration: const InputDecoration(
+                      labelText: "Password", hintText: "Enter your Password"),
+                  obscureText: true,
+                  validator: MultiValidator([
+                    RequiredValidator(errorText: 'Required'),
+                    MinLengthValidator(6,
+                        errorText: "It should be at least 6 characters"),
+                    MaxLengthValidator(15,
+                        errorText: "It should be Max 15 characters"),
+                  ]),
+                ),
+                const SizedBox(
+                  height: 6,
+                ),
+                TextFormField(
+                  controller: phoneController,
+                  decoration: const InputDecoration(
+                      //border: OutlineInputBorder(),
+                      labelText: "Phone No",
+                      hintText: "Enter your Phone Number"),
+                  validator: MultiValidator([
+                    MaxLengthValidator(10,
+                        errorText: "It should be at least 10 characters"),
+                  ]),
+                ),
+                const SizedBox(
+                  height: 24,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    if (formKey.currentState!.validate()) {
+                      registerUser();
+                    } else {
+                      Utils.showSnackBar(
+                          "Please make sure everything on this form is valid !");
+                    }
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    width: MediaQuery.of(context).size.width,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 24, vertical: 20),
+                    decoration: BoxDecoration(
+                        color: const Color(0xFF2e3c96),
+                        borderRadius: BorderRadius.circular(30)),
+                    child: const Text(
+                      "Sign Up",
+                      style: TextStyle(fontSize: 16, color: Colors.white),
                     ),
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 80,
-              ),
-              const Spacer(),
-            ],
-          ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 80,
+            ),
+            const Spacer(),
+          ],
         ),
       ),
+    );
+  }
+
+  AppBar appBar() {
+    return AppBar(
+      toolbarHeight: 0,
+      backgroundColor: Colors.transparent,
+      elevation: 0.0,
+      systemOverlayStyle: SystemUiOverlayStyle.dark,
     );
   }
 

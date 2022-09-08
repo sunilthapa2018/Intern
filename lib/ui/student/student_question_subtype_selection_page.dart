@@ -68,7 +68,7 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
       children: [
         Container(
           width: double.infinity,
-          margin: const EdgeInsets.fromLTRB(10, 15, 10, 10),
+          margin: const EdgeInsets.fromLTRB(20, 15, 20, 10),
           padding: const EdgeInsets.only(bottom: 10),
           decoration: BoxDecoration(
             border: Border.all(color: orangeColor, width: 1),
@@ -95,7 +95,7 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
       children: [
         Container(
           width: double.infinity,
-          margin: const EdgeInsets.fromLTRB(10, 20, 10, 10),
+          margin: const EdgeInsets.fromLTRB(20, 20, 20, 10),
           padding: const EdgeInsets.only(bottom: 10),
           decoration: BoxDecoration(
             border: Border.all(color: orangeColor, width: 1),
@@ -231,17 +231,21 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
           // log("MYTAG : Not Completed");
         }
       },
-      child: UnconstrainedBox(
-        child: Container(
-          alignment: Alignment.center,
-          width: MediaQuery.of(context).size.width / 3,
-          margin: const EdgeInsets.fromLTRB(0, 5, 0, 5),
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-          decoration: myButtonBox(),
-          child: Text(
-            "Submit",
-            style: Theme.of(context).textTheme.headline2,
-          ),
+      child: submitButton(context),
+    );
+  }
+
+  UnconstrainedBox submitButton(BuildContext context) {
+    return UnconstrainedBox(
+      child: Container(
+        alignment: Alignment.center,
+        width: MediaQuery.of(context).size.width / 3,
+        margin: const EdgeInsets.fromLTRB(0, 5, 0, 5),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        decoration: myButtonBox(),
+        child: Text(
+          "Submit",
+          style: Theme.of(context).textTheme.headline2,
         ),
       ),
     );
@@ -256,17 +260,20 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
       titleSpacing: 0,
       toolbarHeight: 36,
       iconTheme: IconThemeData(color: iconColor),
-      backgroundColor: Colors.transparent,
+      backgroundColor: appBarColor,
       elevation: 0,
       systemOverlayStyle: const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
       ),
       actions: [
-        IconButton(
-            onPressed: () {
-              _refresh(context);
-            },
-            icon: const Icon(Icons.refresh)),
+        Padding(
+          padding: const EdgeInsets.only(right: 5),
+          child: IconButton(
+              onPressed: () {
+                _refresh(context);
+              },
+              icon: const Icon(Icons.refresh)),
+        ),
       ],
     );
   }

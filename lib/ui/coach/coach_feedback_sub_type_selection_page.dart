@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -9,14 +11,18 @@ import 'package:motivational_leadership/providers/coach/subtype/coach_imp_provid
 import 'package:motivational_leadership/providers/coach/subtype/coach_io_provider.dart';
 import 'package:motivational_leadership/providers/coach/subtype/coach_oc_provider.dart';
 import 'package:motivational_leadership/providers/coach/subtype/coach_si_provider.dart';
+import 'package:motivational_leadership/services/local_push_notification.dart';
 import 'package:motivational_leadership/ui/coach/widgets/subtype/categories_tile/coach_action_tile.dart';
 import 'package:motivational_leadership/ui/coach/widgets/subtype/categories_tile/coach_future_tile.dart';
 import 'package:motivational_leadership/ui/coach/widgets/subtype/categories_tile/coach_imp_tile.dart';
 import 'package:motivational_leadership/ui/coach/widgets/subtype/categories_tile/coach_io_tile.dart';
 import 'package:motivational_leadership/ui/coach/widgets/subtype/categories_tile/coach_oc_tile.dart';
 import 'package:motivational_leadership/ui/coach/widgets/subtype/categories_tile/coach_si_tile.dart';
+import 'package:motivational_leadership/ui/student/widgets/my_button_box.dart';
 import 'package:motivational_leadership/utility/colors.dart';
+import 'package:motivational_leadership/utility/utils.dart';
 import 'package:provider/provider.dart';
+import 'package:timezone/data/latest.dart' as tz;
 
 class CoachFeedbackSubTypeSelection extends StatefulWidget {
   final String userID;
@@ -45,7 +51,7 @@ class _CoachFeedbackSubTypeSelectionState
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Container(
-                color: backgroundColor,
+                color: coachBackgroundColor,
                 child: const Center(
                   child: CircularProgressIndicator(),
                 ),
@@ -62,8 +68,7 @@ class _CoachFeedbackSubTypeSelectionState
   AppBar appBar(BuildContext context) {
     return AppBar(
       title: const Text("Sub Type Selection"),
-      backgroundColor: appBarColor,
-      systemOverlayStyle: SystemUiOverlayStyle.dark,
+      backgroundColor: coachAppBarColor,
       actions: [
         IconButton(
             onPressed: () {
@@ -102,6 +107,7 @@ class _CoachFeedbackSubTypeSelectionState
   initState() {
     super.initState();
     _questionType = widget.questionType;
+    tz.initializeTimeZones();
   }
 
   Text txtLoading() {
@@ -116,7 +122,7 @@ class _CoachFeedbackSubTypeSelectionState
 
   Container body(BuildContext context) {
     return Container(
-      color: backgroundColor,
+      color: coachBackgroundColor,
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
@@ -126,7 +132,6 @@ class _CoachFeedbackSubTypeSelectionState
               children: [
                 Container(
                   width: myWidth,
-                  height: 296,
                   margin: const EdgeInsets.fromLTRB(10, 20, 10, 10),
                   padding: const EdgeInsets.only(bottom: 10, top: 6),
                   decoration: BoxDecoration(
@@ -134,9 +139,7 @@ class _CoachFeedbackSubTypeSelectionState
                     borderRadius: BorderRadius.circular(10),
                     shape: BoxShape.rectangle,
                   ),
-                  child: ListView(
-                    physics: const NeverScrollableScrollPhysics(),
-                    padding: EdgeInsets.zero,
+                  child: Column(
                     children: [
                       CoachActionTile(
                         userID: widget.userID,
@@ -147,6 +150,7 @@ class _CoachFeedbackSubTypeSelectionState
 
                       CoachSITile(
                           userID: widget.userID, questionType: _questionType),
+                      planSubmitButton(context),
                       // overcomingChallenges(context),
                     ],
                   ),
@@ -161,7 +165,6 @@ class _CoachFeedbackSubTypeSelectionState
               children: [
                 Container(
                   width: myWidth,
-                  height: 296,
                   margin: const EdgeInsets.fromLTRB(10, 15, 10, 10),
                   padding: const EdgeInsets.only(bottom: 10, top: 6),
                   decoration: BoxDecoration(
@@ -169,9 +172,7 @@ class _CoachFeedbackSubTypeSelectionState
                     borderRadius: BorderRadius.circular(10),
                     shape: BoxShape.rectangle,
                   ),
-                  child: ListView(
-                    physics: const NeverScrollableScrollPhysics(),
-                    padding: EdgeInsets.zero,
+                  child: Column(
                     children: [
                       CoachImplementationTile(
                           userID: widget.userID, questionType: _questionType),
@@ -179,6 +180,7 @@ class _CoachFeedbackSubTypeSelectionState
                           userID: widget.userID, questionType: _questionType),
                       CoachFutureTile(
                           userID: widget.userID, questionType: _questionType),
+                      reflectSubmitButton(context),
                     ],
                   ),
                 ),
@@ -191,13 +193,90 @@ class _CoachFeedbackSubTypeSelectionState
     );
   }
 
+  GestureDetector planSubmitButton(BuildContext context) {
+    return GestureDetector(
+      onTap: () async {
+        String txtAValue = context.read<CoachActionProvider>().completedText;
+        String txtBValue = context.read<CoachOCProvider>().completedText;
+        String txtCValue = context.read<CoachSIProvider>().completedText;
+
+        bool aCompleted = getCompletedStatus(txtAValue);
+        bool bCompleted = getCompletedStatus(txtBValue);
+        bool cCompleted = getCompletedStatus(txtCValue);
+        log("MYTAG : $aCompleted , $bCompleted , $cCompleted");
+        String uid = FirebaseAuth.instance.currentUser!.uid;
+        if (aCompleted & bCompleted & cCompleted) {
+          NotificationService().showNotification(
+              1, "Feedback", "Your Coach had given you a feedback", 10);
+          // NotificationApi.showNotification(
+          //     title: "Sunil Thapa", body: "I got you", payload: "sunil");
+          //push notification
+        } else {
+          Utils.showSnackBar(
+              "Please complete all sections of PLAN before you can submit");
+          // log("MYTAG : Not Completed");
+        }
+      },
+      child: submitButton(context),
+    );
+  }
+
+  GestureDetector reflectSubmitButton(BuildContext context) {
+    return GestureDetector(
+      onTap: () async {
+        String txtDValue =
+            context.read<CoachImplementationProvider>().completedText;
+        String txtEValue = context.read<CoachIOProvider>().completedText;
+        String txtFValue = context.read<CoachFutureProvider>().completedText;
+
+        bool dCompleted = getCompletedStatus(txtDValue);
+        bool eCompleted = getCompletedStatus(txtEValue);
+        bool fCompleted = getCompletedStatus(txtFValue);
+
+        String uid = FirebaseAuth.instance.currentUser!.uid;
+        if (dCompleted & eCompleted & fCompleted) {
+          //push notification
+        } else {
+          Utils.showSnackBar(
+              "Please complete all sections of REFLECT before you can submit");
+          // log("MYTAG : Not Completed");
+        }
+      },
+      child: submitButton(context),
+    );
+  }
+
+  bool getCompletedStatus(String value) {
+    if (value == "Feedback Given") {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  UnconstrainedBox submitButton(BuildContext context) {
+    return UnconstrainedBox(
+      child: Container(
+        alignment: Alignment.center,
+        width: MediaQuery.of(context).size.width / 3,
+        margin: const EdgeInsets.fromLTRB(0, 5, 0, 5),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        decoration: myButtonBox(),
+        child: Text(
+          "Push Student Notification",
+          style: Theme.of(context).textTheme.headline1,
+        ),
+      ),
+    );
+  }
+
   Positioned planSection() {
     return Positioned(
         left: 50,
         top: 12,
         child: Container(
           padding: const EdgeInsets.only(left: 10, right: 10),
-          color: backgroundColor,
+          color: coachBackgroundColor,
           child: Text(
             'Plan',
             style: TextStyle(
@@ -215,7 +294,7 @@ class _CoachFeedbackSubTypeSelectionState
         top: 7,
         child: Container(
           padding: const EdgeInsets.only(left: 10, right: 10),
-          color: backgroundColor,
+          color: coachBackgroundColor,
           child: Text(
             'Reflect',
             style: TextStyle(

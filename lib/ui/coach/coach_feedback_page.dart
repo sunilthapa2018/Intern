@@ -27,7 +27,7 @@ class _CoachFeedbackPageState extends State<CoachFeedbackPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      backgroundColor: coachBackgroundColor,
       appBar: appBar(context),
       body: body(context),
     );
@@ -103,7 +103,7 @@ class _CoachFeedbackPageState extends State<CoachFeedbackPage> {
       padding: const EdgeInsets.all(10.0),
       decoration: BoxDecoration(
           border: Border.all(
-            color: Colors.blue,
+            color: coachAppBarColor,
           ),
           borderRadius: const BorderRadius.all(Radius.circular(3))),
       child: Align(alignment: Alignment.centerLeft, child: answer()),
@@ -186,7 +186,7 @@ class _CoachFeedbackPageState extends State<CoachFeedbackPage> {
         color: Colors.black,
         fontSize: 20.sp,
       ),
-      // minLines: 10,
+      minLines: 10,
       maxLines: null,
       controller: feedbackController,
       decoration: const InputDecoration(
@@ -300,7 +300,7 @@ class _CoachFeedbackPageState extends State<CoachFeedbackPage> {
   AppBar appBar(BuildContext context) {
     return AppBar(
       title: const Text("Feedback"),
-      backgroundColor: appBarColor,
+      backgroundColor: coachAppBarColor,
     );
   }
 

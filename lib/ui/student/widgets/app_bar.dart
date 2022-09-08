@@ -6,7 +6,7 @@ AppBar buildAppBar(BuildContext context) {
   return AppBar(
     toolbarHeight: 36,
     iconTheme: IconThemeData(color: iconColor),
-    backgroundColor: Colors.white,
+    backgroundColor: appBarColor,
     elevation: 0,
     systemOverlayStyle: const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
