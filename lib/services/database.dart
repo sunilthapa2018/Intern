@@ -31,6 +31,18 @@ class DatabaseService {
     }
   }
 
+  static Future<String> getToken(String uid) async {
+    final docRef = FirebaseFirestore.instance.collection('users').doc(uid);
+    DocumentSnapshot doc = await docRef.get();
+    if (doc.exists) {
+      String token = await doc.get("token");
+      log('MYTAG getToken Token = $token');
+      return token;
+    } else {
+      return "";
+    }
+  }
+
   static Future<String> getUserType(String uid) async {
     final docRef = FirebaseFirestore.instance.collection('users').doc(uid);
     DocumentSnapshot doc = await docRef.get();
