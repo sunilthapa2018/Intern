@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:form_field_validator/form_field_validator.dart';
@@ -86,7 +84,6 @@ class _StudentContactUsState extends State<StudentContactUs> {
             subject: subject,
             message: message,
           );
-          log("Hello how r u");
         } else {
           Utils.showSnackBar(
               "Please make sure everything on this form is valid !");

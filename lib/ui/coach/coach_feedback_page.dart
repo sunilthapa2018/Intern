@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -146,7 +144,6 @@ class _CoachFeedbackPageState extends State<CoachFeedbackPage> {
               Utils.showSnackBar('Your Feedback has been saved');
             }
           } on FirebaseAuthException catch (e) {
-            log(e.toString());
             Utils.showSnackBar(e.message);
           }
         } else {
@@ -200,7 +197,6 @@ class _CoachFeedbackPageState extends State<CoachFeedbackPage> {
   FutureBuilder<String> question() {
     _questionNumber++;
     questionFuture = getQuestion();
-    log("_questionNumber = $_questionNumber");
     return FutureBuilder<String>(
         future: questionFuture,
         builder: (context, snapshot) {
@@ -262,13 +258,11 @@ class _CoachFeedbackPageState extends State<CoachFeedbackPage> {
   FutureBuilder<String> answer() {
     // _questionNumber++;
     answerFuture = getAnswer();
-    log("_questionNumber = $_questionNumber");
     return FutureBuilder<String>(
         future: answerFuture,
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
-              log("Connection State = Waiting $snapshot");
               if (snapshot.hasData) {
                 String data = snapshot.data!;
                 return answerText(data);
@@ -277,7 +271,6 @@ class _CoachFeedbackPageState extends State<CoachFeedbackPage> {
               }
             case ConnectionState.done:
             default:
-              log("Connection State = done $snapshot");
               if (snapshot.hasError) {
                 final error = snapshot.error;
                 return Text("$error");
@@ -327,18 +320,12 @@ class _CoachFeedbackPageState extends State<CoachFeedbackPage> {
         .where('uid', isEqualTo: widget.uId)
         .where('qid', isEqualTo: questionId)
         .get();
-    final int documents = snapshot.docs.length;
-    log('MYTAG : From getAnswer, uid = $uid , qid = $questionId , total answer = $documents');
     for (var doc in snapshot.docs) {
       if (snapshot.docs.isNotEmpty) {
         _answer = doc.get('answer');
         answerId = doc.id;
-        // answerController.text = _answer.toString();
-        log('MYTAG : Answer Found on the database');
-        log("_answer = $_answer");
         return _answer;
       } else {
-        log('MYTAG : Answer not Found on the database');
         return "Answer not Found on the database.";
       }
     }
@@ -358,9 +345,6 @@ class _CoachFeedbackPageState extends State<CoachFeedbackPage> {
       if (snapshot.docs.isNotEmpty) {
         question = doc.get('question');
         questionId = doc.id;
-        log('MYTAG : question Found on the database, questionId = $questionId');
-      } else {
-        log('MYTAG : question not Found on the database');
       }
     }
 
@@ -377,9 +361,6 @@ class _CoachFeedbackPageState extends State<CoachFeedbackPage> {
     for (var doc in snapshot.docs) {
       if (snapshot.docs.isNotEmpty) {
         questionId = doc.id;
-        log('MYTAG : From : getQuestionId $questionId Found on the database : $questionId');
-      } else {
-        log('MYTAG : questionId not Found on the database');
       }
     }
     return questionId;
@@ -415,7 +396,6 @@ class _CoachFeedbackPageState extends State<CoachFeedbackPage> {
       });
       Utils.showSnackBar('Your Feedback has been updated');
     } on FirebaseAuthException catch (e) {
-      log("mytag $e");
       Utils.showSnackBar("Failed to update Feedback: $e.message");
     }
     // ignore: use_build_context_synchronously
@@ -470,10 +450,8 @@ class _CoachFeedbackPageState extends State<CoachFeedbackPage> {
         feedbackId = doc.id;
         feedbackController.text = _feedback.toString();
         hasFeedback = true;
-        log('MYTAG : Feedback Found on the database');
       } else {
         hasFeedback = false;
-        log('MYTAG : Feedback not Found on the database');
       }
     }
   }

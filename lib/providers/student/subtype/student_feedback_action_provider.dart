@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:motivational_leadership/services/database.dart';
 
@@ -13,13 +11,13 @@ class StudentActionProvider extends ChangeNotifier {
       bool notify = false}) async {
     isLoading = true;
     if (notify) notifyListeners();
-    log("$this type = $type and subType = $subType");
+
     String text =
         await DatabaseService.getStudentSubTypeReturnData(type, subType);
     String returnText = text;
     completedText = returnText;
     isLoading = false;
-    log("subtype returnText = $returnText");
+
     if (notify) notifyListeners();
   }
 }

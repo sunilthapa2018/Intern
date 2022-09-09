@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:motivational_leadership/providers/student/type/student_competence_provider.dart';
 import 'package:motivational_leadership/ui/common/widget/type_decoration_box_3.dart';
@@ -29,7 +27,6 @@ class _StudentCompetenceTileState extends State<StudentCompetenceTile> {
     final completedText =
         context.watch<StudentCompetenceProvider>().completedText;
     final isLoading = context.watch<StudentCompetenceProvider>().isLoading;
-    log("first comp tile");
     return GestureDetector(
       child: Container(
         padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),

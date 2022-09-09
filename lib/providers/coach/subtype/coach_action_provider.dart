@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:motivational_leadership/services/database.dart';
 
@@ -19,7 +17,6 @@ class CoachActionProvider extends ChangeNotifier {
     String returnText = text;
     completedText = returnText;
     isLoading = false;
-    log("subtype returnText = $returnText");
     if (notify) notifyListeners();
   }
 }

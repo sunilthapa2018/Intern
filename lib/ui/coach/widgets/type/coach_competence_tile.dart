@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:motivational_leadership/providers/coach/type/coach_competence_provider.dart';
 import 'package:motivational_leadership/ui/coach/coach_feedback_sub_type_selection_page.dart';
@@ -21,7 +19,7 @@ class CoachCompetenceTile extends StatelessWidget {
     final completedText =
         context.watch<CoachCompetenceProvider>().completedText;
     final isLoading = context.watch<CoachCompetenceProvider>().isLoading;
-    log("Coach comp tile");
+
     return GestureDetector(
       child: Container(
         width: MediaQuery.of(context).size.width / 2,

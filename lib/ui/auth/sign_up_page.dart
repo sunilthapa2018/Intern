@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -228,7 +226,6 @@ class _SignUpState extends State<SignUp> {
       //print("MYTAG : uid = " + user.uid);
 
     } on FirebaseAuthException catch (e) {
-      log(e.toString());
       Utils.showSnackBar(e.message);
     }
     navigatorKey.currentState!.popUntil((route) => route.isFirst);

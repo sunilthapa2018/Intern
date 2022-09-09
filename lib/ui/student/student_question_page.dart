@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -117,7 +115,6 @@ class _QuestionState extends State<Question> {
               Utils.showSnackBar('Your answer has been saved');
             }
           } on FirebaseAuthException catch (e) {
-            log(e.toString());
             Utils.showSnackBar(e.message);
           }
         } else {
@@ -350,18 +347,15 @@ class _QuestionState extends State<Question> {
         .where('uid', isEqualTo: uid)
         .where('qid', isEqualTo: questionId)
         .get();
-    final int documents = snapshot.docs.length;
-    log('MYTAG : From Question/loadDataToTextbox/, uid = $uid , qid = $questionId , total answer = $documents');
+
     for (var doc in snapshot.docs) {
       if (snapshot.docs.isNotEmpty) {
         _answer = doc.get('answer');
         answerId = doc.id;
         answerController.text = _answer.toString();
         hasAnswer = true;
-        log('MYTAG : Answer Found on the database');
       } else {
         hasAnswer = false;
-        log('MYTAG : Answer not Found on the database');
       }
     }
   }
@@ -374,15 +368,10 @@ class _QuestionState extends State<Question> {
         .where('type', isEqualTo: _questionType)
         .where('sub type', isEqualTo: _questionSubType)
         .get();
-    // final int documents = snapshot.docs.length;
-    // log('MYTAG : From Question/getQuestion/Type = $_questionType , sub type = $_questionSubType , _questionNumber = $_questionNumber , DataCount = $documents' );
     for (var doc in snapshot.docs) {
       if (snapshot.docs.isNotEmpty) {
         question = doc.get('question');
         questionId = doc.id;
-        log('MYTAG : question Found on the database, questionId = $questionId');
-      } else {
-        log('MYTAG : question not Found on the database');
       }
     }
 
@@ -399,9 +388,6 @@ class _QuestionState extends State<Question> {
     for (var doc in snapshot.docs) {
       if (snapshot.docs.isNotEmpty) {
         questionId = doc.id;
-        log('MYTAG : From : getQuestionId $questionId Found on the database : $questionId');
-      } else {
-        log('MYTAG : questionId not Found on the database');
       }
     }
     return questionId;
@@ -415,7 +401,6 @@ class _QuestionState extends State<Question> {
         .get();
     final int qDocuments = qSnapshot.docs.length;
     totalQuestion = qDocuments;
-    // log('MYTAG : totalQuestion = $totalQuestion');
     return qDocuments.toString();
   }
 
@@ -433,7 +418,6 @@ class _QuestionState extends State<Question> {
       await answers.doc(answerId).update({'answer': answer});
       Utils.showSnackBar('Your Answer has been updated');
     } on FirebaseAuthException catch (e) {
-      log("mytag $e");
       Utils.showSnackBar("Failed to update Answer: $e.message");
     }
     if (!mounted) return;
@@ -458,7 +442,6 @@ class _QuestionState extends State<Question> {
         'sub type': _questionSubType,
       });
     } on FirebaseAuthException catch (e) {
-      log(e.toString());
       Utils.showSnackBar(e.message);
     }
     if (!mounted) return;

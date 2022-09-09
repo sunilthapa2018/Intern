@@ -233,7 +233,6 @@ class _MainPageState extends State<MainPage> {
                 }
                 if (snapshot.data != null && snapshot.hasData) {
                   final userType = snapshot.data;
-                  log("usertype:$userType");
                   if (userType == 'admin') {
                     return const AdminHome();
                   } else if (userType == 'coach') {
@@ -254,11 +253,10 @@ class _MainPageState extends State<MainPage> {
 
   Future<String?> getType() async {
     userType = "loading";
-    log("getType executed : usertype = $userType");
     if (FirebaseAuth.instance.currentUser != null) {
       String uid = FirebaseAuth.instance.currentUser!.uid;
       userType = await DatabaseService.getUserType(uid);
-      log("main.dart : getType : userType = $userType");
+
       return userType;
     }
     return null;

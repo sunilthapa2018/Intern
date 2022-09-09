@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:motivational_leadership/providers/student/type/student_belonging_provider.dart';
 import 'package:motivational_leadership/ui/common/widget/type_decoration_box_2.dart';
@@ -30,7 +28,7 @@ class _StudentBelongingTileState extends State<StudentBelongingTile> {
     final completedText =
         context.watch<StudentBelongingProvider>().completedText;
     final isLoading = context.watch<StudentBelongingProvider>().isLoading;
-    log("first belog tile");
+
     return GestureDetector(
       child: Container(
         padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:motivational_leadership/providers/coach/type/coach_belonging_provider.dart';
 import 'package:motivational_leadership/ui/coach/coach_feedback_sub_type_selection_page.dart';
@@ -20,7 +18,7 @@ class CoachBelongingTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final completedText = context.watch<CoachBelongingProvider>().completedText;
     final isLoading = context.watch<CoachBelongingProvider>().isLoading;
-    log("first belog tile");
+
     return GestureDetector(
       child: Container(
         width: MediaQuery.of(context).size.width / 2,

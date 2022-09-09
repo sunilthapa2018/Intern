@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -223,11 +221,9 @@ class _SignInState extends State<SignIn> {
       String uid = FirebaseAuth.instance.currentUser!.uid;
       String name = await DatabaseService.getUserName(uid);
       await prefs.setString('name', name);
-      log("mytag $password is saved as password\n");
-      log("Sign IN executed sucessfully");
+
       navigatorKey.currentState!.popUntil((route) => route.isFirst);
     } on FirebaseAuthException catch (e) {
-      log(e.toString());
       Utils.showSnackBar(e.message);
       Navigator.pop(context);
     }

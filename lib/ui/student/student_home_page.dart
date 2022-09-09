@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -27,10 +25,6 @@ class StudentHome extends StatefulWidget {
 class _StudentHomeState extends State<StudentHome> {
   @override
   Widget build(BuildContext context) {
-    log("student home build ");
-    log(MediaQuery.of(context).size.height.toString());
-    log(MediaQuery.of(context).size.width.toString());
-
     return FutureBuilder(
         future: _loadInitialData(),
         builder: (context, snapshot) {

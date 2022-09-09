@@ -205,22 +205,11 @@ class _CoachFeedbackSubTypeSelectionState
         bool aCompleted = getCompletedStatus(txtAValue);
         bool bCompleted = getCompletedStatus(txtBValue);
         bool cCompleted = getCompletedStatus(txtCValue);
-        log("MYTAG : $aCompleted , $bCompleted , $cCompleted");
-        // String uid = FirebaseAuth.instance.currentUser!.uid;
-
+        sendPushMessage();
         if (aCompleted & bCompleted & cCompleted) {
-          // Map<String, String> data = HashMap<String, String>();
-          // data.putIfAbsent("key", () => "null");
-
-          // NotificationService().showNotification(
-          //     1, "Feedback", "Your Coach had given you a feedback", 1);
-          // NotificationApi.showNotification(
-          //     title: "Sunil Thapa", body: "I got you", payload: "sunil");
-          //push notification
         } else {
           Utils.showSnackBar(
               "Please complete all sections of PLAN before you can submit");
-          // log("MYTAG : Not Completed");
         }
       },
       child: submitButton(context),
@@ -245,7 +234,7 @@ class _CoachFeedbackSubTypeSelectionState
       );
       log('FCM request for device sent!');
     } catch (e) {
-      log(e.toString());
+      Utils.showSnackBar(e.toString());
     }
   }
 
@@ -281,7 +270,6 @@ class _CoachFeedbackSubTypeSelectionState
         } else {
           Utils.showSnackBar(
               "Please complete all sections of REFLECT before you can submit");
-          // log("MYTAG : Not Completed");
         }
       },
       child: submitButton(context),

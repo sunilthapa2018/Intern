@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -141,29 +139,26 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
         bool dCompleted = getCompletedStatus(txtDValue);
         bool eCompleted = getCompletedStatus(txtEValue);
         bool fCompleted = getCompletedStatus(txtFValue);
-        log("MYTAG : $dCompleted , $eCompleted , $fCompleted");
+
         String uid = FirebaseAuth.instance.currentUser!.uid;
         if (dCompleted & eCompleted & fCompleted) {
           bool dataAlreadyPresent =
               await DatabaseService.hasThisDocument("submissions", uid);
-          log("Mytag : dataAlreadyPresent = $dataAlreadyPresent");
+
           if (dataAlreadyPresent) {
             //edit data in database
             DatabaseService.updateSubmissions("reflect", "true");
             Utils.showSnackBar(
                 "Your answer has been Edited and re-submitted for Reflect section");
-            log("MYTAG : updateSubmissions Completed ...");
           } else {
             //write new data to database
             DatabaseService.addSubmissions("false", "true");
             Utils.showSnackBar(
                 "Your answer has been submitted for Reflect section");
-            log("MYTAG : addSubmissions Completed ...");
           }
         } else {
           Utils.showSnackBar(
               "Please complete all sections of REFLECT before you can submit");
-          log("MYTAG : Not Completed");
         }
       },
       child: UnconstrainedBox(
@@ -206,29 +201,26 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
         bool aCompleted = getCompletedStatus(txtAValue);
         bool bCompleted = getCompletedStatus(txtBValue);
         bool cCompleted = getCompletedStatus(txtCValue);
-        log("MYTAG : $aCompleted , $bCompleted , $cCompleted");
+
         String uid = FirebaseAuth.instance.currentUser!.uid;
         if (aCompleted & bCompleted & cCompleted) {
           bool dataAlreadyPresent =
               await DatabaseService.hasThisDocument("submissions", uid);
-          log("Mytag : dataAlreadyPresent = $dataAlreadyPresent");
+
           if (dataAlreadyPresent) {
             //edit data in database
             DatabaseService.updateSubmissions("plan", "true");
             Utils.showSnackBar(
                 "Your answer has been Edited and re-submitted for PLAN section");
-            // log("MYTAG : updateSubmissions Completed ...");
           } else {
             //write new data to database
             DatabaseService.addSubmissions("true", "false");
             Utils.showSnackBar(
                 "Your answer has been submitted for PLAN section");
-            // log("MYTAG : addSubmissions Completed ...");
           }
         } else {
           Utils.showSnackBar(
               "Please complete all sections of PLAN before you can submit");
-          // log("MYTAG : Not Completed");
         }
       },
       child: submitButton(context),

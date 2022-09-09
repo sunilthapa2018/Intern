@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -236,7 +234,6 @@ class _ProfileState extends State<Profile> {
         await prefs.setString('password', pass);
       }
     } on FirebaseAuthException catch (e) {
-      log("mytag $e");
       Utils.showSnackBar("Failed to update user: $e.message");
     }
 
@@ -248,7 +245,6 @@ class _ProfileState extends State<Profile> {
       users.doc(uid).update({'full name': name, 'phone': phone});
       Utils.showSnackBar("User details have been updated");
     } on FirebaseAuthException catch (e) {
-      log("mytag $e");
       Utils.showSnackBar("Failed to update user: $e.message");
     }
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
@@ -261,16 +257,15 @@ class _ProfileState extends State<Profile> {
         .get()
         .then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
-        // name = doc["full name"];
         name = documentSnapshot.get("full name");
         phone = documentSnapshot.get("phone");
-        log('Document data: ${documentSnapshot.data()}\n');
-        log('Full name : $name phone : $phone\n');
+
         nameController.text = name;
         emailController.text = email;
         phoneController.text = phone;
       } else {
-        log('Document does not exist on the database');
+        Utils.showSnackBar(
+            "Failed Error Message: Document does not exist on the database");
       }
     });
   }

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -24,7 +22,6 @@ class DatabaseService {
     DocumentSnapshot doc = await docRef.get();
     if (doc.exists) {
       String name = await doc.get("full name");
-      log('MYTAG getUserName NAME = $name');
       return name;
     } else {
       return "";
@@ -36,7 +33,6 @@ class DatabaseService {
     DocumentSnapshot doc = await docRef.get();
     if (doc.exists) {
       String token = await doc.get("token");
-      log('MYTAG getToken Token = $token');
       return token;
     } else {
       return "";
@@ -48,7 +44,6 @@ class DatabaseService {
     DocumentSnapshot doc = await docRef.get();
     if (doc.exists) {
       String type = await doc.get("type");
-      log('MYTAG getUserName NAME = $type');
       return type;
     } else {
       return "loading";
@@ -75,7 +70,6 @@ class DatabaseService {
         .where('sub type', isEqualTo: questionSubType)
         .get();
     final int qDocuments = qSnapshot.docs.length;
-    log("questionType = $questionType and questionSubType = $questionSubType");
     return qDocuments.toString();
   }
 
@@ -125,10 +119,8 @@ class DatabaseService {
     for (var doc in qSnapshot.docs) {
       if (qSnapshot.docs.isNotEmpty) {
         String feedback = doc.get('feedback');
-        log('MYTAG : Answer Found on the database');
         return feedback;
       } else {
-        log('MYTAG : Answer not Found on the database');
         return "Coach has not Given feedback yet";
       }
     }
@@ -146,7 +138,7 @@ class DatabaseService {
         return false;
       }
     } on FirebaseAuthException catch (e) {
-      log("Error(hasThisDocument) $e");
+      Utils.showSnackBar("Failed to update submissions: $e.message");
     }
     return false;
   }
@@ -158,7 +150,6 @@ class DatabaseService {
     try {
       submissions.doc(uid).update({type: value});
     } on FirebaseAuthException catch (e) {
-      log("mytag $e");
       Utils.showSnackBar("Failed to update submissions: $e.message");
     }
   }
@@ -174,8 +165,7 @@ class DatabaseService {
         'reflect': reflect,
       });
     } on FirebaseAuthException catch (e) {
-      log("mytag $e");
-      Utils.showSnackBar("Failed to add submissions: $e.message");
+      Utils.showSnackBar("Failed Error Message: $e.message");
     }
   }
 
@@ -191,7 +181,7 @@ class DatabaseService {
       });
       return itemsList;
     } catch (e) {
-      log(e.toString());
+      Utils.showSnackBar("Failed Error Message: $e.message");
     }
   }
 
@@ -204,17 +194,16 @@ class DatabaseService {
         bool feedbackGiven = false;
 
         for (var element in querySnapshot.docs) {
-          log(element.id);
           feedbackGiven = await checkIfFeedbackIsGiven(element.id);
           if (!feedbackGiven) {
             itemsList.add(element.id);
           }
         }
       });
-      log(itemsList.toString());
+
       return itemsList;
     } catch (e) {
-      log("Error(getFeedbackNotGivenUserList) $e");
+      Utils.showSnackBar("Failed Error Message: $e.message");
     }
   }
 
@@ -227,22 +216,19 @@ class DatabaseService {
         bool feedbackGiven = false;
 
         for (var element in querySnapshot.docs) {
-          log(element.id);
           feedbackGiven = await checkIfFeedbackIsGiven(element.id);
           if (feedbackGiven) {
             itemsList.add(element.id);
           }
         }
       });
-      log(itemsList.toString());
       return itemsList;
     } catch (e) {
-      log("Error(getFeedbackNotGivenUserList) $e");
+      Utils.showSnackBar("Failed Error Message: $e.message");
     }
   }
 
   static Future<bool> checkIfFeedbackIsGiven(String studentId) async {
-    log("studentId = $studentId");
     bool hasDocument = await hasThisDocument("feedback_submissions", studentId);
     if (!hasDocument) {
       return false;

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
@@ -96,7 +94,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         try {
                           resetPassword();
                         } on FirebaseAuthException catch (e) {
-                          log(e.toString());
                           Utils.showSnackBar(e.message);
                         }
                       } else {
@@ -141,7 +138,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
           .sendPasswordResetEmail(email: emailController.text.trim());
       Utils.showSnackBar('Password Reset Email has been sent');
     } on FirebaseAuthException catch (e) {
-      log(e.toString());
       Utils.showSnackBar(e.message);
     }
   }

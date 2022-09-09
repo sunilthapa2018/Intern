@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +11,7 @@ class GetUserName extends StatelessWidget {
         .where('type'.toLowerCase(), isEqualTo: type.toLowerCase())
         .get();
     final int documents = snapshot.docs.length;
-    log('MYTAG : From Home.dart questionCount = $documents');
+
     if (documents > 0) {
       return documents;
     } else {

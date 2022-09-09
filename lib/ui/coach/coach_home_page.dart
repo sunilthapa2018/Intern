@@ -38,7 +38,7 @@ class _AdminHomeState extends State<CoachHome> {
 
   storeNotificationToken() async {
     String? token = await FirebaseMessaging.instance.getToken();
-    log(token.toString());
+    log("token = $token");
     FirebaseFirestore.instance
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -169,7 +169,6 @@ class _AdminHomeState extends State<CoachHome> {
     }
 
     if (resultant == null) {
-      log("MYTAG: unable to retreive");
       return userSubmissionList;
     } else {
       userSubmissionList = resultant;
@@ -184,9 +183,9 @@ class _AdminHomeState extends State<CoachHome> {
 
   Future getName(int index) async {
     String uID = userSubmissionList[index].toString().trim();
-    log("MYTAG : getName : uID = $uID");
+
     dynamic userName = await DatabaseService.getUserName(uID);
-    log("MYTAG : getName : userName = $userName");
+
     return userName;
   }
 }
