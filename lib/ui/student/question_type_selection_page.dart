@@ -2,25 +2,24 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:motivational_leadership/ui/student/question_display_page.dart';
 import 'package:motivational_leadership/services/database.dart';
+import 'package:motivational_leadership/ui/student/question_display_page.dart';
 import 'package:motivational_leadership/utility/base_util.dart';
 import 'package:page_transition/page_transition.dart';
-
 
 class QuestionTypeSelection extends StatefulWidget {
   final String questionType;
 
-  QuestionTypeSelection({required this.questionType});
+  const QuestionTypeSelection({required this.questionType});
   @override
   _QuestionTypeSelectionState createState() => _QuestionTypeSelectionState();
 }
 
 class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
   late String _questionType = "";
-  Color backgroundColor = Color(0xFFD9D9D9);
-  Color itemColor = Color(0xFF417CA9);
-  Color appBarColor = Color(0xFFF2811D);
+  Color backgroundColor = const Color(0xFFD9D9D9);
+  Color itemColor = const Color(0xFF417CA9);
+  Color appBarColor = const Color(0xFFF2811D);
 
   late Future<String> dataAFuture;
   late Future<String> dataBFuture;
@@ -28,42 +27,42 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
   late Future<String> dataDFuture;
   late Future<String> dataEFuture;
   late Future<String> dataFFuture;
-  Text txtA = Text(
+  Text txtA = const Text(
     "Loading...",
     style: TextStyle(
       color: Colors.white,
       fontSize: 16,
     ),
   );
-  Text txtB = Text(
+  Text txtB = const Text(
     "Loading...",
     style: TextStyle(
       color: Colors.white,
       fontSize: 16,
     ),
   );
-  Text txtC = Text(
+  Text txtC = const Text(
     "Loading...",
     style: TextStyle(
       color: Colors.white,
       fontSize: 16,
     ),
   );
-  Text txtD = Text(
+  Text txtD = const Text(
     "Loading...",
     style: TextStyle(
       color: Colors.white,
       fontSize: 16,
     ),
   );
-  Text txtE = Text(
+  Text txtE = const Text(
     "Loading...",
     style: TextStyle(
       color: Colors.white,
       fontSize: 16,
     ),
   );
-  Text txtF = Text(
+  Text txtF = const Text(
     "Loading...",
     style: TextStyle(
       color: Colors.white,
@@ -77,8 +76,8 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
         backgroundColor: backgroundColor,
         // drawer: const NavigationDrawerWidget(),
         appBar: AppBar(
-          title: Text("Question Type Selection"),
-          backgroundColor: Color(0xFFF2811D),
+          title: const Text("Question Type Selection"),
+          backgroundColor: const Color(0xFFF2811D),
           // toolbarHeight: 0,
           // backgroundColor: Colors.transparent,
           // elevation: 0.0,
@@ -94,15 +93,15 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
                   Container(
                     width: double.infinity,
                     height: 330,
-                    margin: EdgeInsets.fromLTRB(10, 20, 10, 10),
-                    padding: EdgeInsets.only(bottom: 10),
+                    margin: const EdgeInsets.fromLTRB(10, 20, 10, 10),
+                    padding: const EdgeInsets.only(bottom: 10),
                     decoration: BoxDecoration(
                       border: Border.all(color: itemColor, width: 1),
                       borderRadius: BorderRadius.circular(10),
                       shape: BoxShape.rectangle,
                     ),
                     child: ListView(
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       padding: EdgeInsets.zero,
                       children: [
                         GestureDetector(
@@ -111,20 +110,19 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
                             margin: const EdgeInsets.fromLTRB(10, 10, 10, 5),
                             decoration: BoxDecoration(
                                 color: itemColor,
-                                borderRadius: new BorderRadius.only(
-                                  topLeft: const Radius.circular(5.0),
-                                  topRight: const Radius.circular(20.0),
-                                  bottomLeft: const Radius.circular(20.0),
-                                  bottomRight: const Radius.circular(5.0),
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(5.0),
+                                  topRight: Radius.circular(20.0),
+                                  bottomLeft: Radius.circular(20.0),
+                                  bottomRight: Radius.circular(5.0),
                                 )),
 
                             child: Column(
                               children: [
-                                Align(
+                                const Align(
                                   alignment: Alignment.centerLeft,
                                   child: Padding(
-                                    padding: const EdgeInsets.fromLTRB(
-                                        30, 10, 0, 10),
+                                    padding: EdgeInsets.fromLTRB(30, 10, 0, 10),
                                     child: Text(
                                       'Actions',
                                       style: TextStyle(
@@ -149,14 +147,14 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
                                           } else if (snapshot.hasData) {
                                             String data = snapshot.data!;
                                             return txtA = Text(
-                                              "$data",
-                                              style: TextStyle(
+                                              data,
+                                              style: const TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 16,
                                               ),
                                             );
                                           } else {
-                                            return txtA = Text(
+                                            return txtA = const Text(
                                               "Loading...",
                                               style: TextStyle(
                                                 color: Colors.white,
@@ -187,20 +185,19 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
                             margin: const EdgeInsets.fromLTRB(10, 5, 10, 5),
                             decoration: BoxDecoration(
                                 color: itemColor,
-                                borderRadius: new BorderRadius.only(
-                                  topLeft: const Radius.circular(5.0),
-                                  topRight: const Radius.circular(20.0),
-                                  bottomLeft: const Radius.circular(20.0),
-                                  bottomRight: const Radius.circular(5.0),
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(5.0),
+                                  topRight: Radius.circular(20.0),
+                                  bottomLeft: Radius.circular(20.0),
+                                  bottomRight: Radius.circular(5.0),
                                 )),
                             // color: Color(0xFF52adc8),
                             child: Column(
                               children: [
-                                Align(
+                                const Align(
                                   alignment: Alignment.centerLeft,
                                   child: Padding(
-                                    padding: const EdgeInsets.fromLTRB(
-                                        30, 10, 0, 10),
+                                    padding: EdgeInsets.fromLTRB(30, 10, 0, 10),
                                     child: Text(
                                       'Overcoming Challenges',
                                       style: TextStyle(
@@ -225,14 +222,14 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
                                           } else if (snapshot.hasData) {
                                             String data = snapshot.data!;
                                             return txtB = Text(
-                                              "$data",
-                                              style: TextStyle(
+                                              data,
+                                              style: const TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 16,
                                               ),
                                             );
                                           } else {
-                                            return txtB = Text(
+                                            return txtB = const Text(
                                               "Loading...",
                                               style: TextStyle(
                                                 color: Colors.white,
@@ -263,20 +260,19 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
                             margin: const EdgeInsets.fromLTRB(10, 5, 10, 5),
                             decoration: BoxDecoration(
                                 color: itemColor,
-                                borderRadius: new BorderRadius.only(
-                                  topLeft: const Radius.circular(5.0),
-                                  topRight: const Radius.circular(20.0),
-                                  bottomLeft: const Radius.circular(20.0),
-                                  bottomRight: const Radius.circular(5.0),
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(5.0),
+                                  topRight: Radius.circular(20.0),
+                                  bottomLeft: Radius.circular(20.0),
+                                  bottomRight: Radius.circular(5.0),
                                 )),
                             // color: Color(0xFF52adc8),
                             child: Column(
                               children: [
-                                Align(
+                                const Align(
                                   alignment: Alignment.centerLeft,
                                   child: Padding(
-                                    padding: const EdgeInsets.fromLTRB(
-                                        30, 10, 0, 10),
+                                    padding: EdgeInsets.fromLTRB(30, 10, 0, 10),
                                     child: Text(
                                       'Success Indicators (KPIs)',
                                       style: TextStyle(
@@ -301,14 +297,14 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
                                           } else if (snapshot.hasData) {
                                             String data = snapshot.data!;
                                             return txtC = Text(
-                                              "$data",
-                                              style: TextStyle(
+                                              data,
+                                              style: const TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 16,
                                               ),
                                             );
                                           } else {
-                                            return txtC = Text(
+                                            return txtC = const Text(
                                               "Loading...",
                                               style: TextStyle(
                                                 color: Colors.white,
@@ -346,12 +342,12 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
                                 "MYTAG : $aCompleted , $bCompleted , $cCompleted");
                             String uid = FirebaseAuth.instance.currentUser!.uid;
                             if (aCompleted & bCompleted & cCompleted) {
-                              String dataAlreadyPresent =
+                              bool dataAlreadyPresent =
                                   await DatabaseService.hasThisDocument(
-                                      "submissions", "$uid");
-                              print("Mytag : dataAlreadyPresent = " +
-                                  dataAlreadyPresent);
-                              if (dataAlreadyPresent == "true") {
+                                      "submissions", uid);
+                              print(
+                                  "Mytag : dataAlreadyPresent = $dataAlreadyPresent");
+                              if (dataAlreadyPresent) {
                                 //edit data in database
                                 DatabaseService.updateSubmissions(
                                     "plan", "true");
@@ -376,12 +372,12 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
                               alignment: Alignment.center,
                               width: MediaQuery.of(context).size.width / 3,
                               margin: const EdgeInsets.fromLTRB(0, 5, 0, 5),
-                              padding: EdgeInsets.symmetric(
+                              padding: const EdgeInsets.symmetric(
                                   horizontal: 10, vertical: 10),
                               decoration: BoxDecoration(
                                   color: appBarColor,
                                   borderRadius: BorderRadius.circular(30)),
-                              child: Text(
+                              child: const Text(
                                 "Submit",
                                 style: TextStyle(
                                     fontSize: 16, color: Colors.white),
@@ -396,7 +392,7 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
                       left: 50,
                       top: 12,
                       child: Container(
-                        padding: EdgeInsets.only(left: 10, right: 10),
+                        padding: const EdgeInsets.only(left: 10, right: 10),
                         color: backgroundColor,
                         child: Text(
                           'Plan',
@@ -414,15 +410,15 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
                   Container(
                     width: double.infinity,
                     height: 330,
-                    margin: EdgeInsets.fromLTRB(10, 15, 10, 10),
-                    padding: EdgeInsets.only(bottom: 10),
+                    margin: const EdgeInsets.fromLTRB(10, 15, 10, 10),
+                    padding: const EdgeInsets.only(bottom: 10),
                     decoration: BoxDecoration(
                       border: Border.all(color: itemColor, width: 1),
                       borderRadius: BorderRadius.circular(10),
                       shape: BoxShape.rectangle,
                     ),
                     child: ListView(
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       padding: EdgeInsets.zero,
                       children: [
                         GestureDetector(
@@ -431,19 +427,18 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
                             margin: const EdgeInsets.fromLTRB(10, 10, 10, 5),
                             decoration: BoxDecoration(
                                 color: itemColor,
-                                borderRadius: new BorderRadius.only(
-                                  topLeft: const Radius.circular(5.0),
-                                  topRight: const Radius.circular(20.0),
-                                  bottomLeft: const Radius.circular(20.0),
-                                  bottomRight: const Radius.circular(5.0),
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(5.0),
+                                  topRight: Radius.circular(20.0),
+                                  bottomLeft: Radius.circular(20.0),
+                                  bottomRight: Radius.circular(5.0),
                                 )),
                             child: Column(
                               children: [
-                                Align(
+                                const Align(
                                   alignment: Alignment.centerLeft,
                                   child: Padding(
-                                    padding: const EdgeInsets.fromLTRB(
-                                        30, 10, 0, 10),
+                                    padding: EdgeInsets.fromLTRB(30, 10, 0, 10),
                                     child: Text(
                                       'Implementation',
                                       style: TextStyle(
@@ -468,14 +463,14 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
                                           } else if (snapshot.hasData) {
                                             String data = snapshot.data!;
                                             return txtD = Text(
-                                              "$data",
-                                              style: TextStyle(
+                                              data,
+                                              style: const TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 16,
                                               ),
                                             );
                                           } else {
-                                            return txtD = Text(
+                                            return txtD = const Text(
                                               "Loading...",
                                               style: TextStyle(
                                                 color: Colors.white,
@@ -506,19 +501,18 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
                             margin: const EdgeInsets.fromLTRB(10, 5, 10, 5),
                             decoration: BoxDecoration(
                                 color: itemColor,
-                                borderRadius: new BorderRadius.only(
-                                  topLeft: const Radius.circular(5.0),
-                                  topRight: const Radius.circular(20.0),
-                                  bottomLeft: const Radius.circular(20.0),
-                                  bottomRight: const Radius.circular(5.0),
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(5.0),
+                                  topRight: Radius.circular(20.0),
+                                  bottomLeft: Radius.circular(20.0),
+                                  bottomRight: Radius.circular(5.0),
                                 )),
                             child: Column(
                               children: [
-                                Align(
+                                const Align(
                                   alignment: Alignment.centerLeft,
                                   child: Padding(
-                                    padding: const EdgeInsets.fromLTRB(
-                                        30, 10, 0, 10),
+                                    padding: EdgeInsets.fromLTRB(30, 10, 0, 10),
                                     child: Text(
                                       'Impact and Outcome',
                                       style: TextStyle(
@@ -543,14 +537,14 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
                                           } else if (snapshot.hasData) {
                                             String data = snapshot.data!;
                                             return txtE = Text(
-                                              "$data",
-                                              style: TextStyle(
+                                              data,
+                                              style: const TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 16,
                                               ),
                                             );
                                           } else {
-                                            return txtE = Text(
+                                            return txtE = const Text(
                                               "Loading...",
                                               style: TextStyle(
                                                 color: Colors.white,
@@ -580,19 +574,18 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
                             margin: const EdgeInsets.fromLTRB(10, 5, 10, 5),
                             decoration: BoxDecoration(
                                 color: itemColor,
-                                borderRadius: new BorderRadius.only(
-                                  topLeft: const Radius.circular(5.0),
-                                  topRight: const Radius.circular(20.0),
-                                  bottomLeft: const Radius.circular(20.0),
-                                  bottomRight: const Radius.circular(5.0),
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(5.0),
+                                  topRight: Radius.circular(20.0),
+                                  bottomLeft: Radius.circular(20.0),
+                                  bottomRight: Radius.circular(5.0),
                                 )),
                             child: Column(
                               children: [
-                                Align(
+                                const Align(
                                   alignment: Alignment.centerLeft,
                                   child: Padding(
-                                    padding: const EdgeInsets.fromLTRB(
-                                        30, 10, 0, 10),
+                                    padding: EdgeInsets.fromLTRB(30, 10, 0, 10),
                                     child: Text(
                                       'Future',
                                       style: TextStyle(
@@ -617,14 +610,14 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
                                           } else if (snapshot.hasData) {
                                             String data = snapshot.data!;
                                             return txtF = Text(
-                                              "$data",
-                                              style: TextStyle(
+                                              data,
+                                              style: const TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 16,
                                               ),
                                             );
                                           } else {
-                                            return txtF = Text(
+                                            return txtF = const Text(
                                               "Loading...",
                                               style: TextStyle(
                                                 color: Colors.white,
@@ -661,11 +654,11 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
                                 "MYTAG : $dCompleted , $eCompleted , $fCompleted");
                             String uid = FirebaseAuth.instance.currentUser!.uid;
                             if (dCompleted & eCompleted & fCompleted) {
-                              String dataAlreadyPresent =
+                              bool dataAlreadyPresent =
                                   await DatabaseService.hasThisDocument(
-                                      "submissions", "$uid");
-                              print("Mytag : dataAlreadyPresent = " +
-                                  dataAlreadyPresent);
+                                      "submissions", uid);
+                              print(
+                                  "Mytag : dataAlreadyPresent = $dataAlreadyPresent");
                               if (dataAlreadyPresent == "true") {
                                 //edit data in database
                                 DatabaseService.updateSubmissions(
@@ -692,12 +685,12 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
                               alignment: Alignment.center,
                               width: MediaQuery.of(context).size.width / 3,
                               margin: const EdgeInsets.fromLTRB(0, 5, 0, 5),
-                              padding: EdgeInsets.symmetric(
+                              padding: const EdgeInsets.symmetric(
                                   horizontal: 10, vertical: 10),
                               decoration: BoxDecoration(
                                   color: appBarColor,
                                   borderRadius: BorderRadius.circular(30)),
-                              child: Text(
+                              child: const Text(
                                 "Submit",
                                 style: TextStyle(
                                     fontSize: 16, color: Colors.white),
@@ -712,7 +705,7 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
                       left: 50,
                       top: 7,
                       child: Container(
-                        padding: EdgeInsets.only(left: 10, right: 10),
+                        padding: const EdgeInsets.only(left: 10, right: 10),
                         color: backgroundColor,
                         child: Text(
                           'Reflect',
@@ -747,8 +740,7 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
         .where('sub type', isEqualTo: subType)
         .get();
     final int aDocuments = aSnapshot.docs.length;
-    String returnText =
-        "Completed : " + aDocuments.toString() + "/" + qDocuments.toString();
+    String returnText = "Completed : $aDocuments/$qDocuments";
     // print('MYTAG : From Question_type_selection.dart/getData/Type = $_questionType , sub type = $subType , Completed = $aDocuments, Total = $qDocuments' );
     return returnText;
   }
@@ -769,7 +761,7 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
   Future<void> refreshPage() async {
     int counter = 0;
     while (counter <= 10) {
-      await Future.delayed(Duration(milliseconds: 10));
+      await Future.delayed(const Duration(milliseconds: 10));
       setState(() {});
       counter++;
     }
@@ -784,7 +776,7 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
       dataEFuture = getData("Impact and Outcome"),
       dataFFuture = getData("Future"),
     ]);
-    this.setState(() {});
+    setState(() {});
   }
 
   bool getCompletedStatus(String Value) {

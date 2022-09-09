@@ -1,17 +1,19 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:http/http.dart' as http;
 import 'package:motivational_leadership/providers/coach/subtype/coach_action_provider.dart';
 import 'package:motivational_leadership/providers/coach/subtype/coach_future_provider.dart';
 import 'package:motivational_leadership/providers/coach/subtype/coach_imp_provider.dart';
 import 'package:motivational_leadership/providers/coach/subtype/coach_io_provider.dart';
 import 'package:motivational_leadership/providers/coach/subtype/coach_oc_provider.dart';
 import 'package:motivational_leadership/providers/coach/subtype/coach_si_provider.dart';
-import 'package:motivational_leadership/services/local_push_notification.dart';
 import 'package:motivational_leadership/ui/coach/widgets/subtype/categories_tile/coach_action_tile.dart';
 import 'package:motivational_leadership/ui/coach/widgets/subtype/categories_tile/coach_future_tile.dart';
 import 'package:motivational_leadership/ui/coach/widgets/subtype/categories_tile/coach_imp_tile.dart';
@@ -204,10 +206,14 @@ class _CoachFeedbackSubTypeSelectionState
         bool bCompleted = getCompletedStatus(txtBValue);
         bool cCompleted = getCompletedStatus(txtCValue);
         log("MYTAG : $aCompleted , $bCompleted , $cCompleted");
-        String uid = FirebaseAuth.instance.currentUser!.uid;
+        // String uid = FirebaseAuth.instance.currentUser!.uid;
+
         if (aCompleted & bCompleted & cCompleted) {
-          NotificationService().showNotification(
-              1, "Feedback", "Your Coach had given you a feedback", 10);
+          // Map<String, String> data = HashMap<String, String>();
+          // data.putIfAbsent("key", () => "null");
+
+          // NotificationService().showNotification(
+          //     1, "Feedback", "Your Coach had given you a feedback", 1);
           // NotificationApi.showNotification(
           //     title: "Sunil Thapa", body: "I got you", payload: "sunil");
           //push notification
@@ -219,6 +225,42 @@ class _CoachFeedbackSubTypeSelectionState
       },
       child: submitButton(context),
     );
+  }
+
+  Future<void> sendPushMessage() async {
+    FirebaseMessaging fm = FirebaseMessaging.instance;
+    String? token = await fm.getToken();
+    if (token == null) {
+      log('Unable to send FCM message, no token exists.');
+      return;
+    }
+
+    try {
+      await http.post(
+        Uri.parse('https://api.rnfirebase.io/messaging/send'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: constructFCMPayload(token),
+      );
+      log('FCM request for device sent!');
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  String constructFCMPayload(String? token) {
+    return jsonEncode({
+      'token': token,
+      'data': {
+        'via': 'FlutterFire Cloud Messaging!!!',
+        'count': 1,
+      },
+      'notification': {
+        'title': 'Hello FlutterFire!',
+        'body': 'This notification (#1) was created via FCM!',
+      },
+    });
   }
 
   GestureDetector reflectSubmitButton(BuildContext context) {

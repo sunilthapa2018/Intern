@@ -16,6 +16,7 @@ import 'package:motivational_leadership/ui/student/widgets/type/student_competen
 import 'package:motivational_leadership/utility/colors.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:timezone/data/latest.dart' as tz;
 
 class StudentHome extends StatefulWidget {
   const StudentHome({Key? key}) : super(key: key);
@@ -61,6 +62,7 @@ class _StudentHomeState extends State<StudentHome> {
   void initState() {
     super.initState();
     storeNotificationToken();
+    tz.initializeTimeZones();
   }
 
   Future<String> loadName() async {

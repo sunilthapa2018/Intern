@@ -1,136 +1,119 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-<<<<<<<< HEAD:lib/ui/admin/widgets/admin_navigation_drawer.dart
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:motivational_leadership/services/get_user_name.dart';
 import 'package:motivational_leadership/ui/auth/sign_in_page.dart';
-import 'package:motivational_leadership/ui/coach/coach_feedback_page.dart';
 import 'package:motivational_leadership/ui/coach/coach_home_page.dart';
 import 'package:motivational_leadership/ui/common/profile_page.dart';
-import 'package:page_transition/page_transition.dart';
+import 'package:motivational_leadership/ui/common/widget/box_decoration.dart';
+import 'package:motivational_leadership/utility/base_utils.dart';
+import 'package:motivational_leadership/utility/colors.dart';
 
 String uid = FirebaseAuth.instance.currentUser!.uid;
-
-class AdminNavigationDrawerWidget extends StatelessWidget {
-  const AdminNavigationDrawerWidget({Key? key}) : super(key: key);
-========
-import 'package:motivational_leadership/ui/coach/coach_home_page.dart';
-import 'package:motivational_leadership/services/get_user_name.dart';
-import 'package:motivational_leadership/ui/profile_page.dart';
-import 'package:motivational_leadership/ui/signin_page.dart';
-import 'package:page_transition/page_transition.dart';
-
-
-String uid = FirebaseAuth.instance.currentUser!.uid;
+int currentNavigation = 0;
 
 class CoachNavigationDrawerWidget extends StatelessWidget {
   const CoachNavigationDrawerWidget({Key? key}) : super(key: key);
->>>>>>>> 9f772799fada077ac3bf85a560783a919450460d:lib/ui/coach/coach_navigation_drawer_page.dart
 
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
-        // Removing any padding from the ListView.
         padding: EdgeInsets.zero,
-
         children: [
-          SizedBox(
-            height: 120,
-            child: Container(
-              color: const Color(0xFF6495ED),
-              // color: Color(0xFF52adc8),
-              child: Row(children: [
-<<<<<<<< HEAD:lib/ui/admin/widgets/admin_navigation_drawer.dart
-                const Padding(
-                  padding: EdgeInsets.fromLTRB(20, 50, 0, 20),
-========
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 50, 0, 20),
->>>>>>>> 9f772799fada077ac3bf85a560783a919450460d:lib/ui/coach/coach_navigation_drawer_page.dart
-                  child: Text(
-                    'Hey',
-                    style: TextStyle(
-                      //color: Color(0xFFff6600),
-                      color: Color(0xFF2e3c96),
-                      fontWeight: FontWeight.w900,
-                      fontSize: 36,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 50, 0, 20),
-                  child: GetUserName(documentId: uid),
-                ),
-              ]),
+          title(),
+          ListTile(
+            contentPadding: const EdgeInsets.symmetric(horizontal: 24.0),
+            leading: Icon(
+              FontAwesomeIcons.houseUser,
+              color: coachAppBarColor,
             ),
+            title: myText('Home'),
+            onTap: () => selectedItem(context, 0),
           ),
           ListTile(
-            contentPadding: const EdgeInsets.symmetric(horizontal: 50.0),
-            leading: const Icon(Icons.home_outlined),
-            title: const Text('Home'),
-            onTap: () {
-              Navigator.of(context).push(PageTransition(
-                  type: PageTransitionType.rightToLeftJoined,
-                  childCurrent: this,
-<<<<<<<< HEAD:lib/ui/admin/widgets/admin_navigation_drawer.dart
-                  child: const CoachHome()));
-========
-                  child: CoachHome()));
->>>>>>>> 9f772799fada077ac3bf85a560783a919450460d:lib/ui/coach/coach_navigation_drawer_page.dart
-            },
+            contentPadding: const EdgeInsets.symmetric(horizontal: 24.0),
+            leading: Icon(
+              FontAwesomeIcons.userTie,
+              color: coachAppBarColor,
+            ),
+            title: myText('Profile'),
+            onTap: () => selectedItem(context, 1),
           ),
           ListTile(
-            contentPadding: const EdgeInsets.symmetric(horizontal: 50.0),
-            leading: const Icon(Icons.feedback_outlined),
-            title: const Text('Feedback'),
-            onTap: () {
-              Navigator.of(context).push(PageTransition(
-                  type: PageTransitionType.rightToLeftJoined,
-                  childCurrent: this,
-<<<<<<<< HEAD:lib/ui/admin/widgets/admin_navigation_drawer.dart
-                  child: const CoachFeedbackPage(
-                    questionType: '',
-                    questionSubType: '',
-                    uId: '',
-                  )));
-========
-                  child: SignIn()));
->>>>>>>> 9f772799fada077ac3bf85a560783a919450460d:lib/ui/coach/coach_navigation_drawer_page.dart
-            },
-          ),
-          ListTile(
-            contentPadding: const EdgeInsets.symmetric(horizontal: 50.0),
-            leading: const Icon(Icons.supervised_user_circle_outlined),
-            title: const Text('Profile'),
-            onTap: () {
-              Navigator.of(context).push(PageTransition(
-                  type: PageTransitionType.rightToLeftJoined,
-                  childCurrent: this,
-<<<<<<<< HEAD:lib/ui/admin/widgets/admin_navigation_drawer.dart
-                  child: const Profile()));
-========
-                  child: Profile()));
->>>>>>>> 9f772799fada077ac3bf85a560783a919450460d:lib/ui/coach/coach_navigation_drawer_page.dart
-            },
-          ),
-          ListTile(
-            contentPadding: const EdgeInsets.symmetric(horizontal: 50.0),
-            leading: const Icon(Icons.logout_outlined),
-            title: const Text('Logout'),
-            onTap: () {
-              FirebaseAuth.instance.signOut();
-              Navigator.of(context).push(PageTransition(
-                  type: PageTransitionType.rightToLeftJoined,
-                  childCurrent: this,
-<<<<<<<< HEAD:lib/ui/admin/widgets/admin_navigation_drawer.dart
-                  child: const SignIn()));
-========
-                  child: SignIn()));
->>>>>>>> 9f772799fada077ac3bf85a560783a919450460d:lib/ui/coach/coach_navigation_drawer_page.dart
-            },
+            contentPadding: const EdgeInsets.symmetric(horizontal: 24.0),
+            leading: Icon(
+              FontAwesomeIcons.arrowRightFromBracket,
+              color: coachAppBarColor,
+            ),
+            title: myText('Logout'),
+            onTap: () => selectedItem(context, 2),
           ),
         ],
       ),
     );
+  }
+
+  Text myText(String title) {
+    return Text(
+      title,
+      style: TextStyle(
+        color: Colors.black,
+        fontFamily: 'Roboto',
+        fontSize: 16.sp,
+      ),
+    );
+  }
+
+  SizedBox title() {
+    return SizedBox(
+      height: 140,
+      child: Container(
+        decoration: myBoxDecoration(),
+        child: Row(children: [
+          const Padding(
+            padding: EdgeInsets.fromLTRB(24, 50, 0, 20),
+            child: Text(
+              'Hey',
+              style: TextStyle(
+                fontFamily: 'Roboto',
+                color: Colors.black87,
+                fontWeight: FontWeight.w900,
+                fontSize: 36,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(10, 50, 0, 20),
+            child: GetUserName(documentId: uid),
+          ),
+        ]),
+      ),
+    );
+  }
+
+  selectedItem(BuildContext context, int index) {
+    Navigator.of(context).pop();
+    switch (index) {
+      case 0:
+        if (currentNavigation != 0) {
+          navigateTo(
+              context: context, nextPage: const CoachHome(), currentPage: this);
+        }
+        currentNavigation = 0;
+        break;
+      case 1:
+        navigateTo(
+            context: context,
+            nextPage: const Profile(),
+            currentPage: const CoachHome());
+
+        break;
+      case 2:
+        FirebaseAuth.instance.signOut();
+        navigateTo(
+            context: context, nextPage: const SignIn(), currentPage: this);
+    }
   }
 }

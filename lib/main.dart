@@ -32,6 +32,7 @@ import 'package:motivational_leadership/ui/coach/coach_home_page.dart';
 import 'package:motivational_leadership/ui/student/student_home_page.dart';
 import 'package:motivational_leadership/utility/colors.dart';
 import 'package:motivational_leadership/utility/utils.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:provider/provider.dart';
 
 String userType = "loading";
@@ -40,10 +41,64 @@ Future<void> backgroundHandler(RemoteMessage message) async {
   log(message.notification!.title.toString());
 }
 
+Future<void> initPlatform() async {
+  OneSignal.shared.setAppId("1e5cbd40-2209-499d-8216-b63c951596ef");
+  OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
+
+  OneSignal.shared
+      .setNotificationOpenedHandler((OSNotificationOpenedResult result) {
+    log('NOTIFICATION OPENED HANDLER CALLED WITH: $result');
+  });
+
+  OneSignal.shared.setNotificationWillShowInForegroundHandler(
+      (OSNotificationReceivedEvent event) {
+    log('FOREGROUND HANDLER CALLED WITH: $event');
+  });
+}
+
+initializeFcm() async {
+  FirebaseMessaging.instance.getInitialMessage().then(
+    (message) {
+      log("FirebaseMessaging.instance.getInitialMessage");
+      if (message != null) {
+        log("New Notification");
+      }
+    },
+  );
+
+  FirebaseMessaging.onMessage.listen(
+    (message) {
+      log("FirebaseMessaging.onMessage.listen");
+      if (message.notification != null) {
+        String? title = message.notification?.title;
+        String? body = message.notification?.body;
+        log("FirebaseMessaging.onMessage.listen || title = $title");
+        log("FirebaseMessaging.onMessage.listen || body = $body");
+        log("message.datail ${message.data}");
+        NotificationService()
+            .showNotification(1, title.toString(), body.toString(), 5);
+        // LocalNotificationService.createanddisplaynotification(message);
+      }
+    },
+  );
+  FirebaseMessaging.onMessageOpenedApp.listen(
+    (message) {
+      log("FirebaseMessaging.onMessageOpenedApp.listen");
+      if (message.notification != null) {
+        log(message.notification!.title ?? "");
+        log(message.notification!.body ?? "");
+        log("message.data22 ${message.data['_id']}");
+      }
+    },
+  );
+}
+
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  NotificationService().initNotification();
+  await initPlatform();
+  await initializeFcm();
+  // NotificationService().initNotification();
   // LocalNotificationService.initialize();
   //FirebaseMessaging.onBackgroundMessage(backgroundHandler);
 
