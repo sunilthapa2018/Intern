@@ -22,11 +22,11 @@ class NavigationDrawerWidget extends StatelessWidget {
           SizedBox(
             height: 120,
             child: Container(
-              color: Color(0xFF6495ED),
+              color: const Color(0xFF6495ED),
               // color: Color(0xFF52adc8),
               child: Row(children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 50, 0, 20),
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(20, 50, 0, 20),
                   child: Text(
                     'Hey',
                     style: TextStyle(
@@ -52,7 +52,7 @@ class NavigationDrawerWidget extends StatelessWidget {
               Navigator.of(context).push(PageTransition(
                   type: PageTransitionType.rightToLeftJoined,
                   childCurrent: this,
-                  child: StudentHome()));
+                  child: const StudentHome()));
             },
           ),
           ListTile(

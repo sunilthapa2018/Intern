@@ -398,7 +398,8 @@ class _CoachFeedbackPageState extends State<CoachFeedbackPage> {
     } on FirebaseAuthException catch (e) {
       Utils.showSnackBar("Failed to update Feedback: $e.message");
     }
-    // ignore: use_build_context_synchronously
+
+    if (!mounted) return;
     Navigator.of(context).pop();
   }
 
@@ -426,7 +427,8 @@ class _CoachFeedbackPageState extends State<CoachFeedbackPage> {
       print(e);
       Utils.showSnackBar(e.message);
     }
-    // ignore: use_build_context_synchronously
+
+    if (!mounted) return;
     Navigator.of(context).pop();
   }
 

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
-class Utils{
-  static GlobalKey<ScaffoldMessengerState> messengerKey = GlobalKey<ScaffoldMessengerState>();
-  static showSnackBar(String? text){
-    if(text == null) return;
+class Utils {
+  static GlobalKey<ScaffoldMessengerState> messengerKey =
+      GlobalKey<ScaffoldMessengerState>();
+  static showSnackBar(String? text) {
+    if (text == null) return;
     final snackBar = SnackBar(content: Text(text));
     messengerKey.currentState!
       ..removeCurrentSnackBar()
@@ -13,7 +14,7 @@ class Utils{
   }
 }
 
-void NavigateTo(
+void navigateTo(
     {required BuildContext context,
     required Widget nextPage,
     required Widget currentPage}) {
@@ -28,4 +29,3 @@ void NavigateTo(
     ),
   );
 }
-

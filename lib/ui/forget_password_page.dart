@@ -6,12 +6,14 @@ import 'package:motivational_leadership/main.dart';
 import 'package:motivational_leadership/utility/base_util.dart';
 
 class ForgotPassword extends StatefulWidget {
+  const ForgotPassword({super.key});
+
   @override
   _ForgotPasswordState createState() => _ForgotPasswordState();
 }
 
 class _ForgotPasswordState extends State<ForgotPassword> {
-  TextEditingController emailController = new TextEditingController();
+  TextEditingController emailController = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
@@ -33,99 +35,95 @@ class _ForgotPasswordState extends State<ForgotPassword> {
       ),
       body: Container(
         //color: Colors.deepOrange,
-        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
         child: Form(
           autovalidateMode: AutovalidateMode.always,
           key: formKey,
           child: Column(
             children: [
-              Container(
-                child: Column(
-                  children: [
-                    Container(
-                      color: Colors.white,
-                      child: Row(children: [
-                        Text(
-                          'Forgot',
-                          style: TextStyle(
-                            //color: Color(0xFFff6600),
-                            color: Color(0xFF2e3c96),
-                            fontWeight: FontWeight.w900,
-                            fontSize: 36,
-                          ),
+              Column(
+                children: [
+                  Container(
+                    color: Colors.white,
+                    child: Row(children: const [
+                      Text(
+                        'Forgot',
+                        style: TextStyle(
+                          //color: Color(0xFFff6600),
+                          color: Color(0xFF2e3c96),
+                          fontWeight: FontWeight.w900,
+                          fontSize: 36,
                         ),
-                        Text(
-                          ' Password?',
-                          style: TextStyle(
-                            color: Color(0xFFff6600),
-                            fontWeight: FontWeight.w900,
-                            fontSize: 36,
-                          ),
-                        ),
-                      ]),
-                    ),
-                    Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 0, vertical: 40),
-                      child: Image.asset(
-                        'assets/logo.png',
-                        height: 100,
-                        width: 130,
-                        fit: BoxFit.contain,
                       ),
+                      Text(
+                        ' Password?',
+                        style: TextStyle(
+                          color: Color(0xFFff6600),
+                          fontWeight: FontWeight.w900,
+                          fontSize: 36,
+                        ),
+                      ),
+                    ]),
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 0, vertical: 40),
+                    child: Image.asset(
+                      'assets/logo.png',
+                      height: 100,
+                      width: 130,
+                      fit: BoxFit.contain,
                     ),
-                    TextFormField(
-                      controller: emailController,
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: "Email",
-                          hintText: "Enter your Email Address"),
-                      validator: MultiValidator([
-                        RequiredValidator(errorText: 'Required'),
-                        EmailValidator(errorText: "Not A Valid Email"),
-                      ]),
-                    ),
-                    SizedBox(
-                      height: 6,
-                    ),
-                    SizedBox(
-                      height: 24,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        if (formKey.currentState!.validate()) {
-                          try {
-                            resetPassword();
-                          } on FirebaseAuthException catch (e) {
-                            print(e);
-                            Utils.showSnackBar(e.message);
-                          }
-                        } else {
-                          Utils.showSnackBar(
-                              'Please enter valid Email Address');
+                  ),
+                  TextFormField(
+                    controller: emailController,
+                    decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: "Email",
+                        hintText: "Enter your Email Address"),
+                    validator: MultiValidator([
+                      RequiredValidator(errorText: 'Required'),
+                      EmailValidator(errorText: "Not A Valid Email"),
+                    ]),
+                  ),
+                  const SizedBox(
+                    height: 6,
+                  ),
+                  const SizedBox(
+                    height: 24,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      if (formKey.currentState!.validate()) {
+                        try {
+                          resetPassword();
+                        } on FirebaseAuthException catch (e) {
+                          Utils.showSnackBar(e.message);
                         }
-                      },
-                      child: Container(
-                        alignment: Alignment.center,
-                        width: MediaQuery.of(context).size.width,
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-                        decoration: BoxDecoration(
-                            color: Color(0xFF2e3c96),
-                            borderRadius: BorderRadius.circular(30)),
-                        child: Text(
-                          "Reset Password",
-                          style: TextStyle(fontSize: 16, color: Colors.white),
-                        ),
+                      } else {
+                        Utils.showSnackBar('Please enter valid Email Address');
+                      }
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      width: MediaQuery.of(context).size.width,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 24, vertical: 20),
+                      decoration: BoxDecoration(
+                          color: const Color(0xFF2e3c96),
+                          borderRadius: BorderRadius.circular(30)),
+                      child: const Text(
+                        "Reset Password",
+                        style: TextStyle(fontSize: 16, color: Colors.white),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 80,
               ),
-              Spacer(),
+              const Spacer(),
             ],
           ),
         ),
@@ -133,11 +131,11 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     );
   }
 
-  Future ForgotPassword() async {
+  Future forgotPassword() async {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => Center(child: CircularProgressIndicator()),
+      builder: (context) => const Center(child: CircularProgressIndicator()),
     );
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
@@ -148,7 +146,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
           .sendPasswordResetEmail(email: emailController.text.trim());
       Utils.showSnackBar('Password Reset Email has been sent');
     } on FirebaseAuthException catch (e) {
-      print(e);
       Utils.showSnackBar(e.message);
     }
   }

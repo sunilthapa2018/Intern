@@ -338,16 +338,13 @@ class _FeedbackSelectionState extends State<FeedbackSelection> {
                             bool aCompleted = getCompletedStatus(txtAValue);
                             bool bCompleted = getCompletedStatus(txtBValue);
                             bool cCompleted = getCompletedStatus(txtCValue);
-                            print(
-                                "MYTAG : $aCompleted , $bCompleted , $cCompleted");
                             String uid = FirebaseAuth.instance.currentUser!.uid;
                             if (aCompleted & bCompleted & cCompleted) {
                               bool dataAlreadyPresent =
                                   await DatabaseService.hasThisDocument(
                                       "submissions", uid);
-                              print(
-                                  "Mytag : dataAlreadyPresent = $dataAlreadyPresent");
-                              if (dataAlreadyPresent == "true") {
+
+                              if (dataAlreadyPresent) {
                                 //edit data in database
                                 DatabaseService.updateSubmissions(
                                     "plan", "true");
@@ -650,34 +647,28 @@ class _FeedbackSelectionState extends State<FeedbackSelection> {
                             bool dCompleted = getCompletedStatus(txtDValue);
                             bool eCompleted = getCompletedStatus(txtEValue);
                             bool fCompleted = getCompletedStatus(txtFValue);
-                            print(
-                                "MYTAG : $dCompleted , $eCompleted , $fCompleted");
+
                             String uid = FirebaseAuth.instance.currentUser!.uid;
                             if (dCompleted & eCompleted & fCompleted) {
                               bool dataAlreadyPresent =
                                   await DatabaseService.hasThisDocument(
                                       "submissions", uid);
-                              print(
-                                  "Mytag : dataAlreadyPresent = $dataAlreadyPresent");
+
                               if (dataAlreadyPresent) {
                                 //edit data in database
                                 DatabaseService.updateSubmissions(
                                     "reflect", "true");
                                 Utils.showSnackBar(
                                     "Your answer has been Edited and re-submitted for Reflect section");
-                                print(
-                                    "MYTAG : updateSubmissions Completed ...");
                               } else {
                                 //write new data to database
                                 DatabaseService.addSubmissions("false", "true");
                                 Utils.showSnackBar(
                                     "Your answer has been submitted for Reflect section");
-                                print("MYTAG : addSubmissions Completed ...");
                               }
                             } else {
                               Utils.showSnackBar(
                                   "Please complete all sections of REFLECT before you can submit");
-                              print("MYTAG : Not Completed");
                             }
                           },
                           child: UnconstrainedBox(
@@ -779,8 +770,8 @@ class _FeedbackSelectionState extends State<FeedbackSelection> {
     setState(() {});
   }
 
-  bool getCompletedStatus(String Value) {
-    final split = Value.split(':');
+  bool getCompletedStatus(String value) {
+    final split = value.split(':');
     final split2 = split[1].split('/');
     String completed = split2[0].trim();
     String total = split2[1].trim();
