@@ -56,14 +56,14 @@ class _QuestionState extends State<Question> {
               ElevatedButton(
                 onPressed: () => Navigator.pop(context, false),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: buttonColor,
+                  primary: buttonColor,
                 ),
                 child: const Text("Cancel"),
               ),
               ElevatedButton(
                 onPressed: () => Navigator.pop(context, true),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: buttonColor,
+                  primary: buttonColor,
                 ),
                 child: const Text("Discard"),
               ),

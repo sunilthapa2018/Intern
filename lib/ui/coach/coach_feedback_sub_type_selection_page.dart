@@ -1,19 +1,17 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:http/http.dart' as http;
 import 'package:motivational_leadership/providers/coach/subtype/coach_action_provider.dart';
 import 'package:motivational_leadership/providers/coach/subtype/coach_future_provider.dart';
 import 'package:motivational_leadership/providers/coach/subtype/coach_imp_provider.dart';
 import 'package:motivational_leadership/providers/coach/subtype/coach_io_provider.dart';
 import 'package:motivational_leadership/providers/coach/subtype/coach_oc_provider.dart';
 import 'package:motivational_leadership/providers/coach/subtype/coach_si_provider.dart';
+import 'package:motivational_leadership/services/push_notification_service.dart';
 import 'package:motivational_leadership/ui/coach/widgets/subtype/categories_tile/coach_action_tile.dart';
 import 'package:motivational_leadership/ui/coach/widgets/subtype/categories_tile/coach_future_tile.dart';
 import 'package:motivational_leadership/ui/coach/widgets/subtype/categories_tile/coach_imp_tile.dart';
@@ -21,23 +19,27 @@ import 'package:motivational_leadership/ui/coach/widgets/subtype/categories_tile
 import 'package:motivational_leadership/ui/coach/widgets/subtype/categories_tile/coach_oc_tile.dart';
 import 'package:motivational_leadership/ui/coach/widgets/subtype/categories_tile/coach_si_tile.dart';
 import 'package:motivational_leadership/ui/student/widgets/my_button_box.dart';
+import 'package:motivational_leadership/utility/base_page.dart';
 import 'package:motivational_leadership/utility/colors.dart';
 import 'package:motivational_leadership/utility/utils.dart';
 import 'package:provider/provider.dart';
 import 'package:timezone/data/latest.dart' as tz;
 
-class CoachFeedbackSubTypeSelection extends StatefulWidget {
+import '../../models/notificatin_request.dart';
+import '../../utility/base_state.dart';
+
+class CoachFeedbackSubTypeSelection extends BaseStatefulWidget {
   final String userID;
   final String questionType;
   const CoachFeedbackSubTypeSelection(
       {super.key, required this.userID, required this.questionType});
   @override
-  State<CoachFeedbackSubTypeSelection> createState() =>
+  BaseState<CoachFeedbackSubTypeSelection> createState() =>
       _CoachFeedbackSubTypeSelectionState();
 }
 
 class _CoachFeedbackSubTypeSelectionState
-    extends State<CoachFeedbackSubTypeSelection> {
+    extends BaseState<CoachFeedbackSubTypeSelection> {
   @override
   Widget build(BuildContext context) {
     myWidth = MediaQuery.of(context).size.width / 2;
@@ -205,7 +207,23 @@ class _CoachFeedbackSubTypeSelectionState
         bool aCompleted = getCompletedStatus(txtAValue);
         bool bCompleted = getCompletedStatus(txtBValue);
         bool cCompleted = getCompletedStatus(txtCValue);
-        sendPushMessage();
+        try {
+          showProgressDialog();
+          final response = await PushNotificationService().sendPushMessage(
+            request: NotificationRequest(
+              registrationIds: [
+                "eWo8W_l2R8qS_fiA38Lvrn:APA91bH39s5TnHjLtnjeBDMthF2pmnQi-ueYpcleFXTueyKqIupdr8UnbhzWKAnb5ZtOOrKuQ7vaz65WdU9tzE2zdKjXa0onOGGXcoDhEuELtdDoEuoBjI1zIn1uHIH9GUwVib6j5S5W",
+                "da4M7hMpS_2mfb9CTw3r-9:APA91bEd2XHX7XEWSfvqmha4WFGKlbyJz3OK0elbogcWFj3OeZUbhkINX-iGJoCOGb8qLOYWq41B36L27vJ8pWOf1BQj2Cw3JCc-51mY2vaUamXIsV5Qz1T10WdNyhqAihcI6nKjdH50"
+              ],
+              notification: SentNotification(
+                  body: "Our custom notifiation", title: "Hello there"),
+            ),
+          );
+          dismissProgressDialog();
+          if (response == null) Utils.showSnackBar("Token not found");
+        } catch (e) {
+          Utils.showSnackBar(e.toString());
+        }
         if (aCompleted & bCompleted & cCompleted) {
         } else {
           Utils.showSnackBar(
@@ -216,29 +234,7 @@ class _CoachFeedbackSubTypeSelectionState
     );
   }
 
-  Future<void> sendPushMessage() async {
-    FirebaseMessaging fm = FirebaseMessaging.instance;
-    String? token = await fm.getToken();
-    if (token == null) {
-      log('Unable to send FCM message, no token exists.');
-      return;
-    }
-
-    try {
-      await http.post(
-        Uri.parse('https://api.rnfirebase.io/messaging/send'),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: constructFCMPayload(token),
-      );
-      log('FCM request for device sent!');
-    } catch (e) {
-      Utils.showSnackBar(e.toString());
-    }
-  }
-
-  String constructFCMPayload(String? token) {
+  constructFCMPayload(String? token) {
     return jsonEncode({
       'token': token,
       'data': {
