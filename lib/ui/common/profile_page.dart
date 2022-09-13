@@ -54,7 +54,7 @@ class _ProfileState extends State<Profile> {
     double space = 6;
     return SingleChildScrollView(
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         child: Form(
           key: formKey,
           child: Column(
@@ -64,7 +64,7 @@ class _ProfileState extends State<Profile> {
                   myTitle(),
                   myLogo(),
                   verticleSpacer(space),
-                  firstName(),
+                  fullName(),
                   verticleSpacer(space),
                   myEmail(),
                   verticleSpacer(space),
@@ -108,6 +108,10 @@ class _ProfileState extends State<Profile> {
 
   TextFormField myPhoneNumber() {
     return TextFormField(
+      onFieldSubmitted: (value) {
+        validateForm();
+      },
+      textInputAction: TextInputAction.done,
       controller: phoneController,
       decoration: const InputDecoration(
           //border: OutlineInputBorder(),
@@ -122,6 +126,7 @@ class _ProfileState extends State<Profile> {
 
   TextFormField myPassword() {
     return TextFormField(
+      textInputAction: TextInputAction.next,
       controller: passwordController,
       decoration: const InputDecoration(
           labelText: "Password", hintText: "Enter your Password"),
@@ -134,6 +139,7 @@ class _ProfileState extends State<Profile> {
 
   TextFormField myEmail() {
     return TextFormField(
+      textInputAction: TextInputAction.next,
       controller: emailController,
       decoration: const InputDecoration(
           labelText: "Email", hintText: "Enter your Email Address"),
@@ -144,10 +150,10 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  TextFormField firstName() {
+  TextFormField fullName() {
     return TextFormField(
+      textInputAction: TextInputAction.next,
       controller: nameController,
-      //initialValue: 'Sunil',
       decoration: const InputDecoration(
           labelText: "Full Name", hintText: "Enter your Full Name"),
       validator: MultiValidator([
@@ -197,6 +203,7 @@ class _ProfileState extends State<Profile> {
     return AppBar(
       titleSpacing: 0,
       toolbarHeight: 36,
+      leadingWidth: 48,
       iconTheme: IconThemeData(color: iconColor),
       backgroundColor: appBarColor,
       elevation: 0,
@@ -274,5 +281,13 @@ class _ProfileState extends State<Profile> {
   void initState() {
     super.initState();
     pupulateData();
+  }
+
+  void validateForm() {
+    if (formKey.currentState!.validate()) {
+      updateUserDetails();
+    } else {
+      Utils.showSnackBar("Please make sure everything on this form is valid !");
+    }
   }
 }

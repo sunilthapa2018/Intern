@@ -6,7 +6,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:motivational_leadership/services/database.dart';
-import 'package:motivational_leadership/services/notification_service_one_signal.dart';
 import 'package:motivational_leadership/ui/coach/coach_feedback_type_selection_page.dart';
 import 'package:motivational_leadership/ui/coach/widgets/coach_navigation_drawer.dart';
 import 'package:motivational_leadership/utility/base_utils.dart';
@@ -50,7 +49,6 @@ class _AdminHomeState extends State<CoachHome> {
     super.initState();
     storeNotificationToken();
     tz.initializeTimeZones();
-    // tz.initializeTimezones();
   }
 
   FutureBuilder myBody(BuildContext context) {
@@ -86,6 +84,16 @@ class _AdminHomeState extends State<CoachHome> {
                     title: FutureBuilder(
                       future: getName(index),
                       builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Text(
+                            "Loading...",
+                            style: TextStyle(
+                              fontSize: 16.sp,
+                              color: Colors.black,
+                            ),
+                          );
+                        }
                         return Text(
                           snapshot.data.toString(),
                           style: TextStyle(fontSize: 16.sp),
@@ -120,14 +128,6 @@ class _AdminHomeState extends State<CoachHome> {
               _refresh(context);
             },
             icon: const Icon(Icons.refresh)),
-        IconButton(
-            onPressed: () {
-              sendToAllNotification(
-                content: "asdasdasdasd",
-                heading: "gsadasd",
-              );
-            },
-            icon: const Icon(Icons.person)),
         PopupMenuButton<String>(
           icon: const Icon(Icons.sort),
           onSelected: handleClick,
@@ -169,6 +169,7 @@ class _AdminHomeState extends State<CoachHome> {
     }
 
     if (resultant == null) {
+      userSubmissionList = [];
       return userSubmissionList;
     } else {
       userSubmissionList = resultant;

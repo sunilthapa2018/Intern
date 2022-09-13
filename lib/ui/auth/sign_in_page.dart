@@ -26,28 +26,31 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       appBar: appBar(),
-      body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-        child: Form(
-          key: formKey,
-          child: Column(
-            children: [
-              welcomeTitle(),
-              companyLogo(),
-              txtEmail(),
-              spacerSixPixel(),
-              txtPassword(),
-              spacerTwentyPixel(),
-              signInButton(context),
-              spacerTwentyPixel(),
-              forgotPassword(context),
-              spacerTwentyPixel(),
-              signUp(context),
-            ],
-          ),
+      body: myBody(context),
+    );
+  }
+
+  myBody(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+      child: Form(
+        key: formKey,
+        child: ListView(
+          children: [
+            welcomeTitle(),
+            companyLogo(),
+            txtEmail(),
+            spacerSixPixel(),
+            txtPassword(),
+            spacerTwentyPixel(),
+            signInButton(context),
+            spacerTwentyPixel(),
+            forgotPassword(context),
+            spacerTwentyPixel(),
+            signUp(context),
+          ],
         ),
       ),
     );
@@ -113,11 +116,14 @@ class _SignInState extends State<SignIn> {
           currentPage: widget,
         );
       },
-      child: const Text('Forgot Password?',
-          style: TextStyle(
-              color: Colors.black87,
-              decoration: TextDecoration.underline,
-              fontSize: 17)),
+      child: const Align(
+        alignment: Alignment.centerRight,
+        child: Text('Forgot Password?',
+            style: TextStyle(
+                color: Colors.black87,
+                decoration: TextDecoration.underline,
+                fontSize: 17)),
+      ),
     );
   }
 
@@ -145,6 +151,10 @@ class _SignInState extends State<SignIn> {
 
   TextFormField txtPassword() {
     return TextFormField(
+      onFieldSubmitted: (value) {
+        validateForm();
+      },
+      textInputAction: TextInputAction.done,
       controller: passwordController,
       decoration: const InputDecoration(
           labelText: "Password", hintText: "Enter your Password"),
@@ -158,6 +168,8 @@ class _SignInState extends State<SignIn> {
 
   TextFormField txtEmail() {
     return TextFormField(
+      autofocus: true,
+      textInputAction: TextInputAction.next,
       controller: emailController,
       decoration: const InputDecoration(
           labelText: "Email", hintText: "Enter your Email Address"),
@@ -189,7 +201,6 @@ class _SignInState extends State<SignIn> {
           'Welcome!',
           style: TextStyle(
             color: Color(0xFFff6600),
-            //color: Color(0xFF2e3c96),
             fontWeight: FontWeight.w900,
             fontSize: 36,
           ),
@@ -202,7 +213,12 @@ class _SignInState extends State<SignIn> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => const Center(child: CircularProgressIndicator()),
+      builder: (context) => Container(
+        color: backgroundColor,
+        child: const Center(
+          child: CircularProgressIndicator(),
+        ),
+      ),
     );
     try {
       String email = emailController.text.trim();
@@ -225,7 +241,8 @@ class _SignInState extends State<SignIn> {
       navigatorKey.currentState!.popUntil((route) => route.isFirst);
     } on FirebaseAuthException catch (e) {
       Utils.showSnackBar(e.message);
-      Navigator.pop(context);
+      if (!mounted) return;
+      Navigator.of(context).pop();
     }
   }
 
@@ -234,6 +251,14 @@ class _SignInState extends State<SignIn> {
       backgroundColor: appBarColor,
       systemOverlayStyle: SystemUiOverlayStyle.dark,
     );
+  }
+
+  validateForm() {
+    if (formKey.currentState!.validate()) {
+      signIn();
+    } else {
+      Utils.showSnackBar("Please fill in all the details");
+    }
   }
 }
 

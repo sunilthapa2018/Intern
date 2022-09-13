@@ -109,7 +109,7 @@ class _StudentContactUsState extends State<StudentContactUs> {
 
   letsStart() {
     return Padding(
-      padding: const EdgeInsets.only(left: 20),
+      padding: const EdgeInsets.only(left: 16),
       child: Align(
         alignment: Alignment.centerLeft,
         child: Text(
@@ -189,7 +189,8 @@ class _StudentContactUsState extends State<StudentContactUs> {
 
     final Uri emailLaunchUri = Uri(
       scheme: 'mailto',
-      path: 'nicholai@leadershipdevelopment.training',
+      // path: 'nicholai@leadershipdevelopment.training',
+      path: 'stsoft2016@gmail.com',
       query: encodeQueryParameters(<String, String>{
         'subject': subject,
         'body': message,

@@ -1,13 +1,13 @@
 class NotificationRequest {
   List<String>? registrationIds;
-  SentNotification? notification;
+  SendNotification? notification;
 
   NotificationRequest({this.registrationIds, this.notification});
 
   NotificationRequest.fromJson(Map<String, dynamic> json) {
     registrationIds = json['registration_ids'].cast<String>();
     notification = json['notification'] != null
-        ? SentNotification.fromJson(json['notification'])
+        ? SendNotification.fromJson(json['notification'])
         : null;
   }
 
@@ -21,17 +21,17 @@ class NotificationRequest {
   }
 }
 
-class SentNotification {
+class SendNotification {
   String? body;
   String? title;
   String? androidChannelId;
   String? image;
   bool? sound;
 
-  SentNotification(
+  SendNotification(
       {this.body, this.title, this.androidChannelId, this.image, this.sound});
 
-  SentNotification.fromJson(Map<String, dynamic> json) {
+  SendNotification.fromJson(Map<String, dynamic> json) {
     body = json['body'];
     title = json['title'];
     androidChannelId = json['android_channel_id'];

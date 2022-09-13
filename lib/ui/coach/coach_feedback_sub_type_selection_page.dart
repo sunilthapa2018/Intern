@@ -1,4 +1,4 @@
-import 'dart:convert';
+import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,6 +11,7 @@ import 'package:motivational_leadership/providers/coach/subtype/coach_imp_provid
 import 'package:motivational_leadership/providers/coach/subtype/coach_io_provider.dart';
 import 'package:motivational_leadership/providers/coach/subtype/coach_oc_provider.dart';
 import 'package:motivational_leadership/providers/coach/subtype/coach_si_provider.dart';
+import 'package:motivational_leadership/services/database.dart';
 import 'package:motivational_leadership/services/push_notification_service.dart';
 import 'package:motivational_leadership/ui/coach/widgets/subtype/categories_tile/coach_action_tile.dart';
 import 'package:motivational_leadership/ui/coach/widgets/subtype/categories_tile/coach_future_tile.dart';
@@ -207,24 +208,30 @@ class _CoachFeedbackSubTypeSelectionState
         bool aCompleted = getCompletedStatus(txtAValue);
         bool bCompleted = getCompletedStatus(txtBValue);
         bool cCompleted = getCompletedStatus(txtCValue);
-        try {
-          showProgressDialog();
-          final response = await PushNotificationService().sendPushMessage(
-            request: NotificationRequest(
-              registrationIds: [
-                "eWo8W_l2R8qS_fiA38Lvrn:APA91bH39s5TnHjLtnjeBDMthF2pmnQi-ueYpcleFXTueyKqIupdr8UnbhzWKAnb5ZtOOrKuQ7vaz65WdU9tzE2zdKjXa0onOGGXcoDhEuELtdDoEuoBjI1zIn1uHIH9GUwVib6j5S5W",
-                "da4M7hMpS_2mfb9CTw3r-9:APA91bEd2XHX7XEWSfvqmha4WFGKlbyJz3OK0elbogcWFj3OeZUbhkINX-iGJoCOGb8qLOYWq41B36L27vJ8pWOf1BQj2Cw3JCc-51mY2vaUamXIsV5Qz1T10WdNyhqAihcI6nKjdH50"
-              ],
-              notification: SentNotification(
-                  body: "Our custom notifiation", title: "Hello there"),
-            ),
-          );
-          dismissProgressDialog();
-          if (response == null) Utils.showSnackBar("Token not found");
-        } catch (e) {
-          Utils.showSnackBar(e.toString());
-        }
+
         if (aCompleted & bCompleted & cCompleted) {
+          String? token = await DatabaseService.getUserToken(widget.userID);
+          log("Student has been Notified for this token :$token");
+          try {
+            showProgressDialog();
+            final response = await PushNotificationService().sendPushMessage(
+              request: NotificationRequest(
+                registrationIds: [
+                  token,
+                ],
+                notification: SendNotification(
+                  body: "Your coach had given a feedback for Plan Section",
+                  title: "Feedback Received",
+                  sound: true,
+                ),
+              ),
+            );
+            dismissProgressDialog();
+            Utils.showSnackBar("Student has been Notified");
+            if (response == null) Utils.showSnackBar("Token not found");
+          } catch (e) {
+            Utils.showSnackBar(e.toString());
+          }
         } else {
           Utils.showSnackBar(
               "Please complete all sections of PLAN before you can submit");
@@ -232,20 +239,6 @@ class _CoachFeedbackSubTypeSelectionState
       },
       child: submitButton(context),
     );
-  }
-
-  constructFCMPayload(String? token) {
-    return jsonEncode({
-      'token': token,
-      'data': {
-        'via': 'FlutterFire Cloud Messaging!!!',
-        'count': 1,
-      },
-      'notification': {
-        'title': 'Hello FlutterFire!',
-        'body': 'This notification (#1) was created via FCM!',
-      },
-    });
   }
 
   GestureDetector reflectSubmitButton(BuildContext context) {
@@ -260,9 +253,30 @@ class _CoachFeedbackSubTypeSelectionState
         bool eCompleted = getCompletedStatus(txtEValue);
         bool fCompleted = getCompletedStatus(txtFValue);
 
-        String uid = FirebaseAuth.instance.currentUser!.uid;
         if (dCompleted & eCompleted & fCompleted) {
           //push notification
+          String? token = await DatabaseService.getUserToken(widget.userID);
+          log("Student has been Notified for this token :$token");
+          try {
+            showProgressDialog();
+            final response = await PushNotificationService().sendPushMessage(
+              request: NotificationRequest(
+                registrationIds: [
+                  token,
+                ],
+                notification: SendNotification(
+                  body: "Your coach has given a feedback for Reflect Section",
+                  title: "Feedback Received",
+                  sound: true,
+                ),
+              ),
+            );
+            dismissProgressDialog();
+            Utils.showSnackBar("Student has been Notified");
+            if (response == null) Utils.showSnackBar("Token not found");
+          } catch (e) {
+            Utils.showSnackBar(e.toString());
+          }
         } else {
           Utils.showSnackBar(
               "Please complete all sections of REFLECT before you can submit");

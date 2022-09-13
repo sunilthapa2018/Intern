@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:motivational_leadership/providers/student/subtype/student_feedback_action_provider.dart';
 import 'package:motivational_leadership/providers/student/subtype/student_feedback_future_provider.dart';
 import 'package:motivational_leadership/providers/student/subtype/student_feedback_imp_provider.dart';
@@ -51,13 +53,18 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
 
   late String _questionType = "";
 
-  ListView myBody(BuildContext context) {
-    return ListView(
-      padding: EdgeInsets.zero,
-      children: [
-        planSection(context),
-        reflectSection(context),
-      ],
+  Padding myBody(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 16, right: 16),
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          verbage(),
+          planSection(context),
+          reflectSection(context),
+          verticleSpacer(8),
+        ],
+      ),
     );
   }
 
@@ -66,24 +73,30 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
       children: [
         Container(
           width: double.infinity,
-          margin: const EdgeInsets.fromLTRB(20, 15, 20, 10),
-          padding: const EdgeInsets.only(bottom: 10),
+          margin: const EdgeInsets.fromLTRB(0, 8, 0, 5),
+          padding: const EdgeInsets.only(bottom: 5),
           decoration: BoxDecoration(
-            border: Border.all(color: orangeColor, width: 1),
+            color: const Color(0xFF00d4b7),
+            border: Border.all(color: const Color(0xFF00d4b7), width: 1),
             borderRadius: BorderRadius.circular(10),
             shape: BoxShape.rectangle,
           ),
           child: Column(
             children: [
-              verticleSpacer(5),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: myTextTitle("Reflect"),
+              ),
+              reflectVerbage(),
               StudentImplementationTile(questionType: _questionType),
               StudentIOTile(questionType: _questionType),
               StudentFutureTile(questionType: _questionType),
+              verticleSpacer(5),
               reflectSubmitButton(context),
             ],
           ),
         ),
-        reflectBorder(),
+        // reflectBorderText(),
       ],
     );
   }
@@ -93,38 +106,44 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
       children: [
         Container(
           width: double.infinity,
-          margin: const EdgeInsets.fromLTRB(20, 20, 20, 10),
-          padding: const EdgeInsets.only(bottom: 10),
+          margin: const EdgeInsets.fromLTRB(0, 8, 0, 5),
+          padding: const EdgeInsets.only(bottom: 5, top: 5),
           decoration: BoxDecoration(
-            border: Border.all(color: orangeColor, width: 1),
+            color: const Color(0xFF00d4b7),
+            border: Border.all(color: const Color(0xFF00d4b7), width: 1),
             borderRadius: BorderRadius.circular(10),
             shape: BoxShape.rectangle,
           ),
           child: Column(
             children: [
-              verticleSpacer(5),
+              Align(
+                alignment: Alignment.topLeft,
+                child: myTextTitle("Plan"),
+              ),
+              planVerbage(),
               StudentActionTile(questionType: _questionType),
               StudentOCTile(questionType: _questionType),
               StudentSITile(questionType: _questionType),
+              verticleSpacer(5),
               planSubmitButton(context),
             ],
           ),
         ),
-        planBorder(),
+        // planBorderText(),
       ],
     );
   }
 
-  Positioned reflectBorder() {
+  Positioned reflectBorderText() {
     return Positioned(
         left: 50,
         top: 5,
         child: Container(
           padding: const EdgeInsets.only(left: 10, right: 10),
-          color: backgroundColor,
+          color: Colors.transparent,
           child: Text(
             'Reflect',
-            style: Theme.of(context).textTheme.headline4,
+            style: TextStyle(color: Colors.orange, fontSize: 20.sp),
           ),
         ));
   }
@@ -166,7 +185,7 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
           alignment: Alignment.center,
           width: MediaQuery.of(context).size.width / 3,
           margin: const EdgeInsets.fromLTRB(0, 5, 0, 5),
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
           decoration: myButtonBox(),
           child: Text(
             "Submit",
@@ -177,16 +196,16 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
     );
   }
 
-  Positioned planBorder() {
+  Positioned planBorderText() {
     return Positioned(
         left: 50,
-        top: 10,
+        top: 0,
         child: Container(
           padding: const EdgeInsets.only(left: 10, right: 10),
-          color: backgroundColor,
+          color: Colors.transparent,
           child: Text(
             'Plan',
-            style: Theme.of(context).textTheme.headline4,
+            style: TextStyle(color: Colors.black, fontSize: 20.sp),
           ),
         ));
   }
@@ -233,7 +252,7 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
         alignment: Alignment.center,
         width: MediaQuery.of(context).size.width / 3,
         margin: const EdgeInsets.fromLTRB(0, 5, 0, 5),
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
         decoration: myButtonBox(),
         child: Text(
           "Submit",
@@ -245,8 +264,10 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
 
   AppBar appBar(BuildContext context) {
     return AppBar(
+      leadingWidth: 48, // <-- Use this
+      // leading: const Icon(Icons.arrow_back),
       title: Text(
-        "Sub-Type Selection",
+        "Action Plan",
         style: Theme.of(context).textTheme.headline4,
       ),
       titleSpacing: 0,
@@ -258,13 +279,28 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
         statusBarColor: Colors.transparent,
       ),
       actions: [
-        Padding(
-          padding: const EdgeInsets.only(right: 5),
-          child: IconButton(
-              onPressed: () {
-                _refresh(context);
-              },
-              icon: const Icon(Icons.refresh)),
+        IconButton(
+          visualDensity: const VisualDensity(horizontal: -4.0, vertical: -4.0),
+          padding: EdgeInsets.zero,
+          onPressed: () {
+            loadInfo(context);
+          },
+          icon: Icon(
+            FontAwesomeIcons.solidCircleQuestion,
+            color: iconColor,
+            size: 20,
+          ),
+        ),
+        IconButton(
+          padding: const EdgeInsets.only(right: 8),
+          onPressed: () {
+            _refresh(context);
+          },
+          icon: Icon(
+            FontAwesomeIcons.arrowRotateRight,
+            color: iconColor,
+            size: 20,
+          ),
         ),
       ],
     );
@@ -342,4 +378,165 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
           .getData(type: widget.questionType, notify: false, subType: "Future"),
     ]);
   }
+
+  reflectVerbage() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 8, top: 8, right: 8),
+      child: Text(
+        "Submit your responses to your coach for review by completing all three parts of this activity.",
+        style: myTextStyle(),
+        textAlign: TextAlign.justify,
+      ),
+    );
+  }
+
+  planVerbage() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 8, top: 8, right: 8),
+      child: Text(
+        "Submit your responses to your coach by completing all three parts of this activity. ",
+        style: myTextStyle(),
+        textAlign: TextAlign.justify,
+      ),
+    );
+  }
+
+  // verbage() {
+  //   return Text(
+  //     "To complete this action plan submit your responses for the Plan and Reflect activities below. You will receive a notification once your coach has responded, and find their responses by selecting the Feedback tab in the navigation menu on the Home page.",
+  //     style: myTextStyle3(),
+  //     textAlign: TextAlign.justify,
+  //   );
+  // }
+  RichText verbage() {
+    return RichText(
+      textAlign: TextAlign.justify,
+      text: TextSpan(
+        children: [
+          TextSpan(
+            text: "To complete this action plan submit your responses for the ",
+            style: myTextStyle4(),
+          ),
+          TextSpan(
+            text: "Plan",
+            style: myTextStyle2(),
+          ),
+          TextSpan(
+            text: " and ",
+            style: myTextStyle4(),
+          ),
+          TextSpan(
+            text: "Reflect",
+            style: myTextStyle2(),
+          ),
+          TextSpan(
+            text:
+                " activities below. You will receive a notification once your coach has responded, and find their responses by selecting the Feedback tab in the navigation menu on the Home page.",
+            style: myTextStyle4(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  TextStyle myTextStyle() {
+    return TextStyle(
+      color: Colors.black,
+      fontSize: 14.sp,
+    );
+  }
+
+  TextStyle myTextStyle4() {
+    return TextStyle(
+      color: Colors.black,
+      fontSize: 14.sp,
+    );
+  }
+
+  TextStyle myTextStyle2() {
+    return TextStyle(
+      color: Colors.black,
+      fontSize: 14.sp,
+      fontStyle: FontStyle.italic,
+      fontWeight: FontWeight.bold,
+    );
+  }
+
+  TextStyle myTextStyle3() {
+    return TextStyle(
+      color: Colors.black,
+      fontSize: 14.sp,
+      fontWeight: FontWeight.bold,
+    );
+  }
+
+  myText(String text) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 8, top: 8),
+      child: Text(
+        text,
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 14.sp,
+        ),
+      ),
+    );
+  }
+
+  myTextTitle(String text) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 8, top: 8),
+      child: Text(
+        text,
+        style: TextStyle(
+            color: Colors.black,
+            fontSize: 18.sp,
+            fontWeight: FontWeight.bold,
+            fontStyle: FontStyle.italic),
+      ),
+    );
+  }
+
+  Future<bool?> loadInfo(BuildContext context) async => showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+            title: Row(
+              children: [
+                const Text(
+                  "Help",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                IconButton(
+                  visualDensity:
+                      const VisualDensity(horizontal: -4.0, vertical: -4.0),
+                  padding: EdgeInsets.zero,
+                  icon: Icon(
+                    FontAwesomeIcons.solidCircleQuestion,
+                    color: iconColor,
+                  ),
+                  onPressed: null,
+                ),
+              ],
+            ),
+            content: const Text(
+              "There are two key activities to complete. The Plan and Reflect activities each have three components. You will be prompted to complete responses for three components of both the Plan and Reflect activities. Once you have provided your responses you can submit them for review by a member of our coaching team. You will receive a notification once your coach has responded and find their responses in the Feedback tab in the navigation menu. ",
+              style: TextStyle(),
+              textAlign: TextAlign.justify,
+            ),
+            actions: [
+              ElevatedButton(
+                onPressed: () => Navigator.pop(context, false),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: buttonColor,
+                ),
+                child: const Text("Close"),
+              ),
+            ],
+            contentPadding: const EdgeInsets.only(left: 16, right: 16),
+            titlePadding: const EdgeInsets.all(16),
+            actionsPadding: const EdgeInsets.only(bottom: 12, right: 16),
+          ));
 }

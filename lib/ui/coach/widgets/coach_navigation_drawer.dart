@@ -114,6 +114,7 @@ class CoachNavigationDrawerWidget extends StatelessWidget {
         FirebaseAuth.instance.signOut();
         navigateTo(
             context: context, nextPage: const SignIn(), currentPage: this);
+        break;
     }
   }
 }

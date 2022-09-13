@@ -7,6 +7,7 @@ AppBar appBar(BuildContext context, String title) {
     title: Text(title),
     titleSpacing: 0,
     toolbarHeight: 36,
+    leadingWidth: 48,
     iconTheme: IconThemeData(color: iconColor),
     backgroundColor: Colors.transparent,
     elevation: 0,

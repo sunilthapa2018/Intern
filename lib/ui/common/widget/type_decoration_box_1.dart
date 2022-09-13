@@ -7,8 +7,8 @@ BoxDecoration myTypeBoxDecoration1() {
       begin: Alignment.centerLeft,
       end: Alignment.centerRight,
       colors: [
-        tile1Color1,
-        tile1Color2,
+        newTile1,
+        newTile1,
       ],
     ),
     borderRadius: const BorderRadius.all(Radius.circular(30)),

@@ -24,7 +24,7 @@ class StudentImplementationTile extends StatelessWidget {
     return GestureDetector(
       child: Container(
         width: MediaQuery.of(context).size.width,
-        margin: const EdgeInsets.fromLTRB(10, 10, 10, 5),
+        margin: const EdgeInsets.fromLTRB(10, 10, 10, 0),
         decoration: mySubTypeBoxDecoration1(),
         child: Column(
           children: [

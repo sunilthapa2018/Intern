@@ -32,28 +32,14 @@ import 'package:motivational_leadership/ui/coach/coach_home_page.dart';
 import 'package:motivational_leadership/ui/student/student_home_page.dart';
 import 'package:motivational_leadership/utility/colors.dart';
 import 'package:motivational_leadership/utility/utils.dart';
-import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:motivational_leadership/widget/circular_progress_indicator.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 String userType = "loading";
 Future<void> backgroundHandler(RemoteMessage message) async {
   log(message.data.toString());
   log(message.notification!.title.toString());
-}
-
-Future<void> initPlatform() async {
-  OneSignal.shared.setAppId("1e5cbd40-2209-499d-8216-b63c951596ef");
-  OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
-
-  OneSignal.shared
-      .setNotificationOpenedHandler((OSNotificationOpenedResult result) {
-    log('NOTIFICATION OPENED HANDLER CALLED WITH: $result');
-  });
-
-  OneSignal.shared.setNotificationWillShowInForegroundHandler(
-      (OSNotificationReceivedEvent event) {
-    log('FOREGROUND HANDLER CALLED WITH: $event');
-  });
 }
 
 initializeFcm() async {
@@ -96,11 +82,7 @@ initializeFcm() async {
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await initPlatform();
   await initializeFcm();
-  // NotificationService().initNotification();
-  // LocalNotificationService.initialize();
-  //FirebaseMessaging.onBackgroundMessage(backgroundHandler);
 
   runApp(const MyApp());
 }
@@ -189,9 +171,9 @@ class MyApp extends StatelessWidget {
                 color: Colors.white,
                 decoration: TextDecoration.none),
             headline6: TextStyle(
-                fontWeight: FontWeight.w300,
+                fontWeight: FontWeight.w500,
                 fontFamily: 'Roboto',
-                fontSize: 20.sp,
+                fontSize: 16.sp,
                 color: Colors.white,
                 decoration: TextDecoration.none),
           ),
@@ -224,20 +206,15 @@ class _MainPageState extends State<MainPage> {
               future: getType(),
               builder: ((context, AsyncSnapshot<String?> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Scaffold(
-                    // appBar: newAppBar(),
-                    body: Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  );
+                  return myCircularProgressIndicator(context);
                 }
                 if (snapshot.data != null && snapshot.hasData) {
                   final userType = snapshot.data;
-                  if (userType == 'admin') {
+                  if (userType == 'Admin') {
                     return const AdminHome();
-                  } else if (userType == 'coach') {
+                  } else if (userType == 'Coach') {
                     return const CoachHome();
-                  } else if (userType == 'student') {
+                  } else if (userType == 'Student') {
                     return const StudentHome();
                   } else {
                     return const SignIn();
@@ -251,12 +228,17 @@ class _MainPageState extends State<MainPage> {
         });
   }
 
+  Future<String?> getTypeFromLocal() async {
+    final prefs = await SharedPreferences.getInstance();
+    final savedType = prefs.getString('type').toString();
+    return savedType;
+  }
+
   Future<String?> getType() async {
     userType = "loading";
     if (FirebaseAuth.instance.currentUser != null) {
       String uid = FirebaseAuth.instance.currentUser!.uid;
       userType = await DatabaseService.getUserType(uid);
-
       return userType;
     }
     return null;

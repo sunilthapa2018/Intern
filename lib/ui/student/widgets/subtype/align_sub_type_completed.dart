@@ -4,11 +4,11 @@ import 'package:motivational_leadership/ui/common/widget/subtype/subtype_decorat
 Padding alignSubTypeCompleted(
     bool isLoading, String completedText, BuildContext context) {
   return Padding(
-    padding: const EdgeInsets.only(bottom: 10, right: 20),
+    padding: const EdgeInsets.only(bottom: 5, right: 16, top: 2),
     child: Align(
       alignment: Alignment.centerRight,
       child: Container(
-        padding: const EdgeInsets.fromLTRB(20, 2, 20, 2),
+        padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
         decoration: mySubTypeBoxDecoration4(),
         child: Text(
           (isLoading) ? "Loading..." : completedText,

@@ -57,17 +57,19 @@ class _CoachFeedbackTypeSelectionState
   }
 
   _buildMainBody(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      color: coachBackgroundColor,
-      height: double.infinity,
-      child: Column(
-        children: [
-          CoachAutonomyTile(userID: widget.userID),
-          CoachBelongingTile(userID: widget.userID),
-          CoachCompetenceTile(userID: widget.userID),
-          _buildButtonLogo()
-        ],
+    return SingleChildScrollView(
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        color: coachBackgroundColor,
+        child: Column(
+          children: [
+            CoachAutonomyTile(userID: widget.userID),
+            CoachBelongingTile(userID: widget.userID),
+            CoachCompetenceTile(userID: widget.userID),
+            _buildButtonLogo()
+          ],
+        ),
       ),
     );
   }

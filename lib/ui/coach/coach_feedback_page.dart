@@ -25,6 +25,7 @@ class _CoachFeedbackPageState extends State<CoachFeedbackPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: coachBackgroundColor,
       appBar: appBar(context),
       body: body(context),
@@ -86,7 +87,7 @@ class _CoachFeedbackPageState extends State<CoachFeedbackPage> {
                 verticalSpacing(),
                 txtFeedback(),
                 verticalSpacing(),
-                feedback(),
+                Expanded(child: feedback()),
                 saveButton(context),
               ],
             ),

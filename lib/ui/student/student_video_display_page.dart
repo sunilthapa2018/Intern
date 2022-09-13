@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:motivational_leadership/ui/common/widget/verticle_spacer.dart';
 import 'package:motivational_leadership/ui/student/student_question_subtype_selection_page.dart';
 import 'package:motivational_leadership/ui/student/widgets/app_bar.dart';
 import 'package:motivational_leadership/ui/student/widgets/my_button_box.dart';
@@ -25,31 +27,177 @@ class _VideoPlaybackState extends State<VideoPlayback> {
           return Scaffold(
             backgroundColor: backgroundColor,
             appBar: buildAppBar(context),
-            body: Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20),
-              child: Column(
-                children: [
-                  Column(
-                    children: [
-                      const SizedBox(height: 10),
-                      mainTitle(),
-                      const SizedBox(height: 10),
-                      player,
-                      const SizedBox(height: 10),
-                      saveButton(context),
-                    ],
-                  ),
-                  Expanded(
-                    child: Align(
-                      alignment: Alignment.bottomCenter,
-                      child: _buildButtonLogo(),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            body: myBody(player, context),
           );
         });
+  }
+
+  Padding myBody(Widget player, BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 16, right: 16),
+      child: Column(
+        children: [
+          Column(
+            children: [
+              if (_questionType == "Autonomy") ...[
+                titleText("A", "utonomy"),
+                autonomyText(),
+                autonomySecondText(),
+              ] else if (widget.questionType == "Belonging") ...[
+                titleText("B", "elonging"),
+                belongingText(),
+                belongingSecondText(),
+              ] else ...[
+                titleText("C", "ompetence"),
+                competenceText(),
+                competenceSecondText(),
+              ],
+              verticleSpacer(10),
+              player,
+              verticleSpacer(10),
+              saveButton(context),
+            ],
+          ),
+          Expanded(
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: _buildButtonLogo(),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Text autonomyText() {
+    return Text(
+        "Self-Determination Theory explains that we each have three basic psychological needs and that our motivation improves as they are satisfied. These psychological needs are the need for autonomy, belonging and competence. ",
+        style: myTextStyle(),
+        textAlign: TextAlign.justify);
+  }
+
+  RichText autonomySecondText() {
+    return RichText(
+      textAlign: TextAlign.justify,
+      text: TextSpan(
+        children: [
+          TextSpan(
+            text:
+                "The first of these psychological needs is the need for autonomy. This need relates to the sense of freedom and choice an individual has concerning their actions. This is what we call the",
+            style: myTextStyle(),
+          ),
+          TextSpan(
+            text: " “A” ",
+            style: myTextStyle2(),
+          ),
+          TextSpan(
+            text:
+                "of a leader’s ABC to building motivation in the workplace. Click the video to learn more.",
+            style: myTextStyle(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Text belongingText() {
+    return Text(
+        "The need for belonging is the desire to feel connected with others. This need is fulfilled by interpersonal connections with others, which are characterised by mutual respect, reliance and caring.",
+        style: myTextStyle(),
+        textAlign: TextAlign.justify);
+  }
+
+  RichText belongingSecondText() {
+    return RichText(
+      textAlign: TextAlign.justify,
+      text: TextSpan(
+        children: [
+          TextSpan(
+            text: "This is the",
+            style: myTextStyle(),
+          ),
+          TextSpan(
+            text: " “B” ",
+            style: myTextStyle2(),
+          ),
+          TextSpan(
+            text:
+                "of what we call a leader’s ABC to building motivation in the workplace. Click the video to learn more.",
+            style: myTextStyle(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Text competenceText() {
+    return Text(
+        "Another motivational force contributing to employee performance is the psychological need for competence. The need for competence relates to the desire of an individual to feel effective in their environment or job and to make valuable contributions.",
+        style: myTextStyle(),
+        textAlign: TextAlign.justify);
+  }
+
+  RichText competenceSecondText() {
+    return RichText(
+      textAlign: TextAlign.justify,
+      text: TextSpan(
+        children: [
+          TextSpan(
+            text: "This is the",
+            style: myTextStyle(),
+          ),
+          TextSpan(
+            text: " “C” ",
+            style: myTextStyle2(),
+          ),
+          TextSpan(
+            text:
+                "of what we call a leader’s ABC to building motivation in the workplace. Click the video to learn more.",
+            style: myTextStyle(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  TextStyle myTextStyle() {
+    return TextStyle(
+      fontWeight: FontWeight.w400,
+      fontFamily: 'Roboto',
+      fontSize: 16.sp,
+      color: Colors.black87,
+      decoration: TextDecoration.none,
+    );
+  }
+
+  TextStyle myTextStyle2() {
+    return TextStyle(
+      fontWeight: FontWeight.w400,
+      fontFamily: 'Roboto',
+      fontSize: 16.sp,
+      color: orangeColor,
+      decoration: TextDecoration.none,
+    );
+  }
+
+  TextStyle myTextStyle3() {
+    return TextStyle(
+      fontWeight: FontWeight.w600,
+      fontFamily: 'Roboto',
+      fontSize: 36.sp,
+      color: Colors.black87,
+      decoration: TextDecoration.none,
+    );
+  }
+
+  TextStyle myTextStyle4() {
+    return TextStyle(
+      fontWeight: FontWeight.w600,
+      fontFamily: 'Roboto',
+      fontSize: 36.sp,
+      color: orangeColor,
+      decoration: TextDecoration.none,
+    );
   }
 
   late String _questionType = "";
@@ -59,9 +207,9 @@ class _VideoPlaybackState extends State<VideoPlayback> {
     _questionType = widget.questionType;
     super.initState();
     String url = "";
-    if (_questionType == 'AUTONOMY') {
+    if (_questionType == 'Autonomy') {
       url = "https://www.youtube.com/watch?v=vWitScrU8uY";
-    } else if (_questionType == 'BELONGING') {
+    } else if (_questionType == 'Belonging') {
       url = "https://www.youtube.com/watch?v=vWitScrU8uY";
     } else {
       url = "https://www.youtube.com/watch?v=vWitScrU8uY";
@@ -92,7 +240,7 @@ class _VideoPlaybackState extends State<VideoPlayback> {
       padding: const EdgeInsets.only(bottom: 30),
       child: Image.asset(
         'assets/complete_logo.png',
-        width: width - (20 / 100 * width),
+        width: width - (10 / 100 * width),
         fit: BoxFit.contain,
       ),
     );
@@ -102,8 +250,29 @@ class _VideoPlaybackState extends State<VideoPlayback> {
     return Align(
       alignment: Alignment.centerLeft,
       child: Text(
-        "Introduction",
+        _questionType,
         style: Theme.of(context).textTheme.headline3,
+      ),
+    );
+  }
+
+  Align titleText(String firstLetter, String remainingPart) {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: RichText(
+        textAlign: TextAlign.justify,
+        text: TextSpan(
+          children: [
+            TextSpan(
+              text: firstLetter,
+              style: myTextStyle4(),
+            ),
+            TextSpan(
+              text: remainingPart,
+              style: myTextStyle3(),
+            ),
+          ],
+        ),
       ),
     );
   }

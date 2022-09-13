@@ -97,7 +97,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                           Utils.showSnackBar(e.message);
                         }
                       } else {
-                        Utils.showSnackBar('Please enter valid Email Address');
+                        Utils.showSnackBar(
+                            'This Email Address is not registered in our system. Please enter a valid Email Address');
                       }
                     },
                     child: Container(

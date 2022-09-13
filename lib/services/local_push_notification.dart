@@ -15,6 +15,11 @@ class NotificationService {
   NotificationService._internal();
 
   Future<void> initNotification() async {
+    flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
+        ?.requestPermission();
+
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings('@drawable/ic_flutternotification');
 

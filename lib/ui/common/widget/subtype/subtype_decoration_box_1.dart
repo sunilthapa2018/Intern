@@ -11,6 +11,6 @@ BoxDecoration mySubTypeBoxDecoration1() {
         tile1Color2,
       ],
     ),
-    borderRadius: const BorderRadius.all(Radius.circular(30)),
+    borderRadius: const BorderRadius.all(Radius.circular(15)),
   );
 }

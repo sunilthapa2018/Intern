@@ -2,9 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:motivational_leadership/UI/Student/student_home_page.dart';
 import 'package:motivational_leadership/services/get_user_name.dart';
-import 'package:motivational_leadership/ui/profile_page.dart';
-import 'package:motivational_leadership/ui/signin_page.dart';
-import 'package:page_transition/page_transition.dart';
+import 'package:motivational_leadership/ui/auth/sign_in_page.dart';
+import 'package:motivational_leadership/ui/common/profile_page.dart';
+import 'package:motivational_leadership/utility/base_utils.dart';
 
 String uid = FirebaseAuth.instance.currentUser!.uid;
 
@@ -49,10 +49,10 @@ class NavigationDrawerWidget extends StatelessWidget {
             leading: const Icon(Icons.home_outlined),
             title: const Text('Home'),
             onTap: () {
-              Navigator.of(context).push(PageTransition(
-                  type: PageTransitionType.rightToLeftJoined,
-                  childCurrent: this,
-                  child: const StudentHome()));
+              navigateTo(
+                  context: context,
+                  nextPage: const StudentHome(),
+                  currentPage: this);
             },
           ),
           ListTile(
@@ -60,10 +60,10 @@ class NavigationDrawerWidget extends StatelessWidget {
             leading: const Icon(Icons.feedback_outlined),
             title: const Text('Feedback'),
             onTap: () {
-              Navigator.of(context).push(PageTransition(
-                  type: PageTransitionType.rightToLeftJoined,
-                  childCurrent: this,
-                  child: SignIn()));
+              navigateTo(
+                  context: context,
+                  nextPage: const SignIn(),
+                  currentPage: this);
             },
           ),
           ListTile(
@@ -71,10 +71,10 @@ class NavigationDrawerWidget extends StatelessWidget {
             leading: const Icon(Icons.supervised_user_circle_outlined),
             title: const Text('Profile'),
             onTap: () {
-              Navigator.of(context).push(PageTransition(
-                  type: PageTransitionType.rightToLeftJoined,
-                  childCurrent: this,
-                  child: Profile()));
+              navigateTo(
+                  context: context,
+                  nextPage: const Profile(),
+                  currentPage: this);
             },
           ),
           ListTile(
@@ -83,10 +83,10 @@ class NavigationDrawerWidget extends StatelessWidget {
             title: const Text('Logout'),
             onTap: () {
               FirebaseAuth.instance.signOut();
-              Navigator.of(context).push(PageTransition(
-                  type: PageTransitionType.rightToLeftJoined,
-                  childCurrent: this,
-                  child: SignIn()));
+              navigateTo(
+                  context: context,
+                  nextPage: const SignIn(),
+                  currentPage: this);
             },
           ),
         ],

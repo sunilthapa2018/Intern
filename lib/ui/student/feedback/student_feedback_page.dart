@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:motivational_leadership/services/database.dart';
 import 'package:motivational_leadership/ui/common/app_bar.dart';
 import 'package:motivational_leadership/ui/common/widget/verticle_spacer.dart';
@@ -45,12 +46,14 @@ class _StudentFeedbackPageState extends State<StudentFeedbackPage> {
     double spacer = 10;
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+        padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
         child: Column(
           children: [
             textTitle(),
             verticleSpacer(spacer),
+            verticleSpacer(spacer),
             typeSelectionMenu(),
+            verticleSpacer(spacer),
             verticleSpacer(spacer),
             subTypeSelectionMenu(),
             verticleSpacer(spacer),
@@ -63,46 +66,88 @@ class _StudentFeedbackPageState extends State<StudentFeedbackPage> {
     );
   }
 
-  Container subTypeSelectionMenu() {
-    return Container(
-      padding: const EdgeInsets.only(left: 10),
-      decoration: myBox(),
-      child: DropdownButtonHideUnderline(
-        child: DropdownButton(
-          value: subTypeValue,
-          isExpanded: true,
-          items: subType.map(buildMenuItem).toList(),
-          onChanged: (String? value) => setState(() {
+  subTypeSelectionMenu() {
+    return DropdownButtonHideUnderline(
+      child: DropdownButtonFormField(
+        decoration: mySubTypeBox(),
+        value: subTypeValue,
+        isExpanded: true,
+        items: subType.map(buildMenuItem).toList(),
+        onChanged: (String? value) => setState(
+          () {
             subTypeValue = value;
             notifyChanges();
-          }),
+          },
         ),
       ),
     );
   }
 
-  Container typeSelectionMenu() {
-    return Container(
-      padding: const EdgeInsets.only(left: 10),
-      decoration: myBox(),
-      child: DropdownButtonHideUnderline(
-        child: DropdownButton(
-          value: typeValue,
-          isExpanded: true,
-          items: type.map(buildMenuItem).toList(),
-          onChanged: (String? value) => setState(() {
+  typeSelectionMenu() {
+    return DropdownButtonHideUnderline(
+      child: DropdownButtonFormField(
+        decoration: myTypeBox(),
+        value: typeValue,
+        isExpanded: true,
+        items: type.map(buildMenuItem).toList(),
+        onChanged: (String? value) => setState(
+          () {
             typeValue = value;
             notifyChanges();
-          }),
+          },
         ),
       ),
     );
   }
 
-  BoxDecoration myBox() {
-    return BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: iconColor, width: 1));
+  InputDecoration myTypeBox() {
+    return InputDecoration(
+      enabled: true,
+      contentPadding: const EdgeInsets.all(12.0),
+      labelText: "Type",
+      border: InputBorder.none,
+      labelStyle: TextStyle(
+        fontSize: 16.sp,
+        color: orangeColor,
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: const BorderRadius.all(
+          Radius.circular(5.0),
+        ),
+        borderSide: BorderSide(color: orangeColor),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: const BorderRadius.all(
+          Radius.circular(5.0),
+        ),
+        borderSide: BorderSide(color: orangeColor),
+      ),
+    );
+  }
+
+  InputDecoration mySubTypeBox() {
+    return InputDecoration(
+      enabled: true,
+      contentPadding: const EdgeInsets.all(12.0),
+      labelText: "Sub Type",
+      border: InputBorder.none,
+      labelStyle: TextStyle(
+        fontSize: 16.sp,
+        color: orangeColor,
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: const BorderRadius.all(
+          Radius.circular(5.0),
+        ),
+        borderSide: BorderSide(color: orangeColor),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: const BorderRadius.all(
+          Radius.circular(5.0),
+        ),
+        borderSide: BorderSide(color: orangeColor),
+      ),
+    );
   }
 
   TextField feebackSection() {
@@ -117,15 +162,15 @@ class _StudentFeedbackPageState extends State<StudentFeedbackPage> {
       decoration: InputDecoration(
         labelText: "Feedback",
         labelStyle: TextStyle(color: iconColor),
-        contentPadding: const EdgeInsets.fromLTRB(20, 30, 20, 0),
+        contentPadding: const EdgeInsets.fromLTRB(12, 30, 20, 0),
         border: const OutlineInputBorder(),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(color: iconColor, width: 1.0),
-          borderRadius: BorderRadius.circular(25.0),
+          borderRadius: BorderRadius.circular(15.0),
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: iconColor, width: 1.0),
-          borderRadius: BorderRadius.circular(25.0),
+          borderRadius: BorderRadius.circular(15.0),
         ),
       ),
     );
