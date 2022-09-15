@@ -59,7 +59,7 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
-          verbage(),
+          // verbage(),
           planSection(context),
           reflectSection(context),
           verticleSpacer(8),
@@ -76,8 +76,9 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
           margin: const EdgeInsets.fromLTRB(0, 8, 0, 5),
           padding: const EdgeInsets.only(bottom: 5),
           decoration: BoxDecoration(
-            color: const Color(0xFF00d4b7),
-            border: Border.all(color: const Color(0xFF00d4b7), width: 1),
+            // color: const Color(0xFF00d4b7),
+            // color: newTile3,
+            border: Border.all(color: orangeColor, width: 1),
             borderRadius: BorderRadius.circular(10),
             shape: BoxShape.rectangle,
           ),
@@ -109,8 +110,8 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
           margin: const EdgeInsets.fromLTRB(0, 8, 0, 5),
           padding: const EdgeInsets.only(bottom: 5, top: 5),
           decoration: BoxDecoration(
-            color: const Color(0xFF00d4b7),
-            border: Border.all(color: const Color(0xFF00d4b7), width: 1),
+            // color: const Color(0xFF00d4b7),
+            border: Border.all(color: orangeColor, width: 1),
             borderRadius: BorderRadius.circular(10),
             shape: BoxShape.rectangle,
           ),
@@ -177,7 +178,7 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
           }
         } else {
           Utils.showSnackBar(
-              "Please complete all sections of REFLECT before you can submit");
+              "You can only submit your responses to your coach by completing all three parts of REFLECT section. ");
         }
       },
       child: UnconstrainedBox(
@@ -239,7 +240,7 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
           }
         } else {
           Utils.showSnackBar(
-              "Please complete all sections of PLAN before you can submit");
+              "You can only submit your responses to your coach by completing all three parts of PLAN section. ");
         }
       },
       child: submitButton(context),
@@ -394,7 +395,7 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
     return Padding(
       padding: const EdgeInsets.only(left: 8, top: 8, right: 8),
       child: Text(
-        "Submit your responses to your coach by completing all three parts of this activity. ",
+        "Submit your responses to your coach for review by completing all three parts of this activity.",
         style: myTextStyle(),
         textAlign: TextAlign.justify,
       ),
@@ -489,10 +490,11 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
       child: Text(
         text,
         style: TextStyle(
-            color: Colors.black,
-            fontSize: 18.sp,
-            fontWeight: FontWeight.bold,
-            fontStyle: FontStyle.italic),
+          color: Colors.black,
+          fontSize: 18.sp,
+          fontWeight: FontWeight.bold,
+          // fontStyle: FontStyle.italic,
+        ),
       ),
     );
   }
