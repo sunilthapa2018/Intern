@@ -35,7 +35,6 @@ import 'package:motivational_leadership/utility/colors.dart';
 import 'package:motivational_leadership/utility/utils.dart';
 import 'package:motivational_leadership/widget/circular_progress_indicator.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 String userType = "loading";
 Future<void> backgroundHandler(RemoteMessage message) async {
@@ -152,20 +151,20 @@ class MyApp extends StatelessWidget {
             headline2: TextStyle(
                 fontWeight: FontWeight.w300,
                 fontFamily: 'Roboto',
-                fontSize: 16.sp,
+                fontSize: 14.sp,
                 color: Colors.white,
                 decoration: TextDecoration.none),
             headline3: TextStyle(
                 fontWeight: FontWeight.w500,
                 fontFamily: 'Roboto',
-                fontSize: 36.sp,
-                color: orangeColor,
+                fontSize: 24.sp,
+                color: titleOrange,
                 decoration: TextDecoration.none),
             headline4: TextStyle(
                 fontWeight: FontWeight.w500,
                 fontFamily: 'Roboto',
-                fontSize: 16.sp,
-                color: orangeColor,
+                fontSize: 14.sp,
+                color: titleOrange,
                 decoration: TextDecoration.none),
             headline5: TextStyle(
                 fontWeight: FontWeight.w300,
@@ -174,9 +173,9 @@ class MyApp extends StatelessWidget {
                 color: Colors.white,
                 decoration: TextDecoration.none),
             headline6: TextStyle(
-                fontWeight: FontWeight.w500,
+                fontWeight: FontWeight.w400,
                 fontFamily: 'Roboto',
-                fontSize: 16.sp,
+                fontSize: 17.sp,
                 color: Colors.white,
                 decoration: TextDecoration.none),
           ),

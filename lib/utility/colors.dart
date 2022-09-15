@@ -10,6 +10,7 @@ Color appBarColor = Colors.white;
 Color buttonColor = const Color(0xFFff6d00);
 
 Color iconColor = const Color(0xFFff6d00);
+Color titleOrange = const Color(0xFFff6d00);
 
 Color tile1Color1 = const Color(0xFFff6d00);
 Color tile1Color2 = const Color(0xFFff9100);

@@ -163,7 +163,7 @@ class _VideoPlaybackState extends State<VideoPlayback> {
     return TextStyle(
       fontWeight: FontWeight.w400,
       fontFamily: 'Roboto',
-      fontSize: 16.sp,
+      fontSize: 14.sp,
       color: Colors.black87,
       decoration: TextDecoration.none,
     );
@@ -171,10 +171,10 @@ class _VideoPlaybackState extends State<VideoPlayback> {
 
   TextStyle myTextStyle2() {
     return TextStyle(
-      fontWeight: FontWeight.w400,
+      fontWeight: FontWeight.w500,
       fontFamily: 'Roboto',
-      fontSize: 16.sp,
-      color: orangeColor,
+      fontSize: 14.sp,
+      color: titleOrange,
       decoration: TextDecoration.none,
     );
   }
@@ -183,7 +183,7 @@ class _VideoPlaybackState extends State<VideoPlayback> {
     return TextStyle(
       fontWeight: FontWeight.w600,
       fontFamily: 'Roboto',
-      fontSize: 36.sp,
+      fontSize: 24.sp,
       color: Colors.black87,
       decoration: TextDecoration.none,
     );
@@ -193,8 +193,8 @@ class _VideoPlaybackState extends State<VideoPlayback> {
     return TextStyle(
       fontWeight: FontWeight.w600,
       fontFamily: 'Roboto',
-      fontSize: 36.sp,
-      color: orangeColor,
+      fontSize: 24.sp,
+      color: titleOrange,
       decoration: TextDecoration.none,
     );
   }

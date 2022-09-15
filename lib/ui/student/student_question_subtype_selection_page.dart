@@ -60,6 +60,7 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
         padding: EdgeInsets.zero,
         children: [
           // verbage(),
+          titleText("Action Plan"),
           planSection(context),
           reflectSection(context),
           verticleSpacer(8),
@@ -102,13 +103,40 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
     );
   }
 
+  Align titleText(String text) {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: RichText(
+        textAlign: TextAlign.justify,
+        text: TextSpan(
+          children: [
+            TextSpan(
+              text: text,
+              style: myTextStyle5(),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  TextStyle myTextStyle5() {
+    return TextStyle(
+      fontWeight: FontWeight.w500,
+      fontFamily: 'Roboto',
+      fontSize: 24.sp,
+      color: titleOrange,
+      decoration: TextDecoration.none,
+    );
+  }
+
   Stack planSection(BuildContext context) {
     return Stack(
       children: [
         Container(
           width: double.infinity,
-          margin: const EdgeInsets.fromLTRB(0, 8, 0, 5),
-          padding: const EdgeInsets.only(bottom: 5, top: 5),
+          margin: const EdgeInsets.fromLTRB(0, 5, 0, 5),
+          padding: const EdgeInsets.only(bottom: 5, top: 0),
           decoration: BoxDecoration(
             // color: const Color(0xFF00d4b7),
             border: Border.all(color: orangeColor, width: 1),
@@ -267,10 +295,10 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
     return AppBar(
       leadingWidth: 48, // <-- Use this
       // leading: const Icon(Icons.arrow_back),
-      title: Text(
-        "Action Plan",
-        style: Theme.of(context).textTheme.headline4,
-      ),
+      // title: Text(
+      //   "Action Plan",
+      //   style: Theme.of(context).textTheme.headline4,
+      // ),
       titleSpacing: 0,
       toolbarHeight: 36,
       iconTheme: IconThemeData(color: iconColor),
