@@ -382,7 +382,7 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
 
   reflectVerbage() {
     return Padding(
-      padding: const EdgeInsets.only(left: 8, top: 8, right: 8),
+      padding: const EdgeInsets.only(left: 8, top: 5, right: 8),
       child: Text(
         "Submit your responses to your coach for review by completing all three parts of this activity.",
         style: myTextStyle(),
@@ -393,7 +393,7 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
 
   planVerbage() {
     return Padding(
-      padding: const EdgeInsets.only(left: 8, top: 8, right: 8),
+      padding: const EdgeInsets.only(left: 8, top: 5, right: 8),
       child: Text(
         "Submit your responses to your coach for review by completing all three parts of this activity.",
         style: myTextStyle(),

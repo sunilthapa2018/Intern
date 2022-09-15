@@ -57,6 +57,7 @@ class _VideoPlaybackState extends State<VideoPlayback> {
             player,
             verticleSpacer(10),
             saveButton(context),
+            verticleSpacer(10),
           ],
         ),
         Align(

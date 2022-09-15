@@ -7,10 +7,10 @@ BoxDecoration mySubTypeBoxDecoration3() {
       begin: Alignment.centerLeft,
       end: Alignment.centerRight,
       colors: [
-        tile3Color1,
-        tile3Color2,
+        newTile3,
+        newTile3,
       ],
     ),
-    borderRadius: const BorderRadius.all(Radius.circular(30)),
+    borderRadius: const BorderRadius.all(Radius.circular(5)),
   );
 }
