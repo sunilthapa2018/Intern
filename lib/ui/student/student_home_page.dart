@@ -134,8 +134,11 @@ class _StudentHomeState extends State<StudentHome> {
               child: Column(
                 children: [
                   GestureDetector(
-                    onTap: () {
-                      NotificationService().showNotification(
+                    onTap: () async {
+                      final notificationSevice = NotificationService();
+                      await notificationSevice.handlePermission();
+                      notificationSevice.showNew();
+                      notificationSevice.showNotification(
                           1, "title.toString()", "body.toString()", 1);
                       Utils.showSnackBar("Clicked");
                     },
