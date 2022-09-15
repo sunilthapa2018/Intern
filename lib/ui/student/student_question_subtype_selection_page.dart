@@ -10,6 +10,7 @@ import 'package:motivational_leadership/providers/student/subtype/student_feedba
 import 'package:motivational_leadership/providers/student/subtype/student_feedback_oc_provider.dart';
 import 'package:motivational_leadership/providers/student/subtype/student_feedback_si_provider.dart';
 import 'package:motivational_leadership/services/database.dart';
+import 'package:motivational_leadership/ui/common/widget/help_dialog_box.dart';
 import 'package:motivational_leadership/ui/common/widget/verticle_spacer.dart';
 import 'package:motivational_leadership/ui/student/widgets/my_button_box.dart';
 import 'package:motivational_leadership/ui/student/widgets/subtype/categories_tile/student_action_tile.dart';
@@ -209,19 +210,7 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
               "You can only submit your responses to your coach by completing all three parts of REFLECT section. ");
         }
       },
-      child: UnconstrainedBox(
-        child: Container(
-          alignment: Alignment.center,
-          width: MediaQuery.of(context).size.width / 3,
-          margin: const EdgeInsets.fromLTRB(0, 5, 0, 5),
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-          decoration: myButtonBox(),
-          child: Text(
-            "Submit",
-            style: Theme.of(context).textTheme.headline2,
-          ),
-        ),
-      ),
+      child: submitButton(context),
     );
   }
 
@@ -279,9 +268,9 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
     return UnconstrainedBox(
       child: Container(
         alignment: Alignment.center,
-        width: MediaQuery.of(context).size.width / 3,
+        width: MediaQuery.of(context).size.width / 4,
         margin: const EdgeInsets.fromLTRB(0, 5, 0, 5),
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
         decoration: myButtonBox(),
         child: Text(
           "Submit",
@@ -312,7 +301,8 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
           visualDensity: const VisualDensity(horizontal: -4.0, vertical: -4.0),
           padding: EdgeInsets.zero,
           onPressed: () {
-            loadInfo(context);
+            loadInfo(context,
+                "There are two key activities to complete. The Plan and Reflect activities each have three components. You will be prompted to complete responses for three components of both the Plan and Reflect activities. Once you have provided your responses you can submit them for review by a member of our coaching team. You will receive a notification once your coach has responded and find their responses in the Feedback tab in the navigation menu.");
           },
           icon: Icon(
             FontAwesomeIcons.solidCircleQuestion,
@@ -526,52 +516,4 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
       ),
     );
   }
-
-  Future<bool?> loadInfo(BuildContext context) async => showDialog<bool>(
-        context: context,
-        builder: (context) {
-          double padding = (5 / 100) * MediaQuery.of(context).size.width;
-          return AlertDialog(
-            title: Row(
-              children: [
-                const Text(
-                  "Help",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                IconButton(
-                  visualDensity:
-                      const VisualDensity(horizontal: -4.0, vertical: -4.0),
-                  padding: EdgeInsets.zero,
-                  icon: Icon(
-                    FontAwesomeIcons.solidCircleQuestion,
-                    color: iconColor,
-                  ),
-                  onPressed: null,
-                ),
-              ],
-            ),
-            content: const Text(
-              "There are two key activities to complete. The Plan and Reflect activities each have three components. You will be prompted to complete responses for three components of both the Plan and Reflect activities. Once you have provided your responses you can submit them for review by a member of our coaching team. You will receive a notification once your coach has responded and find their responses in the Feedback tab in the navigation menu.",
-              style: TextStyle(),
-              textAlign: TextAlign.justify,
-            ),
-            actions: [
-              ElevatedButton(
-                onPressed: () => Navigator.pop(context, false),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: buttonColor,
-                ),
-                child: const Text("Close"),
-              ),
-            ],
-            contentPadding: const EdgeInsets.only(left: 16, right: 16),
-            titlePadding: const EdgeInsets.all(16),
-            actionsPadding: const EdgeInsets.only(bottom: 12, right: 16),
-            insetPadding: EdgeInsets.all(padding),
-          );
-        },
-      );
 }

@@ -42,14 +42,17 @@ class _VideoPlaybackState extends State<VideoPlayback> {
           children: [
             if (_questionType == "Autonomy") ...[
               titleText("A", "utonomy"),
+              verticleSpacer(10),
               autonomyText(),
               autonomySecondText(),
             ] else if (widget.questionType == "Belonging") ...[
               titleText("B", "elonging"),
+              verticleSpacer(10),
               belongingText(),
               belongingSecondText(),
             ] else ...[
               titleText("C", "ompetence"),
+              verticleSpacer(10),
               competenceText(),
               competenceSecondText(),
             ],
@@ -293,10 +296,10 @@ class _VideoPlaybackState extends State<VideoPlayback> {
             currentPage: widget);
       },
       child: SizedBox(
-        width: MediaQuery.of(context).size.width / 2,
+        width: MediaQuery.of(context).size.width / 3,
         child: Container(
           alignment: Alignment.center,
-          padding: const EdgeInsets.symmetric(vertical: 16),
+          padding: const EdgeInsets.symmetric(vertical: 10),
           decoration: myButtonBox(),
           child: const Text(
             "Skip >>",

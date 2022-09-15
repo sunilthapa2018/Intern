@@ -21,10 +21,15 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
         const SystemUiOverlayStyle(statusBarColor: Colors.white));
-    return Scaffold(
-      backgroundColor: backgroundColor,
-      appBar: appBar(),
-      body: myBody(context),
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).requestFocus(FocusNode());
+      },
+      child: Scaffold(
+        backgroundColor: backgroundColor,
+        appBar: appBar(),
+        body: myBody(context),
+      ),
     );
   }
 
@@ -184,7 +189,7 @@ class _ProfileState extends State<Profile> {
             //color: Color(0xFFff6600),
             color: Colors.black87,
             fontWeight: FontWeight.w900,
-            fontSize: 36,
+            fontSize: 24,
           ),
         ),
         Text(
@@ -192,7 +197,7 @@ class _ProfileState extends State<Profile> {
           style: TextStyle(
             color: Color(0xFFff6600),
             fontWeight: FontWeight.w900,
-            fontSize: 36,
+            fontSize: 24,
           ),
         ),
       ]),

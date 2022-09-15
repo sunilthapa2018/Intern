@@ -18,9 +18,14 @@ class StudentContactUs extends StatefulWidget {
 class _StudentContactUsState extends State<StudentContactUs> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: myAppBar(),
-      body: buildMainBody(),
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).requestFocus(FocusNode());
+      },
+      child: Scaffold(
+        appBar: myAppBar(),
+        body: buildMainBody(),
+      ),
     );
   }
 
@@ -32,6 +37,7 @@ class _StudentContactUsState extends State<StudentContactUs> {
     return AppBar(
       titleSpacing: 0,
       toolbarHeight: 36,
+      leadingWidth: 48,
       iconTheme: IconThemeData(color: iconColor),
       backgroundColor: appBarColor,
       elevation: 0,
@@ -97,10 +103,6 @@ class _StudentContactUsState extends State<StudentContactUs> {
           } on Exception catch (_, e) {
             Utils.showSnackBar("Error : $e");
           }
-          // launchEmailClient(
-          //   subject: subject,
-          //   message: message,
-          // );
         } else {
           Utils.showSnackBar(
               "Please make sure everything on this form is filled !");
@@ -113,13 +115,13 @@ class _StudentContactUsState extends State<StudentContactUs> {
   Container buttonDesign() {
     return Container(
       alignment: Alignment.center,
-      width: MediaQuery.of(context).size.width / 2,
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+      width: MediaQuery.of(context).size.width / 3,
+      padding: const EdgeInsets.symmetric(vertical: 16),
       decoration: BoxDecoration(
-          color: buttonColor, borderRadius: BorderRadius.circular(30)),
+          color: buttonColor, borderRadius: BorderRadius.circular(25)),
       child: const Text(
         "Send Email",
-        style: TextStyle(fontSize: 16, color: Colors.white),
+        style: TextStyle(fontSize: 14, color: Colors.white),
       ),
     );
   }
@@ -139,7 +141,7 @@ class _StudentContactUsState extends State<StudentContactUs> {
 
   TextFormField emailBody() {
     return TextFormField(
-      style: const TextStyle(fontSize: 16),
+      style: const TextStyle(fontSize: 14),
       keyboardType: TextInputType.multiline,
       minLines: 10,
       maxLines: null,
@@ -166,7 +168,7 @@ class _StudentContactUsState extends State<StudentContactUs> {
 
   subject() {
     return TextFormField(
-      style: const TextStyle(fontSize: 16),
+      style: const TextStyle(fontSize: 14),
       controller: subjectController,
       validator: MultiValidator([
         RequiredValidator(errorText: 'Required'),
@@ -199,22 +201,6 @@ class _StudentContactUsState extends State<StudentContactUs> {
       ),
     );
   }
-
-  // void launchEmailClient(
-  //     {required String subject, required String message}) async {
-  //   // String newMessage = "$message\n Sent From the App.";
-
-  //   final Uri emailLaunchUri = Uri(
-  //     scheme: 'mailto',
-  //     // path: 'nicholai@leadershipdevelopment.training',
-  //     path: 'stsoft2016@gmail.com',
-  //     query: encodeQueryParameters(<String, String>{
-  //       'subject': subject,
-  //       'body': message,
-  //     }),
-  //   );
-  //   launchUrl(emailLaunchUri);
-  // }
 
   String? encodeQueryParameters(Map<String, String> params) {
     return params.entries

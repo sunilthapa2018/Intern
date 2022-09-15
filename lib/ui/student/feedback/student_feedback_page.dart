@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:motivational_leadership/services/database.dart';
-import 'package:motivational_leadership/ui/common/app_bar.dart';
+import 'package:motivational_leadership/ui/common/widget/help_dialog_box.dart';
 import 'package:motivational_leadership/ui/common/widget/verticle_spacer.dart';
 import 'package:motivational_leadership/utility/colors.dart';
 
@@ -40,6 +42,36 @@ class _StudentFeedbackPageState extends State<StudentFeedbackPage> {
   initState() {
     super.initState();
     notifyChanges();
+  }
+
+  AppBar appBar(BuildContext context, String title) {
+    return AppBar(
+      title: Text(title),
+      titleSpacing: 0,
+      toolbarHeight: 36,
+      leadingWidth: 48,
+      iconTheme: IconThemeData(color: iconColor),
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      systemOverlayStyle: const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+      ),
+      actions: [
+        IconButton(
+          visualDensity: const VisualDensity(horizontal: -4.0, vertical: -4.0),
+          padding: const EdgeInsets.only(right: 16),
+          onPressed: () {
+            loadInfo(context,
+                "If feedback has been given by coach to selected TYPE and SUB-TYPE then feedback will be shown automatically.");
+          },
+          icon: Icon(
+            FontAwesomeIcons.solidCircleQuestion,
+            color: iconColor,
+            size: 20,
+          ),
+        ),
+      ],
+    );
   }
 
   myBodySection() {
@@ -107,7 +139,7 @@ class _StudentFeedbackPageState extends State<StudentFeedbackPage> {
       labelText: "Type",
       border: InputBorder.none,
       labelStyle: TextStyle(
-        fontSize: 16.sp,
+        fontSize: 14.sp,
         color: orangeColor,
       ),
       focusedBorder: OutlineInputBorder(
@@ -132,7 +164,7 @@ class _StudentFeedbackPageState extends State<StudentFeedbackPage> {
       labelText: "Sub Type",
       border: InputBorder.none,
       labelStyle: TextStyle(
-        fontSize: 16.sp,
+        fontSize: 14.sp,
         color: orangeColor,
       ),
       focusedBorder: OutlineInputBorder(
@@ -154,7 +186,7 @@ class _StudentFeedbackPageState extends State<StudentFeedbackPage> {
     return TextField(
       enableInteractiveSelection: false,
       readOnly: true,
-      style: const TextStyle(fontSize: 16),
+      style: const TextStyle(fontSize: 14),
       keyboardType: TextInputType.multiline,
       minLines: 10,
       maxLines: null,

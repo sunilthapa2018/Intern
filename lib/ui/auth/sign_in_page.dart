@@ -5,7 +5,6 @@ import 'package:form_field_validator/form_field_validator.dart';
 import 'package:motivational_leadership/main.dart';
 import 'package:motivational_leadership/services/database.dart';
 import 'package:motivational_leadership/ui/auth/forget_password_page.dart';
-import 'package:motivational_leadership/ui/auth/sign_up_page.dart';
 import 'package:motivational_leadership/utility/base_utils.dart';
 import 'package:motivational_leadership/utility/colors.dart';
 import 'package:motivational_leadership/utility/utils.dart';
@@ -25,10 +24,15 @@ class _SignInState extends State<SignIn> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: appBar(),
-      body: myBody(context),
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).requestFocus(FocusNode());
+      },
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: appBar(),
+        body: myBody(context),
+      ),
     );
   }
 
@@ -49,7 +53,6 @@ class _SignInState extends State<SignIn> {
             spacerTwentyPixel(),
             forgotPassword(context),
             spacerTwentyPixel(),
-            signUp(context),
           ],
         ),
       ),
@@ -81,29 +84,6 @@ class _SignInState extends State<SignIn> {
   SizedBox spacerSixPixel() {
     return const SizedBox(
       height: 24,
-    );
-  }
-
-  Row signUp(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const Text('Don\'t have an account? ',
-            style: TextStyle(color: Colors.black87, fontSize: 17)),
-        GestureDetector(
-          onTap: () {
-            navigateTo(
-                context: context,
-                nextPage: const SignUp(),
-                currentPage: widget);
-          },
-          child: const Text('Sign Up',
-              style: TextStyle(
-                  color: Colors.black87,
-                  decoration: TextDecoration.underline,
-                  fontSize: 17)),
-        ),
-      ],
     );
   }
 
