@@ -228,34 +228,76 @@ class _QuestionState extends State<Question> {
 
   AppBar appBar(BuildContext context) {
     return AppBar(
-      title: appBarTitle(),
-      leadingWidth: 48,
-      elevation: 0,
-      backgroundColor: appBarColor,
       iconTheme: IconThemeData(color: iconColor),
-      actions: <Widget>[
-        Padding(
-            padding: const EdgeInsets.only(right: 12.0),
-            child: GestureDetector(
-              onTap: () {
-                if (_questionNumber < totalQuestion) {
-                  navigateTo(
-                      context: context,
-                      nextPage: Question(
-                        questionType: _questionType,
-                        questionSubType: _questionSubType,
-                        questionNumber: _questionNumber + 1,
-                      ),
-                      currentPage: widget);
-                } else {
-                  Utils.showSnackBar(
-                      "No more questions! You can always go back.");
-                }
-              },
-              child: appBarNextButton(),
-            )),
-      ],
+      backgroundColor: appBarColor,
+      elevation: 0,
+      titleSpacing: 0,
+      toolbarHeight: 36,
+      systemOverlayStyle: const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+      ),
+      automaticallyImplyLeading: false, // Don't show the leading button
+      title: Padding(
+        padding: const EdgeInsets.all(0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            IconButton(
+              onPressed: () => Navigator.pop(context),
+              icon: Icon(Icons.arrow_back, color: iconColor),
+            ),
+            appBarTitle(),
+            Expanded(
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 12),
+                  child: GestureDetector(
+                    onTap: () => performCheck(context),
+                    child: appBarNextButton(),
+                  ),
+                ),
+              ),
+            ),
+            // Your widgets here
+          ],
+        ),
+      ),
     );
+  }
+
+  // AppBar appBar(BuildContext context) {
+  //   return AppBar(
+  //     title: appBarTitle(),
+  //     leadingWidth: 48,
+  //     elevation: 0,
+  //     backgroundColor: appBarColor,
+  //     iconTheme: IconThemeData(color: iconColor),
+  //     actions: <Widget>[
+  //       Padding(
+  //           padding: const EdgeInsets.only(right: 12.0),
+  //           child: GestureDetector(
+  //             onTap: () => performCheck(context),
+  //             child: appBarNextButton(),
+  //           )),
+  //     ],
+  //   );
+  // }
+
+  void performCheck(BuildContext context) {
+    if (_questionNumber < totalQuestion) {
+      navigateTo(
+          context: context,
+          nextPage: Question(
+            questionType: _questionType,
+            questionSubType: _questionSubType,
+            questionNumber: _questionNumber + 1,
+          ),
+          currentPage: widget);
+    } else {
+      Utils.showSnackBar("No more questions! You can always go back.");
+    }
   }
 
   FutureBuilder<void> appBarNextButton() {

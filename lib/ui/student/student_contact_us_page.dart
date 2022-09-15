@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:motivational_leadership/services/database.dart';
 import 'package:motivational_leadership/services/send_email.dart';
 import 'package:motivational_leadership/ui/common/widget/verticle_spacer.dart';
+import 'package:motivational_leadership/ui/student/widgets/app_bar.dart';
 import 'package:motivational_leadership/utility/colors.dart';
 import 'package:motivational_leadership/utility/utils.dart';
 
@@ -23,7 +23,7 @@ class _StudentContactUsState extends State<StudentContactUs> {
         FocusScope.of(context).requestFocus(FocusNode());
       },
       child: Scaffold(
-        appBar: myAppBar(),
+        appBar: myAppBar(context),
         body: buildMainBody(),
       ),
     );
@@ -32,20 +32,6 @@ class _StudentContactUsState extends State<StudentContactUs> {
   TextEditingController subjectController = TextEditingController();
   TextEditingController emailBodyController = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
-  AppBar myAppBar() {
-    return AppBar(
-      titleSpacing: 0,
-      toolbarHeight: 36,
-      leadingWidth: 48,
-      iconTheme: IconThemeData(color: iconColor),
-      backgroundColor: appBarColor,
-      elevation: 0,
-      systemOverlayStyle: const SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
-      ),
-    );
-  }
 
   buildMainBody() {
     double spacer = 16;

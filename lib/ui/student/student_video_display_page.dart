@@ -28,7 +28,7 @@ class _VideoPlaybackState extends State<VideoPlayback> {
         builder: (context, player) {
           return Scaffold(
             backgroundColor: backgroundColor,
-            appBar: buildAppBar(context),
+            appBar: myAppBar(context),
             body: myBody(player, context),
           );
         });

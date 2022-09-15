@@ -282,48 +282,109 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
 
   AppBar appBar(BuildContext context) {
     return AppBar(
-      leadingWidth: 48, // <-- Use this
-      // leading: const Icon(Icons.arrow_back),
-      // title: Text(
-      //   "Action Plan",
-      //   style: Theme.of(context).textTheme.headline4,
-      // ),
-      titleSpacing: 0,
-      toolbarHeight: 36,
       iconTheme: IconThemeData(color: iconColor),
       backgroundColor: appBarColor,
       elevation: 0,
+      titleSpacing: 0,
+      toolbarHeight: 36,
       systemOverlayStyle: const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
       ),
-      actions: [
-        IconButton(
-          visualDensity: const VisualDensity(horizontal: -4.0, vertical: -4.0),
-          padding: EdgeInsets.zero,
-          onPressed: () {
-            loadInfo(context,
-                "There are two key activities to complete. The Plan and Reflect activities each have three components. You will be prompted to complete responses for three components of both the Plan and Reflect activities. Once you have provided your responses you can submit them for review by a member of our coaching team. You will receive a notification once your coach has responded and find their responses in the Feedback tab in the navigation menu.");
-          },
-          icon: Icon(
-            FontAwesomeIcons.solidCircleQuestion,
-            color: iconColor,
-            size: 20,
-          ),
+      automaticallyImplyLeading: false, // Don't show the leading button
+      title: Padding(
+        padding: const EdgeInsets.all(0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            IconButton(
+              onPressed: () => Navigator.pop(context),
+              icon: Icon(Icons.arrow_back, color: iconColor),
+            ),
+            Expanded(
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: IconButton(
+                  visualDensity:
+                      const VisualDensity(horizontal: -4.0, vertical: -4.0),
+                  padding: const EdgeInsets.all(0),
+                  onPressed: () {
+                    loadInfo(context,
+                        "If feedback has been given by coach to selected TYPE and SUB-TYPE then feedback will be shown automatically.");
+                  },
+                  icon: Icon(
+                    FontAwesomeIcons.solidCircleQuestion,
+                    color: iconColor,
+                    size: 20,
+                  ),
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.centerRight,
+              child: IconButton(
+                padding: const EdgeInsets.only(right: 8, left: 0),
+                onPressed: () {
+                  _refresh(context);
+                },
+                icon: Icon(
+                  FontAwesomeIcons.arrowRotateRight,
+                  color: iconColor,
+                  size: 20,
+                ),
+              ),
+            ),
+            // Your widgets here
+          ],
         ),
-        IconButton(
-          padding: const EdgeInsets.only(right: 8),
-          onPressed: () {
-            _refresh(context);
-          },
-          icon: Icon(
-            FontAwesomeIcons.arrowRotateRight,
-            color: iconColor,
-            size: 20,
-          ),
-        ),
-      ],
+      ),
     );
   }
+
+  // AppBar appBar(BuildContext context) {
+  //   return AppBar(
+  //     leadingWidth: 48, // <-- Use this
+  //     // leading: const Icon(Icons.arrow_back),
+  //     // title: Text(
+  //     //   "Action Plan",
+  //     //   style: Theme.of(context).textTheme.headline4,
+  //     // ),
+  //     titleSpacing: 0,
+  //     toolbarHeight: 36,
+  //     iconTheme: IconThemeData(color: iconColor),
+  //     backgroundColor: appBarColor,
+  //     elevation: 0,
+  //     systemOverlayStyle: const SystemUiOverlayStyle(
+  //       statusBarColor: Colors.transparent,
+  //     ),
+  //     actions: [
+  //       IconButton(
+  //         visualDensity: const VisualDensity(horizontal: -4.0, vertical: -4.0),
+  //         padding: EdgeInsets.zero,
+  //         onPressed: () {
+  //           loadInfo(context,
+  //               "There are two key activities to complete. The Plan and Reflect activities each have three components. You will be prompted to complete responses for three components of both the Plan and Reflect activities. Once you have provided your responses you can submit them for review by a member of our coaching team. You will receive a notification once your coach has responded and find their responses in the Feedback tab in the navigation menu.");
+  //         },
+  //         icon: Icon(
+  //           FontAwesomeIcons.solidCircleQuestion,
+  //           color: iconColor,
+  //           size: 20,
+  //         ),
+  //       ),
+  //       IconButton(
+  //         padding: const EdgeInsets.only(right: 8),
+  //         onPressed: () {
+  //           _refresh(context);
+  //         },
+  //         icon: Icon(
+  //           FontAwesomeIcons.arrowRotateRight,
+  //           color: iconColor,
+  //           size: 20,
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
 
   @override
   initState() {

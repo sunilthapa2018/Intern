@@ -46,31 +46,48 @@ class _StudentFeedbackPageState extends State<StudentFeedbackPage> {
 
   AppBar appBar(BuildContext context, String title) {
     return AppBar(
-      title: Text(title),
+      iconTheme: IconThemeData(color: iconColor),
+      backgroundColor: appBarColor,
+      elevation: 0,
       titleSpacing: 0,
       toolbarHeight: 36,
-      leadingWidth: 48,
-      iconTheme: IconThemeData(color: iconColor),
-      backgroundColor: Colors.transparent,
-      elevation: 0,
       systemOverlayStyle: const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
       ),
-      actions: [
-        IconButton(
-          visualDensity: const VisualDensity(horizontal: -4.0, vertical: -4.0),
-          padding: const EdgeInsets.only(right: 16),
-          onPressed: () {
-            loadInfo(context,
-                "If feedback has been given by coach to selected TYPE and SUB-TYPE then feedback will be shown automatically.");
-          },
-          icon: Icon(
-            FontAwesomeIcons.solidCircleQuestion,
-            color: iconColor,
-            size: 20,
-          ),
+      automaticallyImplyLeading: false, // Don't show the leading button
+      title: Padding(
+        padding: const EdgeInsets.all(0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            IconButton(
+              onPressed: () => Navigator.pop(context),
+              icon: Icon(Icons.arrow_back, color: iconColor),
+            ),
+            Expanded(
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: IconButton(
+                  visualDensity:
+                      const VisualDensity(horizontal: -4.0, vertical: -4.0),
+                  padding: const EdgeInsets.only(right: 16),
+                  onPressed: () {
+                    loadInfo(context,
+                        "If feedback has been given by coach to selected TYPE and SUB-TYPE then feedback will be shown automatically.");
+                  },
+                  icon: Icon(
+                    FontAwesomeIcons.solidCircleQuestion,
+                    color: iconColor,
+                    size: 20,
+                  ),
+                ),
+              ),
+            ),
+            // Your widgets here
+          ],
         ),
-      ],
+      ),
     );
   }
 

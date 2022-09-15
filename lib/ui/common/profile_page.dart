@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:motivational_leadership/main.dart';
 import 'package:motivational_leadership/ui/common/widget/verticle_spacer.dart';
+import 'package:motivational_leadership/ui/student/widgets/app_bar.dart';
 import 'package:motivational_leadership/utility/colors.dart';
 import 'package:motivational_leadership/utility/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -27,7 +28,7 @@ class _ProfileState extends State<Profile> {
       },
       child: Scaffold(
         backgroundColor: backgroundColor,
-        appBar: appBar(),
+        appBar: myAppBar(context),
         body: myBody(context),
       ),
     );
@@ -201,20 +202,6 @@ class _ProfileState extends State<Profile> {
           ),
         ),
       ]),
-    );
-  }
-
-  AppBar appBar() {
-    return AppBar(
-      titleSpacing: 0,
-      toolbarHeight: 36,
-      leadingWidth: 48,
-      iconTheme: IconThemeData(color: iconColor),
-      backgroundColor: appBarColor,
-      elevation: 0,
-      systemOverlayStyle: const SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
-      ),
     );
   }
 
