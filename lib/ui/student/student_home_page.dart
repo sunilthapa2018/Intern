@@ -8,12 +8,13 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:motivational_leadership/providers/student/type/student_autonomy_provider.dart';
 import 'package:motivational_leadership/providers/student/type/student_belonging_provider.dart';
 import 'package:motivational_leadership/providers/student/type/student_competence_provider.dart';
-import 'package:motivational_leadership/services/local_push_notification.dart';
+import 'package:motivational_leadership/services/gg_test.dart';
 import 'package:motivational_leadership/ui/common/widget/verticle_spacer.dart';
 import 'package:motivational_leadership/ui/student/widgets/student_navigation_drawer.dart';
 import 'package:motivational_leadership/ui/student/widgets/type/student_autonomy_tile.dart';
 import 'package:motivational_leadership/ui/student/widgets/type/student_belonging_tile.dart';
 import 'package:motivational_leadership/ui/student/widgets/type/student_competence_tile.dart';
+import 'package:motivational_leadership/utility/base_utils.dart';
 import 'package:motivational_leadership/utility/colors.dart';
 import 'package:motivational_leadership/utility/utils.dart';
 import 'package:motivational_leadership/widget/circular_progress_indicator.dart';
@@ -135,11 +136,15 @@ class _StudentHomeState extends State<StudentHome> {
                 children: [
                   GestureDetector(
                     onTap: () async {
-                      final notificationSevice = NotificationService();
-                      await notificationSevice.handlePermission();
-                      notificationSevice.showNew();
-                      notificationSevice.showNotification(
-                          1, "title.toString()", "body.toString()", 1);
+                      navigateTo(
+                          context: context,
+                          nextPage: MyHomePageTest(),
+                          currentPage: widget);
+                      // final notificationSevice = NotificationService();
+                      // await notificationSevice.handlePermission();
+                      // notificationSevice.showNew();
+                      // notificationSevice.showNotification(
+                      //     1, "title.toString()", "body.toString()", 1);
                       Utils.showSnackBar("Clicked");
                     },
                     child: Container(

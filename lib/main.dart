@@ -94,7 +94,6 @@ Future main() async {
     sound: true,
   );
   await initializeFcm();
-
   runApp(const MyApp());
 }
 
