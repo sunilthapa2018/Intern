@@ -7,7 +7,6 @@ import 'package:motivational_leadership/services/send_email.dart';
 import 'package:motivational_leadership/ui/common/widget/verticle_spacer.dart';
 import 'package:motivational_leadership/utility/colors.dart';
 import 'package:motivational_leadership/utility/utils.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class StudentContactUs extends StatefulWidget {
   const StudentContactUs({super.key});
@@ -98,9 +97,13 @@ class _StudentContactUsState extends State<StudentContactUs> {
           } on Exception catch (_, e) {
             Utils.showSnackBar("Error : $e");
           }
+          // launchEmailClient(
+          //   subject: subject,
+          //   message: message,
+          // );
         } else {
           Utils.showSnackBar(
-              "Please make sure everything on this form is valid !");
+              "Please make sure everything on this form is filled !");
         }
       },
       child: buttonDesign(),
@@ -197,21 +200,21 @@ class _StudentContactUsState extends State<StudentContactUs> {
     );
   }
 
-  void launchEmailClient(
-      {required String subject, required String message}) async {
-    // String newMessage = "$message\n Sent From the App.";
+  // void launchEmailClient(
+  //     {required String subject, required String message}) async {
+  //   // String newMessage = "$message\n Sent From the App.";
 
-    final Uri emailLaunchUri = Uri(
-      scheme: 'mailto',
-      // path: 'nicholai@leadershipdevelopment.training',
-      path: 'stsoft2016@gmail.com',
-      query: encodeQueryParameters(<String, String>{
-        'subject': subject,
-        'body': message,
-      }),
-    );
-    launchUrl(emailLaunchUri);
-  }
+  //   final Uri emailLaunchUri = Uri(
+  //     scheme: 'mailto',
+  //     // path: 'nicholai@leadershipdevelopment.training',
+  //     path: 'stsoft2016@gmail.com',
+  //     query: encodeQueryParameters(<String, String>{
+  //       'subject': subject,
+  //       'body': message,
+  //     }),
+  //   );
+  //   launchUrl(emailLaunchUri);
+  // }
 
   String? encodeQueryParameters(Map<String, String> params) {
     return params.entries

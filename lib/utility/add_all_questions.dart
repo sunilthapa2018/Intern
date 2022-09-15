@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 Future<void> addAllQuestionsToDatabase() async {
@@ -12,13 +10,13 @@ void addCat(String type) {
   CollectionReference questions =
       FirebaseFirestore.instance.collection('questions');
 
-  questions.add({
-    'question':
-        "What actions will you take to satisfy the need for $type? \n(List three actions)",
-    'number': "1",
-    'type': type,
-    'sub type': "Actions",
-  });
+  // questions.add({
+  //   'question':
+  //       "What actions will you take to satisfy the need for $type? \n(List three actions)",
+  //   'number': "1",
+  //   'type': type,
+  //   'sub type': "Actions",
+  // });
   // questions.add({
   //   'question':
   //       "What challenges do you expect in carrying out each of these actions?",
@@ -63,6 +61,6 @@ void addCat(String type) {
   //   'type': type,
   //   'sub type': "Future",
   // });
-  log("*********************All questions added to database********************");
+  // log("*********************All questions added to database********************");
   return;
 }
