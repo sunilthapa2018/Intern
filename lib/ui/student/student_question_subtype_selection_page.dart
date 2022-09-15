@@ -310,7 +310,7 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
                   padding: const EdgeInsets.all(0),
                   onPressed: () {
                     loadInfo(context,
-                        "If feedback has been given by coach to selected TYPE and SUB-TYPE then feedback will be shown automatically.");
+                        "There are two key activities to complete. The Plan and Reflect activities each have three components. You will be prompted to complete responses for three components of both the Plan and Reflect activities. Once you have provided your responses you can submit them for review by a member of our coaching team. You will receive a notification once your coach has responded and find their responses in the Feedback tab in the navigation menu.");
                   },
                   icon: Icon(
                     FontAwesomeIcons.solidCircleQuestion,
