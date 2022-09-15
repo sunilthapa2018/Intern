@@ -6,6 +6,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:motivational_leadership/firebase_options.dart';
 import 'package:motivational_leadership/providers/coach/subtype/coach_action_provider.dart';
 import 'package:motivational_leadership/providers/coach/subtype/coach_future_provider.dart';
 import 'package:motivational_leadership/providers/coach/subtype/coach_imp_provider.dart';
@@ -81,7 +82,9 @@ initializeFcm() async {
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   await initializeFcm();
 
   runApp(const MyApp());
