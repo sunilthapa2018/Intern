@@ -6,7 +6,7 @@ AppBar buildAppBar(BuildContext context) {
   return AppBar(
     leadingWidth: 48, // <-- Use this
     // leading: const Icon(Icons.arrow_back),
-    titleSpacing: 0,
+    titleSpacing: 16,
     toolbarHeight: 36,
     iconTheme: IconThemeData(color: iconColor),
     backgroundColor: appBarColor,
