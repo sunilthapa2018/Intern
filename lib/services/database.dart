@@ -42,22 +42,6 @@ class DatabaseService {
     return "";
   }
 
-  static Future<String> getUserEmail(String uid) async {
-    try {
-      final docRef = FirebaseFirestore.instance.collection('users').doc(uid);
-      DocumentSnapshot doc = await docRef.get();
-      if (doc.exists) {
-        String name = await doc.get("full name");
-        return name;
-      } else {
-        return "";
-      }
-    } on FirebaseAuthException catch (e) {
-      Utils.showSnackBar("Failed Error Message: $e.message");
-    }
-    return "";
-  }
-
   static Future<String> getQuestion(String questionId) async {
     try {
       final docRef =
@@ -505,18 +489,5 @@ class DatabaseService {
     }
     log("totalDocuments = $totalDocuments");
     return totalDocuments.toString();
-  }
-
-  static Future<void> deleteQuestion(
-    String documentId,
-  ) async {
-    FirebaseFirestore.instance
-        .collection("questions")
-        .doc(documentId)
-        .delete()
-        .then(
-          (doc) => log("Document deleted"),
-          onError: (e) => log("Error updating document $e"),
-        );
   }
 }
