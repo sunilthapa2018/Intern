@@ -26,10 +26,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for macos - '
@@ -58,5 +55,15 @@ class DefaultFirebaseOptions {
     messagingSenderId: '708218791636',
     projectId: 'motivational-leadership',
     storageBucket: 'motivational-leadership.appspot.com',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyAVpx6TzgJKAGZvVPyyVk0SzaHmu4BW_pA',
+    appId: '1:708218791636:ios:612d65a612d3082aa6bd41',
+    messagingSenderId: '708218791636',
+    projectId: 'motivational-leadership',
+    storageBucket: 'motivational-leadership.appspot.com',
+    iosClientId: '708218791636-epa6muuin5sd4ph4rmas45pq6cl78e6c.apps.googleusercontent.com',
+    iosBundleId: 'motivationalleadership.leadershipdevelopment.intern',
   );
 }

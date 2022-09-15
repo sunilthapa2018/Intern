@@ -29,6 +29,13 @@
             {
               "client_id": "708218791636-mjemddvtdm02gmki65ntahprrm315uj9.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "708218791636-epa6muuin5sd4ph4rmas45pq6cl78e6c.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "motivationalleadership.leadershipdevelopment.intern"
+              }
             }
           ]
         }
