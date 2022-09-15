@@ -57,6 +57,10 @@ class _VideoPlaybackState extends State<VideoPlayback> {
             player,
             verticleSpacer(10),
             saveButton(context),
+<<<<<<< HEAD
+=======
+            verticleSpacer(10),
+>>>>>>> 9d0818d2c4fa9bf81e7b9eb093bf6e6e36077123
           ],
         ),
         Align(
@@ -206,18 +210,19 @@ class _VideoPlaybackState extends State<VideoPlayback> {
     super.initState();
     String url = "";
     if (_questionType == 'Autonomy') {
-      url = "https://www.youtube.com/watch?v=vWitScrU8uY";
+      url = "https://www.youtube.com/watch?v=tI87ZnTwsD0";
     } else if (_questionType == 'Belonging') {
-      url = "https://www.youtube.com/watch?v=vWitScrU8uY";
+      url = "https://www.youtube.com/watch?v=Ylnysm7L82I";
     } else {
-      url = "https://www.youtube.com/watch?v=vWitScrU8uY";
+      url = "https://www.youtube.com/watch?v=sfABqW_ZP6Q";
     }
     controller = YoutubePlayerController(
-        initialVideoId: YoutubePlayer.convertUrlToId(url)!,
-        flags: const YoutubePlayerFlags(
-          autoPlay: false,
-          showLiveFullscreenButton: true,
-        ));
+      initialVideoId: YoutubePlayer.convertUrlToId(url)!,
+      flags: const YoutubePlayerFlags(
+        autoPlay: false,
+        showLiveFullscreenButton: true,
+      ),
+    );
   }
 
   @override
