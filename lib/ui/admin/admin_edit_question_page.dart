@@ -23,17 +23,6 @@ class EditQuestion extends StatefulWidget {
 class _EditQuestionState extends State<EditQuestion> {
   @override
   Widget build(BuildContext context) {
-    return myScaffold();
-    // return WillPopScope(
-    //   onWillPop: () async {
-    //     final shouldPop = await showWarning(context);
-    //     return shouldPop ?? false;
-    //   },
-    //   child: myScaffold(),
-    // );
-  }
-
-  Scaffold myScaffold() {
     return Scaffold(
       backgroundColor: adminBackgroundColor,
       appBar: myAppBar(),
@@ -96,12 +85,7 @@ class _EditQuestionState extends State<EditQuestion> {
               verticleSpacer(6),
               questionSection(),
               verticleSpacer(spacer),
-              Wrap(
-                children: [
-                  buttonDeleteQuestion(context),
-                  buttonAddQuestion(context),
-                ],
-              )
+              buttonAddQuestion(context),
             ],
           ),
         ),
@@ -229,7 +213,7 @@ class _EditQuestionState extends State<EditQuestion> {
       },
       child: Container(
         alignment: Alignment.center,
-        width: MediaQuery.of(context).size.width / 8,
+        width: MediaQuery.of(context).size.width,
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
         decoration: BoxDecoration(
           color: adminAppBarColor,
@@ -242,62 +226,6 @@ class _EditQuestionState extends State<EditQuestion> {
       ),
     );
   }
-
-  GestureDetector buttonDeleteQuestion(BuildContext context) {
-    return GestureDetector(
-      onTap: () async {
-        final shouldPop = await showWarning(context);
-        shouldPop ?? false;
-      },
-      child: Container(
-        alignment: Alignment.center,
-        width: MediaQuery.of(context).size.width / 8,
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-        margin: const EdgeInsets.only(right: 36),
-        decoration: BoxDecoration(
-          color: Colors.red,
-          borderRadius: BorderRadius.circular(30),
-        ),
-        child: const Text(
-          "Delete",
-          style: TextStyle(fontSize: 16, color: Colors.white),
-        ),
-      ),
-    );
-  }
-
-  Future<bool?> showWarning(BuildContext context) async => showDialog<bool>(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text(
-            "Warning!!!",
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          content: const Text("Are you sure you want to delete this question"),
-          actions: [
-            ElevatedButton(
-              onPressed: () {
-                deleteThisQuestion();
-                Navigator.pop(context, true);
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.red,
-              ),
-              child: const Text("Yes"),
-            ),
-            ElevatedButton(
-              onPressed: () => Navigator.pop(context, false),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
-              ),
-              child: const Text("No"),
-            ),
-          ],
-        ),
-      );
 
   readQuestionData() async {
     dynamic questionString =
@@ -322,12 +250,6 @@ class _EditQuestionState extends State<EditQuestion> {
       typeValue.toString(),
       subTypeValue.toString(),
     );
-    if (!mounted) return;
-    Navigator.pop(context);
-  }
-
-  void deleteThisQuestion() async {
-    await DatabaseService.deleteQuestion(widget.questionId);
     if (!mounted) return;
     Navigator.pop(context);
   }
