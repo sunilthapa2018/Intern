@@ -8,8 +8,8 @@ Padding alignSubTypeCompleted(
     child: Align(
       alignment: Alignment.centerRight,
       child: Container(
-        padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-        decoration: mySubTypeBoxDecoration4(),
+        padding: const EdgeInsets.all(0),
+        //decoration: mySubTypeBoxDecoration4(),
         child: Text(
           (isLoading) ? "Loading..." : completedText,
           style: Theme.of(context).textTheme.headline5,

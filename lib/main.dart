@@ -231,12 +231,6 @@ class _MainPageState extends State<MainPage> {
         });
   }
 
-  Future<String?> getTypeFromLocal() async {
-    final prefs = await SharedPreferences.getInstance();
-    final savedType = prefs.getString('type').toString();
-    return savedType;
-  }
-
   Future<String?> getType() async {
     userType = "loading";
     if (FirebaseAuth.instance.currentUser != null) {

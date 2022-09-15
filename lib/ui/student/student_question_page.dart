@@ -91,19 +91,15 @@ class _QuestionState extends State<Question> {
   late String answerId;
 
   myBody(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
-        padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-        child: Column(
-          children: [
-            question(),
-            verticleSpacer(32),
-            answer(),
-            verticleSpacer(6),
-            saveButton(context),
-          ],
-        ),
-      ),
+    return ListView(
+      padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+      children: [
+        question(),
+        verticleSpacer(32),
+        answer(),
+        verticleSpacer(6),
+        saveButton(context),
+      ],
     );
   }
 

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:motivational_leadership/ui/common/widget/verticle_spacer.dart';
@@ -32,40 +34,36 @@ class _VideoPlaybackState extends State<VideoPlayback> {
         });
   }
 
-  Padding myBody(Widget player, BuildContext context) {
-    return Padding(
+  myBody(Widget player, BuildContext context) {
+    return ListView(
       padding: const EdgeInsets.only(left: 16, right: 16),
-      child: Column(
-        children: [
-          Column(
-            children: [
-              if (_questionType == "Autonomy") ...[
-                titleText("A", "utonomy"),
-                autonomyText(),
-                autonomySecondText(),
-              ] else if (widget.questionType == "Belonging") ...[
-                titleText("B", "elonging"),
-                belongingText(),
-                belongingSecondText(),
-              ] else ...[
-                titleText("C", "ompetence"),
-                competenceText(),
-                competenceSecondText(),
-              ],
-              verticleSpacer(10),
-              player,
-              verticleSpacer(10),
-              saveButton(context),
+      children: [
+        Column(
+          children: [
+            if (_questionType == "Autonomy") ...[
+              titleText("A", "utonomy"),
+              autonomyText(),
+              autonomySecondText(),
+            ] else if (widget.questionType == "Belonging") ...[
+              titleText("B", "elonging"),
+              belongingText(),
+              belongingSecondText(),
+            ] else ...[
+              titleText("C", "ompetence"),
+              competenceText(),
+              competenceSecondText(),
             ],
-          ),
-          Expanded(
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: _buildButtonLogo(),
-            ),
-          ),
-        ],
-      ),
+            verticleSpacer(10),
+            player,
+            verticleSpacer(10),
+            saveButton(context),
+          ],
+        ),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: _buildButtonLogo(),
+        ),
+      ],
     );
   }
 
@@ -234,16 +232,22 @@ class _VideoPlaybackState extends State<VideoPlayback> {
     super.dispose();
   }
 
-  Padding _buildButtonLogo() {
+  _buildButtonLogo() {
     double width = MediaQuery.of(context).size.width;
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 30),
-      child: Image.asset(
-        'assets/complete_logo.png',
-        width: width - (10 / 100 * width),
-        fit: BoxFit.contain,
-      ),
-    );
+    double height = MediaQuery.of(context).size.height;
+    log("width = $width, height = $height");
+    if (height > 600) {
+      return Padding(
+        padding: const EdgeInsets.only(bottom: 30),
+        child: Image.asset(
+          'assets/complete_logo.png',
+          width: width - (10 / 100 * width),
+          fit: BoxFit.contain,
+        ),
+      );
+    } else {
+      return Container();
+    }
   }
 
   mainTitle() {

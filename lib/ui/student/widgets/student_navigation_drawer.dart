@@ -29,6 +29,7 @@ class _StudentNavigationDrawerWidgetState
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      width: (80 / 100) * MediaQuery.of(context).size.width,
       backgroundColor: appBarColor,
       child: Column(
         children: [
