@@ -48,33 +48,34 @@ class _QuestionState extends State<Question> {
   }
 
   Future<bool?> showWarning(BuildContext context) async => showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-            title: const Text(
-              "Discard Changes",
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-              ),
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text(
+            "Discard Changes",
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
             ),
-            content: const Text("Changes on this page will not be saved."),
-            actions: [
-              ElevatedButton(
-                onPressed: () => Navigator.pop(context, false),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: buttonColor,
-                ),
-                child: const Text("Cancel"),
+          ),
+          content: const Text("Changes on this page will not be saved."),
+          actions: [
+            ElevatedButton(
+              onPressed: () => Navigator.pop(context, false),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: buttonColor,
               ),
-              ElevatedButton(
-                onPressed: () => Navigator.pop(context, true),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: buttonColor,
-                ),
-                child: const Text("Discard"),
+              child: const Text("Cancel"),
+            ),
+            ElevatedButton(
+              onPressed: () => Navigator.pop(context, true),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: buttonColor,
               ),
-            ],
-          ));
+              child: const Text("Discard"),
+            ),
+          ],
+        ),
+      );
   late String _questionType;
   late String _questionSubType;
   late int _questionNumber;

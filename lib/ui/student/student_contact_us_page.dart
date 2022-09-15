@@ -1,6 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:motivational_leadership/services/database.dart';
+import 'package:motivational_leadership/services/send_email.dart';
 import 'package:motivational_leadership/ui/common/widget/verticle_spacer.dart';
 import 'package:motivational_leadership/utility/colors.dart';
 import 'package:motivational_leadership/utility/utils.dart';
@@ -76,17 +79,32 @@ class _StudentContactUsState extends State<StudentContactUs> {
 
   GestureDetector sendButton() {
     return GestureDetector(
-      onTap: () {
+      onTap: () async {
         if (formKey.currentState!.validate()) {
           String subject = subjectController.text;
           String message = emailBodyController.text;
-          launchEmailClient(
-            subject: subject,
-            message: message,
-          );
+          String uid = FirebaseAuth.instance.currentUser!.uid;
+          String? email = FirebaseAuth.instance.currentUser!.email;
+          String name = await DatabaseService.getUserName(uid);
+
+          try {
+            SendEmail.send(
+                name: name,
+                email: email.toString(),
+                subject: subject,
+                message: message);
+            Utils.showSnackBar(
+                "Your Email has been successfully sent to us. We will reply shortly.");
+          } on Exception catch (_, e) {
+            Utils.showSnackBar("Error : $e");
+          }
+          // launchEmailClient(
+          //   subject: subject,
+          //   message: message,
+          // );
         } else {
           Utils.showSnackBar(
-              "Please make sure everything on this form is valid !");
+              "Please make sure everything on this form is filled !");
         }
       },
       child: buttonDesign(),
