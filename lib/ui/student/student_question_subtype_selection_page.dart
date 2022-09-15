@@ -528,8 +528,10 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
   }
 
   Future<bool?> loadInfo(BuildContext context) async => showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
+        context: context,
+        builder: (context) {
+          double padding = (5 / 100) * MediaQuery.of(context).size.width;
+          return AlertDialog(
             title: Row(
               children: [
                 const Text(
@@ -552,7 +554,7 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
               ],
             ),
             content: const Text(
-              "There are two key activities to complete. The Plan and Reflect activities each have three components. You will be prompted to complete responses for three components of both the Plan and Reflect activities. Once you have provided your responses you can submit them for review by a member of our coaching team. You will receive a notification once your coach has responded and find their responses in the Feedback tab in the navigation menu. ",
+              "There are two key activities to complete. The Plan and Reflect activities each have three components. You will be prompted to complete responses for three components of both the Plan and Reflect activities. Once you have provided your responses you can submit them for review by a member of our coaching team. You will receive a notification once your coach has responded and find their responses in the Feedback tab in the navigation menu.",
               style: TextStyle(),
               textAlign: TextAlign.justify,
             ),
@@ -568,5 +570,8 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
             contentPadding: const EdgeInsets.only(left: 16, right: 16),
             titlePadding: const EdgeInsets.all(16),
             actionsPadding: const EdgeInsets.only(bottom: 12, right: 16),
-          ));
+            insetPadding: EdgeInsets.all(padding),
+          );
+        },
+      );
 }
