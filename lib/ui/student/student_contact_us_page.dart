@@ -98,10 +98,6 @@ class _StudentContactUsState extends State<StudentContactUs> {
           } on Exception catch (_, e) {
             Utils.showSnackBar("Error : $e");
           }
-          // launchEmailClient(
-          //   subject: subject,
-          //   message: message,
-          // );
         } else {
           Utils.showSnackBar(
               "Please make sure everything on this form is filled !");
