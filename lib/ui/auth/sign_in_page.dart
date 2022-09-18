@@ -38,11 +38,12 @@ class _SignInState extends State<SignIn> {
 
   myBody(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Form(
         key: formKey,
         child: ListView(
           children: [
+            spacerTwentyPixel(),
             welcomeTitle(),
             companyLogo(),
             txtEmail(),
