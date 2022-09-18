@@ -69,6 +69,7 @@ flutter_icons:
 flutter_native_splash:
   color: "#ffffff"
   image: "assets/app_icon.png"
+  android_gravity: center
   android_12:
     image: "assets/app_icon.png"
     icon_background_color: "#ffffff"
