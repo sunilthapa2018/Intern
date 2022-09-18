@@ -80,6 +80,7 @@ class _StudentHomeState extends State<StudentHome> {
       elevation: 0,
       systemOverlayStyle: const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.dark,
       ),
       actions: [
         IconButton(

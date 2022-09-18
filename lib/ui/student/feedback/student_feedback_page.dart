@@ -53,6 +53,7 @@ class _StudentFeedbackPageState extends State<StudentFeedbackPage> {
       toolbarHeight: 36,
       systemOverlayStyle: const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.dark,
       ),
       automaticallyImplyLeading: false, // Don't show the leading button
       title: Padding(

@@ -64,7 +64,10 @@ class _SignInState extends State<SignIn> {
       toolbarHeight: 0,
       backgroundColor: Colors.transparent,
       elevation: 0.0,
-      systemOverlayStyle: SystemUiOverlayStyle.dark,
+      systemOverlayStyle: const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.dark,
+      ),
     );
   }
 

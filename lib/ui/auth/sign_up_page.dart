@@ -190,7 +190,10 @@ class _SignUpState extends State<SignUp> {
     return AppBar(
       title: const Text("Add new user"),
       backgroundColor: adminAppBarColor,
-      systemOverlayStyle: SystemUiOverlayStyle.dark,
+      systemOverlayStyle: const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.dark,
+      ),
     );
   }
 

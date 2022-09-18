@@ -188,7 +188,7 @@ class MyApp extends StatelessWidget {
                 decoration: TextDecoration.none),
           ),
           fontFamily: 'Roboto',
-          primarySwatch: Colors.deepPurple,
+          primarySwatch: Colors.orange,
           colorScheme: ColorScheme.fromSwatch()
               .copyWith(primary: orangeColor, secondary: backgroundColor)),
       home: const MainPage(),
