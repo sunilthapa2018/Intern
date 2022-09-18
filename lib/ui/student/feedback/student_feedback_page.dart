@@ -94,23 +94,28 @@ class _StudentFeedbackPageState extends State<StudentFeedbackPage> {
 
   myBodySection() {
     double spacer = 10;
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
-        child: Column(
-          children: [
-            textTitle(),
-            verticleSpacer(spacer),
-            verticleSpacer(spacer),
-            typeSelectionMenu(),
-            verticleSpacer(spacer),
-            verticleSpacer(spacer),
-            subTypeSelectionMenu(),
-            verticleSpacer(spacer),
-            verticleSpacer(spacer),
-            feebackSection(),
-            verticleSpacer(spacer),
-          ],
+    return Container(
+      padding: const EdgeInsets.all(0),
+      color: backgroundColor,
+      height: double.infinity,
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+          child: Column(
+            children: [
+              textTitle(),
+              verticleSpacer(spacer),
+              verticleSpacer(spacer),
+              typeSelectionMenu(),
+              verticleSpacer(spacer),
+              verticleSpacer(spacer),
+              subTypeSelectionMenu(),
+              verticleSpacer(spacer),
+              verticleSpacer(spacer),
+              feebackSection(),
+              verticleSpacer(spacer),
+            ],
+          ),
         ),
       ),
     );
