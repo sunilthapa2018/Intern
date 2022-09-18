@@ -98,19 +98,25 @@ class _SignUpState extends State<SignUp> {
               "Please make sure everything on this form is valid !");
         }
       },
-      child: Container(
-        alignment: Alignment.center,
-        width: MediaQuery.of(context).size.width,
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-        decoration: BoxDecoration(
-          color: adminAppBarColor,
-          borderRadius: BorderRadius.circular(30),
+      child: buttonDesign(context),
+    );
+  }
+
+  buttonDesign(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          alignment: Alignment.center,
+          width: MediaQuery.of(context).size.width / 2,
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          decoration: BoxDecoration(
+              color: buttonColor, borderRadius: BorderRadius.circular(25)),
+          child: const Text(
+            "Sign Up",
+            style: TextStyle(fontSize: 16, color: Colors.white),
+          ),
         ),
-        child: const Text(
-          "Sign Up",
-          style: TextStyle(fontSize: 16, color: Colors.white),
-        ),
-      ),
+      ],
     );
   }
 
