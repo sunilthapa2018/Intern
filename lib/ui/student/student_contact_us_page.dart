@@ -86,6 +86,8 @@ class _StudentContactUsState extends State<StudentContactUs> {
                 message: message);
             Utils.showSnackBar(
                 "Your Email has been successfully sent to us. We will reply shortly.");
+            subjectController.text = "";
+            emailBodyController.text = "";
           } on Exception catch (_, e) {
             Utils.showSnackBar("Error : $e");
           }
