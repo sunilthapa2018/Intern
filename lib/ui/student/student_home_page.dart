@@ -38,7 +38,6 @@ class _StudentHomeState extends State<StudentHome> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return myCircularProgressIndicator(context);
         }
-
         return Scaffold(
           drawer: const StudentNavigationDrawerWidget(),
           appBar: _buildAppBar(context),

@@ -51,11 +51,12 @@ dependencies:
   url_launcher: ^6.1.5
   youtube_player_flutter: ^8.1.0
 
-dev_dependencies:  
+dev_dependencies:
+  flutter_launcher_icons: ^0.10.0
   flutter_lints: ^2.0.1
   flutter_test:
-    sdk: flutter
-  flutter_launcher_icons: ^0.10.0  
+    sdk: flutter    
+  
 
 flutter_icons:
   android: true
@@ -83,7 +84,7 @@ flutter:
     - assets/complete_logo.png
     - assets/app_icon.png
     - assets/team_image.jpg
-    - assets/main_image.png   
+    - assets/main_image.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
   # For details regarding adding assets from package dependencies, see
