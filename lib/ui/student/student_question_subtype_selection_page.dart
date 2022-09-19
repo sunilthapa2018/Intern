@@ -302,21 +302,26 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
               onPressed: () => Navigator.pop(context),
               icon: Icon(Icons.arrow_back, color: iconColor),
             ),
+
             Expanded(
               child: Align(
                 alignment: Alignment.centerRight,
-                child: IconButton(
-                  visualDensity:
-                      const VisualDensity(horizontal: -4.0, vertical: -4.0),
+                child: Padding(
                   padding: const EdgeInsets.all(0),
-                  onPressed: () {
-                    loadInfo(context,
-                        "There are two key activities to complete. The Plan and Reflect activities each have three components. You will be prompted to complete responses for three components of both the Plan and Reflect activities. Once you have provided your responses you can submit them for review by a member of our coaching team. You will receive a notification once your coach has responded and find their responses in the Feedback tab in the navigation menu.");
-                  },
-                  icon: Icon(
-                    FontAwesomeIcons.solidCircleQuestion,
-                    color: iconColor,
-                    size: 20,
+                  child: TextButton.icon(
+                    onPressed: () {
+                      loadInfo(context,
+                          "To complete this action plan submit your responses for the Plan and Reflect activities below. You will receive a notification once your coach has responded, and find their responses by selecting the Feedback tab in the navigation menu on the Home page.");
+                    },
+                    label: Text(
+                      "Help",
+                      style: TextStyle(fontSize: 16.sp, color: iconColor),
+                    ),
+                    icon: Icon(
+                      FontAwesomeIcons.solidCircleQuestion,
+                      color: iconColor,
+                      size: 20,
+                    ),
                   ),
                 ),
               ),

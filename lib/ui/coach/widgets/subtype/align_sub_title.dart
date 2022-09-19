@@ -9,9 +9,10 @@ Align alignSubTitle(String title) {
       child: Text(
         title,
         style: TextStyle(
+          fontFamily: "Roboto",
           color: Colors.white,
           fontWeight: FontWeight.w800,
-          fontSize: 26.sp,
+          fontSize: 20.sp,
         ),
       ),
     ),

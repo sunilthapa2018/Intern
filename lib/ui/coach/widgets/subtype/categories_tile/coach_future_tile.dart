@@ -3,7 +3,7 @@ import 'package:motivational_leadership/providers/coach/subtype/coach_future_pro
 import 'package:motivational_leadership/ui/coach/coach_feedback_page.dart';
 import 'package:motivational_leadership/ui/coach/widgets/subtype/align_sub_title.dart';
 import 'package:motivational_leadership/ui/coach/widgets/subtype/align_sub_type_completed.dart';
-import 'package:motivational_leadership/ui/coach/widgets/subtype/box_decoration.dart';
+import 'package:motivational_leadership/ui/common/widget/type_decoration_box_1.dart';
 import 'package:motivational_leadership/utility/base_utils.dart';
 import 'package:provider/provider.dart';
 
@@ -26,7 +26,7 @@ class CoachFutureTile extends StatelessWidget {
       child: Container(
         width: MediaQuery.of(context).size.width / 2,
         margin: const EdgeInsets.fromLTRB(10, 10, 10, 5),
-        decoration: boxSubDecoration(),
+        decoration: myTypeBoxDecoration1(),
         child: Column(
           children: [
             alignSubTitle("Future"),

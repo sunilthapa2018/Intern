@@ -3,7 +3,7 @@ import 'package:motivational_leadership/providers/coach/type/coach_belonging_pro
 import 'package:motivational_leadership/ui/coach/coach_feedback_sub_type_selection_page.dart';
 import 'package:motivational_leadership/ui/coach/widgets/align_completed.dart';
 import 'package:motivational_leadership/ui/coach/widgets/align_title.dart';
-import 'package:motivational_leadership/ui/coach/widgets/box_decoration.dart';
+import 'package:motivational_leadership/ui/common/widget/type_decoration_box_1.dart';
 import 'package:motivational_leadership/utility/base_utils.dart';
 import 'package:provider/provider.dart';
 
@@ -23,7 +23,7 @@ class CoachBelongingTile extends StatelessWidget {
       child: Container(
         width: MediaQuery.of(context).size.width / 2,
         margin: const EdgeInsets.fromLTRB(10, 10, 10, 5),
-        decoration: boxDecoration(),
+        decoration: myTypeBoxDecoration1(),
         child: Column(
           children: [
             alignTitle("Belonging"),

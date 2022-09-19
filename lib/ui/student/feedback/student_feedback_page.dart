@@ -57,7 +57,7 @@ class _StudentFeedbackPageState extends State<StudentFeedbackPage> {
       ),
       automaticallyImplyLeading: false, // Don't show the leading button
       title: Padding(
-        padding: const EdgeInsets.all(0),
+        padding: const EdgeInsets.only(right: 8),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -69,23 +69,26 @@ class _StudentFeedbackPageState extends State<StudentFeedbackPage> {
             Expanded(
               child: Align(
                 alignment: Alignment.centerRight,
-                child: IconButton(
-                  visualDensity:
-                      const VisualDensity(horizontal: -4.0, vertical: -4.0),
-                  padding: const EdgeInsets.only(right: 16),
-                  onPressed: () {
-                    loadInfo(context,
-                        "If feedback has been given by coach to selected TYPE and SUB-TYPE then feedback will be shown automatically.");
-                  },
-                  icon: Icon(
-                    FontAwesomeIcons.solidCircleQuestion,
-                    color: iconColor,
-                    size: 20,
+                child: Padding(
+                  padding: const EdgeInsets.all(0),
+                  child: TextButton.icon(
+                    onPressed: () {
+                      loadInfo(context,
+                          "If feedback has been given by coach to selected TYPE and SUB-TYPE then feedback will be shown automatically.");
+                    },
+                    label: Text(
+                      "Help",
+                      style: TextStyle(fontSize: 16.sp, color: iconColor),
+                    ),
+                    icon: Icon(
+                      FontAwesomeIcons.solidCircleQuestion,
+                      color: iconColor,
+                      size: 20,
+                    ),
                   ),
                 ),
               ),
             ),
-            // Your widgets here
           ],
         ),
       ),
@@ -159,7 +162,7 @@ class _StudentFeedbackPageState extends State<StudentFeedbackPage> {
     return InputDecoration(
       enabled: true,
       contentPadding: const EdgeInsets.all(12.0),
-      labelText: "Type",
+      labelText: "Module",
       border: InputBorder.none,
       labelStyle: TextStyle(
         fontSize: 14.sp,
@@ -184,7 +187,7 @@ class _StudentFeedbackPageState extends State<StudentFeedbackPage> {
     return InputDecoration(
       enabled: true,
       contentPadding: const EdgeInsets.all(12.0),
-      labelText: "Sub Type",
+      labelText: "Activity",
       border: InputBorder.none,
       labelStyle: TextStyle(
         fontSize: 14.sp,
@@ -211,7 +214,7 @@ class _StudentFeedbackPageState extends State<StudentFeedbackPage> {
       readOnly: true,
       style: const TextStyle(fontSize: 14),
       keyboardType: TextInputType.multiline,
-      minLines: 10,
+      minLines: 18,
       maxLines: null,
       controller: feedbackController,
       decoration: InputDecoration(

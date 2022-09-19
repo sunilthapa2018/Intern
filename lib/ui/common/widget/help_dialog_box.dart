@@ -10,13 +10,6 @@ Future<bool?> loadInfo(BuildContext context, String text) async {
       return AlertDialog(
         title: Row(
           children: [
-            const Text(
-              "Help",
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
             IconButton(
               visualDensity:
                   const VisualDensity(horizontal: -4.0, vertical: -4.0),
@@ -27,6 +20,13 @@ Future<bool?> loadInfo(BuildContext context, String text) async {
               ),
               onPressed: null,
             ),
+            Text(
+              "Help",
+              style: TextStyle(
+                color: iconColor,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ],
         ),
         content: Text(
@@ -35,12 +35,15 @@ Future<bool?> loadInfo(BuildContext context, String text) async {
           textAlign: TextAlign.justify,
         ),
         actions: [
-          ElevatedButton(
-            onPressed: () => Navigator.pop(context, false),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: buttonColor,
+          Padding(
+            padding: const EdgeInsets.only(top: 20),
+            child: ElevatedButton(
+              onPressed: () => Navigator.pop(context, false),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: buttonColor,
+              ),
+              child: const Text("Close"),
             ),
-            child: const Text("Close"),
           ),
         ],
         contentPadding: const EdgeInsets.only(left: 16, right: 16),

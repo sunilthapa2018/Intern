@@ -47,8 +47,8 @@ class DatabaseService {
       final docRef = FirebaseFirestore.instance.collection('users').doc(uid);
       DocumentSnapshot doc = await docRef.get();
       if (doc.exists) {
-        String name = await doc.get("full name");
-        return name;
+        String email = await doc.get("email");
+        return email;
       } else {
         return "";
       }
@@ -264,28 +264,6 @@ class DatabaseService {
     }
   }
 
-  static Future getFeedbackNotGivenUserList() async {
-    List itemsList = [];
-    final CollectionReference submissions =
-        FirebaseFirestore.instance.collection('submissions');
-    try {
-      await submissions.get().then((querySnapshot) async {
-        bool feedbackGiven = false;
-
-        for (var element in querySnapshot.docs) {
-          feedbackGiven = await checkIfFeedbackIsGiven(element.id);
-          if (!feedbackGiven) {
-            itemsList.add(element.id);
-          }
-        }
-      });
-
-      return itemsList;
-    } on FirebaseAuthException catch (e) {
-      Utils.showSnackBar("Failed Error Message: $e.message");
-    }
-  }
-
   static Future getAllQuestionList() async {
     List itemsList = [];
     final CollectionReference questions =
@@ -334,6 +312,48 @@ class DatabaseService {
           if (feedbackGiven) {
             itemsList.add(element.id);
           }
+        }
+      });
+      return itemsList;
+    } on FirebaseAuthException catch (e) {
+      Utils.showSnackBar("Failed Error Message: $e.message");
+    }
+  }
+
+  static Future getFeedbackNotGivenUserList() async {
+    List itemsList = [];
+    final CollectionReference submissions =
+        FirebaseFirestore.instance.collection('submissions');
+    try {
+      await submissions.get().then((querySnapshot) async {
+        bool feedbackGiven = false;
+
+        for (var element in querySnapshot.docs) {
+          feedbackGiven = await checkIfFeedbackIsGiven(element.id);
+          if (!feedbackGiven) {
+            itemsList.add(element.id);
+          }
+        }
+      });
+
+      return itemsList;
+    } on FirebaseAuthException catch (e) {
+      Utils.showSnackBar("Failed Error Message: $e.message");
+    }
+  }
+
+  static Future searchStudentList(String searchText) async {
+    List itemsList = [];
+    final CollectionReference users =
+        FirebaseFirestore.instance.collection('users');
+    try {
+      await users
+          .where("full name", isGreaterThanOrEqualTo: searchText)
+          .where("full name", isLessThanOrEqualTo: "$searchText\uf7ff")
+          .get()
+          .then((querySnapshot) async {
+        for (var element in querySnapshot.docs) {
+          itemsList.add(element.id);
         }
       });
       return itemsList;

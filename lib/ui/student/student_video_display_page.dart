@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:motivational_leadership/ui/common/widget/verticle_spacer.dart';
 import 'package:motivational_leadership/ui/student/student_question_subtype_selection_page.dart';
@@ -22,6 +23,9 @@ class _VideoPlaybackState extends State<VideoPlayback> {
   @override
   Widget build(BuildContext context) {
     return YoutubePlayerBuilder(
+        onExitFullScreen: () {
+          SystemChrome.setPreferredOrientations(DeviceOrientation.values);
+        },
         player: YoutubePlayer(
           controller: controller,
         ),
@@ -220,7 +224,8 @@ class _VideoPlaybackState extends State<VideoPlayback> {
       initialVideoId: YoutubePlayer.convertUrlToId(url)!,
       flags: const YoutubePlayerFlags(
         autoPlay: false,
-        showLiveFullscreenButton: true,
+        disableDragSeek: true,
+        forceHD: true,
       ),
     );
   }
@@ -302,7 +307,7 @@ class _VideoPlaybackState extends State<VideoPlayback> {
           padding: const EdgeInsets.symmetric(vertical: 10),
           decoration: myButtonBox(),
           child: const Text(
-            "Skip >>",
+            "Next",
             style: TextStyle(fontSize: 16, color: Colors.white),
           ),
         ),

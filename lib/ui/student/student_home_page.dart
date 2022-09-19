@@ -134,25 +134,7 @@ class _StudentHomeState extends State<StudentHome> {
               ),
               child: Column(
                 children: [
-                  GestureDetector(
-                    onTap: () async {
-                      navigateTo(
-                          context: context,
-                          nextPage: MyHomePageTest(),
-                          currentPage: widget);
-                      // final notificationSevice = NotificationService();
-                      // await notificationSevice.handlePermission();
-                      // notificationSevice.showNew();
-                      // notificationSevice.showNotification(
-                      //     1, "title.toString()", "body.toString()", 1);
-                      Utils.showSnackBar("Clicked");
-                    },
-                    child: Container(
-                      color: Colors.redAccent,
-                      height: 50,
-                      width: MediaQuery.of(context).size.width,
-                    ),
-                  ),
+                  // testButton(context),
                   verticleSpacer(spacer),
                   const StudentAutonomyTile(),
                   verticleSpacer(spacer),
@@ -165,6 +147,26 @@ class _StudentHomeState extends State<StudentHome> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  GestureDetector testButton(BuildContext context) {
+    return GestureDetector(
+      onTap: () async {
+        navigateTo(
+            context: context, nextPage: MyHomePageTest(), currentPage: widget);
+        // final notificationSevice = NotificationService();
+        // await notificationSevice.handlePermission();
+        // notificationSevice.showNew();
+        // notificationSevice.showNotification(
+        //     1, "title.toString()", "body.toString()", 1);
+        Utils.showSnackBar("Clicked");
+      },
+      child: Container(
+        color: Colors.redAccent,
+        height: 50,
+        width: MediaQuery.of(context).size.width,
       ),
     );
   }
