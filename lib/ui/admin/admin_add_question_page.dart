@@ -112,19 +112,19 @@ class _AddQuestionState extends State<AddQuestion> {
       border: InputBorder.none,
       labelStyle: TextStyle(
         fontSize: 16.sp,
-        color: orangeColor,
+        color: Colors.grey,
       ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: const BorderRadius.all(
+      focusedBorder: const OutlineInputBorder(
+        borderRadius: BorderRadius.all(
           Radius.circular(5.0),
         ),
-        borderSide: BorderSide(color: orangeColor),
+        borderSide: BorderSide(color: Colors.grey),
       ),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: const BorderRadius.all(
+      enabledBorder: const OutlineInputBorder(
+        borderRadius: BorderRadius.all(
           Radius.circular(5.0),
         ),
-        borderSide: BorderSide(color: orangeColor),
+        borderSide: BorderSide(color: Colors.grey),
       ),
     );
   }
@@ -137,19 +137,19 @@ class _AddQuestionState extends State<AddQuestion> {
       border: InputBorder.none,
       labelStyle: TextStyle(
         fontSize: 16.sp,
-        color: orangeColor,
+        color: Colors.grey,
       ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: const BorderRadius.all(
+      focusedBorder: const OutlineInputBorder(
+        borderRadius: BorderRadius.all(
           Radius.circular(5.0),
         ),
-        borderSide: BorderSide(color: orangeColor),
+        borderSide: BorderSide(color: Colors.grey),
       ),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: const BorderRadius.all(
+      enabledBorder: const OutlineInputBorder(
+        borderRadius: BorderRadius.all(
           Radius.circular(5.0),
         ),
-        borderSide: BorderSide(color: orangeColor),
+        borderSide: BorderSide(color: Colors.grey),
       ),
     );
   }

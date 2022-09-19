@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:motivational_leadership/providers/student/type/student_autonomy_provider.dart';
@@ -285,6 +286,7 @@ class _StudentHomeState extends State<StudentHome> {
           .read<StudentCompetenceProvider>()
           .getData(type: "Competence", notify: false),
     ]);
+    FlutterNativeSplash.remove();
   }
 
   void checkAndHandlePersmission() async {

@@ -2,8 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:motivational_leadership/main.dart';
 import 'package:motivational_leadership/services/get_user_name.dart';
-import 'package:motivational_leadership/ui/auth/sign_in_page.dart';
 import 'package:motivational_leadership/ui/coach/coach_home_page.dart';
 import 'package:motivational_leadership/ui/common/profile_page.dart';
 import 'package:motivational_leadership/ui/common/widget/box_decoration.dart';
@@ -112,8 +112,12 @@ class CoachNavigationDrawerWidget extends StatelessWidget {
         break;
       case 2:
         FirebaseAuth.instance.signOut();
-        navigateTo(
-            context: context, nextPage: const SignIn(), currentPage: this);
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return const MainPage();
+          }),
+        );
         break;
     }
   }

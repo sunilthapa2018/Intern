@@ -2,8 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:motivational_leadership/main.dart';
 import 'package:motivational_leadership/services/get_user_name.dart';
-import 'package:motivational_leadership/ui/auth/sign_in_page.dart';
 import 'package:motivational_leadership/ui/common/profile_page.dart';
 import 'package:motivational_leadership/ui/common/widget/box_decoration.dart';
 import 'package:motivational_leadership/ui/common/widget/verticle_spacer.dart';
@@ -13,7 +13,6 @@ import 'package:motivational_leadership/ui/student/student_home_page.dart';
 import 'package:motivational_leadership/utility/base_utils.dart';
 import 'package:motivational_leadership/utility/colors.dart';
 
-String uid = FirebaseAuth.instance.currentUser!.uid;
 int currentNavigation = 0;
 
 class StudentNavigationDrawerWidget extends StatefulWidget {
@@ -127,6 +126,7 @@ class _StudentNavigationDrawerWidgetState
   }
 
   SizedBox title() {
+    String uid = FirebaseAuth.instance.currentUser!.uid;
     return SizedBox(
       height: 140,
       child: Container(
@@ -185,8 +185,14 @@ class _StudentNavigationDrawerWidgetState
         break;
       case 4:
         FirebaseAuth.instance.signOut();
-        navigateTo(
-            context: context, nextPage: const SignIn(), currentPage: widget);
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return const MainPage();
+          }),
+        );
+      // navigateTo(
+      //     context: context, nextPage: const SignIn(), currentPage: widget);
     }
   }
 }

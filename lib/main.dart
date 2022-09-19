@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:motivational_leadership/firebase_options.dart';
 import 'package:motivational_leadership/providers/coach/subtype/coach_action_provider.dart';
@@ -35,8 +36,10 @@ import 'package:motivational_leadership/utility/colors.dart';
 import 'package:motivational_leadership/utility/utils.dart';
 import 'package:motivational_leadership/widget/circular_progress_indicator.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 String userType = "loading";
+String localType = "";
 Future<void> backgroundHandler(RemoteMessage message) async {
   log(message.data.toString());
   log(message.notification!.title.toString());
@@ -80,7 +83,9 @@ initializeFcm() async {
 }
 
 Future main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  // WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -94,6 +99,7 @@ Future main() async {
     sound: true,
   );
   await initializeFcm();
+
   runApp(const MyApp());
 }
 
@@ -213,29 +219,74 @@ class _MainPageState extends State<MainPage> {
             return const SignIn();
           } else {
             return FutureBuilder(
-              future: getType(),
+              future: getFromAdmin(),
               builder: ((context, AsyncSnapshot<String?> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return myCircularProgressIndicator(context);
                 }
                 if (snapshot.data != null && snapshot.hasData) {
-                  final userType = snapshot.data;
-                  if (userType == 'Admin') {
-                    return const AdminHome();
-                  } else if (userType == 'Coach') {
-                    return const CoachHome();
-                  } else if (userType == 'Student') {
-                    return const StudentHome();
-                  } else {
-                    return const SignIn();
+                  final fromAdmin = snapshot.data;
+                  if (fromAdmin == 'true') {
+                    return buildFutureByUserType();
                   }
-                } else {
-                  return const SignIn();
                 }
+                return buildFutureByUserType2();
               }),
             );
           }
         });
+  }
+
+  FutureBuilder<String?> buildFutureByUserType() {
+    return FutureBuilder(
+      future: getType(),
+      builder: ((context, AsyncSnapshot<String?> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return myCircularProgressIndicator(context);
+        }
+        if (snapshot.data != null && snapshot.hasData) {
+          final userType = snapshot.data;
+          if (userType == 'Admin') {
+            return const AdminHome();
+          } else if (userType == 'Coach') {
+            signInAdminAgain();
+            return const CoachHome();
+          } else if (userType == 'Student') {
+            signInAdminAgain();
+            return const StudentHome();
+          } else {
+            return const SignIn();
+          }
+        } else {
+          return const SignIn();
+        }
+      }),
+    );
+  }
+
+  FutureBuilder<String?> buildFutureByUserType2() {
+    return FutureBuilder(
+      future: getType(),
+      builder: ((context, AsyncSnapshot<String?> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return myCircularProgressIndicator(context);
+        }
+        if (snapshot.data != null && snapshot.hasData) {
+          final userType = snapshot.data;
+          if (userType == 'Admin') {
+            return const AdminHome();
+          } else if (userType == 'Coach') {
+            return const CoachHome();
+          } else if (userType == 'Student') {
+            return const StudentHome();
+          } else {
+            return const SignIn();
+          }
+        } else {
+          return const SignIn();
+        }
+      }),
+    );
   }
 
   Future<String?> getType() async {
@@ -248,10 +299,36 @@ class _MainPageState extends State<MainPage> {
     return null;
   }
 
+  Future<String?> getFromAdmin() async {
+    userType = "loading";
+    //Reading saved password from local db and re-authenticating user with credentials
+    final prefs = await SharedPreferences.getInstance();
+    final fromAdmin = prefs.getBool('fromAdmin');
+    if (fromAdmin != null) {
+      if (fromAdmin) {
+        return "true";
+      } else {
+        return "false";
+      }
+    }
+    return null;
+  }
+
   newAppBar() {
     return AppBar(
       backgroundColor: appBarColor,
       systemOverlayStyle: SystemUiOverlayStyle.light,
     );
   }
+}
+
+Future<void> signInAdminAgain() async {
+  //Reading saved password from local db and re-authenticating user with credentials
+  final prefs = await SharedPreferences.getInstance();
+  final email = prefs.getString('email').toString();
+  final savedPass = prefs.getString('password').toString();
+  AuthCredential credential =
+      EmailAuthProvider.credential(email: email, password: savedPass);
+  await FirebaseAuth.instance
+      .signInWithEmailAndPassword(email: email, password: savedPass);
 }

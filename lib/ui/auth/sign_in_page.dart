@@ -36,6 +36,17 @@ class _SignInState extends State<SignIn> {
     );
   }
 
+  @override
+  void initState() {
+    resetFromAdmin();
+    super.initState();
+  }
+
+  Future<void> resetFromAdmin() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('fromAdmin', false);
+  }
+
   myBody(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 24),

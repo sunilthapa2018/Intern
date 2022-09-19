@@ -11,8 +11,8 @@ class DatabaseService {
   final CollectionReference userCollection =
       FirebaseFirestore.instance.collection('users');
 
-  static Future updateUserData(
-      String userId, String fullName, String phone, String userType) async {
+  static Future updateUserData(String userId, String fullName, String phone,
+      String userType, String email) async {
     try {
       final CollectionReference userCollection =
           FirebaseFirestore.instance.collection('users');
@@ -20,6 +20,7 @@ class DatabaseService {
         'full name': fullName,
         'phone': phone,
         'type': userType,
+        'email': email,
       });
     } on FirebaseAuthException catch (e) {
       Utils.showSnackBar("Failed Error Message: $e.message");

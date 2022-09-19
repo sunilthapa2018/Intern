@@ -68,10 +68,10 @@ flutter_icons:
 
 flutter_native_splash:
   color: "#ffffff"
-  image: "assets/app_icon.png"
-  android_gravity: center
+  image_android: "assets/new_splash.png"
+  image_ios: "assets/app_icon.png"  
   android_12:
-    image: "assets/app_icon.png"
+    image: "assets/new_splash.png"
     icon_background_color: "#ffffff"
   web: false
 
@@ -99,7 +99,8 @@ flutter:
     - assets/team_image.jpg
     - assets/main_image.png
     - assets/ic_launcher.png
-    - assets/ic_fore.png    
+    - assets/ic_fore.png
+    - assets/new_splash.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
   # For details regarding adding assets from package dependencies, see

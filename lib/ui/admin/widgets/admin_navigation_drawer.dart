@@ -2,12 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:motivational_leadership/main.dart';
 import 'package:motivational_leadership/services/get_user_name.dart';
 import 'package:motivational_leadership/ui/admin/admin_add_question_page.dart';
+import 'package:motivational_leadership/ui/admin/admin_add_user_page.dart';
 import 'package:motivational_leadership/ui/admin/admin_home_page.dart';
 import 'package:motivational_leadership/ui/admin/admin_list_question_page.dart';
-import 'package:motivational_leadership/ui/auth/sign_in_page.dart';
-import 'package:motivational_leadership/ui/auth/sign_up_page.dart';
 import 'package:motivational_leadership/ui/common/profile_page.dart';
 import 'package:motivational_leadership/ui/common/widget/box_decoration.dart';
 import 'package:motivational_leadership/utility/base_utils.dart';
@@ -138,7 +138,7 @@ class AdminNavigationDrawerWidget extends StatelessWidget {
       case 1:
         navigateTo(
           context: context,
-          nextPage: const SignUp(),
+          nextPage: const AddUser(),
           currentPage: const AdminHome(),
         );
         break;
@@ -164,8 +164,12 @@ class AdminNavigationDrawerWidget extends StatelessWidget {
         break;
       case 5:
         FirebaseAuth.instance.signOut();
-        navigateTo(
-            context: context, nextPage: const SignIn(), currentPage: this);
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return const MainPage();
+          }),
+        );
         break;
     }
   }

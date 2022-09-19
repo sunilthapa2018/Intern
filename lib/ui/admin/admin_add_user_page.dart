@@ -6,15 +6,16 @@ import 'package:motivational_leadership/services/database.dart';
 import 'package:motivational_leadership/ui/common/widget/verticle_spacer.dart';
 import 'package:motivational_leadership/utility/colors.dart';
 import 'package:motivational_leadership/utility/utils.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class SignUp extends StatefulWidget {
-  const SignUp({super.key});
+class AddUser extends StatefulWidget {
+  const AddUser({super.key});
 
   @override
-  State<SignUp> createState() => _SignUpState();
+  State<AddUser> createState() => _AddUserState();
 }
 
-class _SignUpState extends State<SignUp> {
+class _AddUserState extends State<AddUser> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,6 +93,7 @@ class _SignUpState extends State<SignUp> {
     return GestureDetector(
       onTap: () {
         if (formKey.currentState!.validate()) {
+          saveUserCredentials();
           registerUser(context);
         } else {
           Utils.showSnackBar(
@@ -185,10 +187,27 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
-  Container title() {
-    return Container(
-      color: adminBackgroundColor,
-      child: _buildHeaderText(),
+  title() {
+    return Row(
+      children: const [
+        Text(
+          'Register',
+          style: TextStyle(
+            //color: Color(0xFFff6600),
+            color: Color(0xFF2e3c96),
+            fontWeight: FontWeight.w900,
+            fontSize: 36,
+          ),
+        ),
+        Text(
+          ' User!',
+          style: TextStyle(
+            color: Color(0xFFff6600),
+            fontWeight: FontWeight.w900,
+            fontSize: 36,
+          ),
+        ),
+      ],
     );
   }
 
@@ -240,35 +259,11 @@ class _SignUpState extends State<SignUp> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
       child: Image.asset(
-        'assets/logo.png',
+        'assets/app_icon.png',
         height: 100,
         width: 130,
         fit: BoxFit.contain,
       ),
-    );
-  }
-
-  Row _buildHeaderText() {
-    return Row(
-      children: const [
-        Text(
-          'Register',
-          style: TextStyle(
-            //color: Color(0xFFff6600),
-            color: Color(0xFF2e3c96),
-            fontWeight: FontWeight.w900,
-            fontSize: 36,
-          ),
-        ),
-        Text(
-          ' User!',
-          style: TextStyle(
-            color: Color(0xFFff6600),
-            fontWeight: FontWeight.w900,
-            fontSize: 36,
-          ),
-        ),
-      ],
     );
   }
 
@@ -292,7 +287,8 @@ class _SignUpState extends State<SignUp> {
         password: password,
       );
       User? user = result.user;
-      await DatabaseService.updateUserData(user!.uid, name, phone, userType);
+      await DatabaseService.updateUserData(
+          user!.uid, name, phone, userType, email);
       resetForm();
       Utils.showSnackBar("A new user has been added");
     } on FirebaseAuthException catch (e) {
@@ -309,5 +305,13 @@ class _SignUpState extends State<SignUp> {
     phoneController.text = "";
     userTypeValue = "Student";
     setState(() {});
+  }
+
+  Future<void> saveUserCredentials() async {
+    String uid = FirebaseAuth.instance.currentUser!.uid;
+    String email = await DatabaseService.getUserEmail(uid);
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('email', email);
+    await prefs.setBool('fromAdmin', true);
   }
 }
