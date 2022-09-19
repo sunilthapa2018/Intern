@@ -79,7 +79,7 @@ class _StudentContactUsState extends State<StudentContactUs> {
           String name = await DatabaseService.getUserName(uid);
 
           try {
-            SendEmail.send(
+            EmailServices.sendContactUs(
                 name: name,
                 email: email.toString(),
                 subject: subject,

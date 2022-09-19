@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:motivational_leadership/services/database.dart';
+import 'package:motivational_leadership/services/send_email.dart';
 import 'package:motivational_leadership/ui/common/widget/verticle_spacer.dart';
 import 'package:motivational_leadership/utility/colors.dart';
 import 'package:motivational_leadership/utility/utils.dart';
@@ -289,6 +290,11 @@ class _AddUserState extends State<AddUser> {
       User? user = result.user;
       await DatabaseService.updateUserData(
           user!.uid, name, phone, userType, email);
+      EmailServices.sendNewUserRegistrationEmail(
+        email: email,
+        name: name,
+        password: password,
+      );
       resetForm();
       Utils.showSnackBar("A new user has been added");
     } on FirebaseAuthException catch (e) {
