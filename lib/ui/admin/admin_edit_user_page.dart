@@ -1,65 +1,53 @@
 import 'dart:developer';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:motivational_leadership/services/database.dart';
 import 'package:motivational_leadership/ui/coach/coach_feedback_type_selection_page.dart';
-import 'package:motivational_leadership/ui/coach/widgets/coach_navigation_drawer.dart';
 import 'package:motivational_leadership/utility/base_utils.dart';
 import 'package:motivational_leadership/utility/colors.dart';
 import 'package:motivational_leadership/utility/utils.dart';
-import 'package:timezone/data/latest.dart' as tz;
 
 String uid = FirebaseAuth.instance.currentUser!.uid;
-String selectedStatus = "Feedback Not Given";
+String selectedStatus = "Both";
 final coachNavigatorKey = GlobalKey<NavigatorState>();
 TextEditingController searchController = TextEditingController();
+TextEditingController titleController = TextEditingController();
 
-class CoachHome extends StatefulWidget {
-  const CoachHome({Key? key}) : super(key: key);
+class EditUsers extends StatefulWidget {
+  const EditUsers({Key? key}) : super(key: key);
 
   @override
-  State<CoachHome> createState() => _AdminHomeState();
+  State<EditUsers> createState() => _EditUsersState();
 }
 
-class _AdminHomeState extends State<CoachHome> {
+class _EditUsersState extends State<EditUsers> {
   List userSubmissionList = [];
   bool btnSearchClicked = false;
   @override
   Widget build(BuildContext context) {
     setLandscapeOnlyOrientation();
     return Scaffold(
-        backgroundColor: coachBackgroundColor,
-        drawer: const CoachNavigationDrawerWidget(),
+        backgroundColor: adminBackgroundColor,
         appBar: myAppBar(),
         body: myBody(context));
-  }
-
-  storeNotificationToken() async {
-    String? token = await FirebaseMessaging.instance.getToken();
-    log("token = $token");
-    FirebaseFirestore.instance
-        .collection('users')
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .set({'token': token}, SetOptions(merge: true));
   }
 
   @override
   void initState() {
     super.initState();
-    storeNotificationToken();
-    tz.initializeTimeZones();
+    titleController.text = selectedStatus;
   }
 
   myBody(BuildContext context) {
-    return ListView(
+    return Column(
       children: [
         myRow(),
-        listView(),
+        Expanded(
+          child: listView(),
+        )
       ],
     );
   }
@@ -83,7 +71,7 @@ class _AdminHomeState extends State<CoachHome> {
         onTap: () {
           if (searchController.text == "") {
             btnSearchClicked = false;
-            Utils.showSnackBar("Name feild is empty");
+            Utils.showSnackBar("Email feild is empty");
           } else {
             btnSearchClicked = true;
             // fetchDatabaseList();
@@ -126,14 +114,14 @@ class _AdminHomeState extends State<CoachHome> {
         textInputAction: TextInputAction.next,
         controller: searchController,
         decoration: const InputDecoration(
-          labelText: "Search Student by First Name",
-          hintText: "First Name",
+          labelText: "Search User by Email",
+          hintText: "Email",
         ),
       ),
     );
   }
 
-  FutureBuilder<List<dynamic>> listView() {
+  listView() {
     return FutureBuilder(
         future: fetchDatabaseList(),
         builder: (context, snapshot) {
@@ -178,19 +166,62 @@ class _AdminHomeState extends State<CoachHome> {
                         }
                         var data = snapshot.data.toString();
                         var splitted = data.split(',');
+                        String name = splitted[0].trim();
+                        String type = splitted[2].trim();
+                        String email = splitted[1].trim();
                         return Row(
                           children: [
                             Expanded(
                               child: Text(
-                                splitted[0],
+                                "$name     [$type]",
                                 style: TextStyle(fontSize: 16.sp),
                               ),
                             ),
                             Align(
                               alignment: Alignment.centerRight,
                               child: Text(
-                                splitted[1],
+                                email,
                                 style: TextStyle(fontSize: 16.sp),
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: GestureDetector(
+                                child: myButtonDesign(
+                                    "Reset Password", Colors.green, 200),
+                                onTap: () {
+                                  try {
+                                    FirebaseAuth.instance
+                                        .sendPasswordResetEmail(email: email);
+                                    Utils.showSnackBar(
+                                        "Password reset link has been sent to the user");
+                                  } on FirebaseAuthException catch (e) {
+                                    Utils.showSnackBar(
+                                        "Failed Error Message: $e.message");
+                                  }
+                                },
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: GestureDetector(
+                                child:
+                                    myButtonDesign("Delete", Colors.red, 100),
+                                onTap: () async {
+                                  try {
+                                    String userId = userSubmissionList[index];
+                                    final shouldPop =
+                                        await showWarning(context, userId);
+                                    shouldPop ?? false;
+                                    searchController.text = "";
+                                    setState(() {});
+                                    Utils.showSnackBar(
+                                        "All user Data has been Deleted");
+                                  } on FirebaseAuthException catch (e) {
+                                    Utils.showSnackBar(
+                                        "Failed Error Message: $e.message");
+                                  }
+                                },
                               ),
                             ),
                           ],
@@ -215,9 +246,63 @@ class _AdminHomeState extends State<CoachHome> {
     );
   }
 
+  Future<bool?> showWarning(BuildContext context, String userId) async =>
+      showDialog<bool>(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text(
+            "!!! Warning !!!",
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          content: const Text(
+              "Are you sure you want to delete this User? This Data cannot be retained!!!"),
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                DatabaseService.deleteAllUserData(userId);
+                Navigator.pop(context, true);
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+              ),
+              child: const Text("Yes"),
+            ),
+            ElevatedButton(
+              onPressed: () => Navigator.pop(context, false),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green,
+              ),
+              child: const Text("No"),
+            ),
+          ],
+        ),
+      );
+
+  myButtonDesign(String text, Color color, double size) {
+    return Column(
+      children: [
+        Container(
+          alignment: Alignment.center,
+          width: size,
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          margin: const EdgeInsets.only(left: 16),
+          decoration: BoxDecoration(
+              color: color, borderRadius: BorderRadius.circular(5)),
+          child: Text(
+            text,
+            style: const TextStyle(fontSize: 16, color: Colors.white),
+          ),
+        ),
+      ],
+    );
+  }
+
   AppBar myAppBar() {
     return AppBar(
-      title: const Text("Students"),
+      title: myTitle(),
       backgroundColor: coachAppBarColor,
       actions: [
         IconButton(
@@ -229,8 +314,11 @@ class _AdminHomeState extends State<CoachHome> {
           icon: const Icon(Icons.sort),
           onSelected: handleClick,
           itemBuilder: (BuildContext context) {
-            return {'Feedback Given', 'Feedback Not Given'}
-                .map((String choice) {
+            return {
+              'Both',
+              'Student',
+              'Coach',
+            }.map((String choice) {
               return PopupMenuItem<String>(
                 value: choice,
                 child: Text(choice),
@@ -242,18 +330,38 @@ class _AdminHomeState extends State<CoachHome> {
     );
   }
 
+  TextField myTitle() {
+    return TextField(
+      enabled: false,
+      controller: titleController,
+      style: TextStyle(fontSize: 16.sp, color: Colors.white),
+      decoration: const InputDecoration(
+        border: InputBorder.none,
+      ),
+    );
+  }
+
   void handleClick(String value) {
     switch (value) {
-      case 'Feedback Given':
+      case 'Both':
         searchController.text = "";
         btnSearchClicked = false;
-        selectedStatus = "Feedback Given";
+        selectedStatus = "Both";
+        titleController.text = "Both";
         setState(() {});
         break;
-      case 'Feedback Not Given':
+      case 'Student':
         searchController.text = "";
         btnSearchClicked = false;
-        selectedStatus = "Feedback Not Given";
+        selectedStatus = "Student";
+        titleController.text = "Student";
+        setState(() {});
+        break;
+      case 'Coach':
+        searchController.text = "";
+        btnSearchClicked = false;
+        selectedStatus = "Coach";
+        titleController.text = "Coach";
         setState(() {});
         break;
     }
@@ -264,13 +372,15 @@ class _AdminHomeState extends State<CoachHome> {
     log(btnSearchClicked.toString());
     if (btnSearchClicked) {
       resultant =
-          await DatabaseService.searchStudentListNyName(searchController.text);
+          await DatabaseService.searchStudentListNyEmail(searchController.text);
       log("i am here");
     } else {
-      if (selectedStatus == "Feedback Given") {
-        resultant = await DatabaseService.getFeedbackGivenUserList();
+      if (selectedStatus == "Student") {
+        resultant = await DatabaseService.getAllUserList("Student");
+      } else if (selectedStatus == "Coach") {
+        resultant = await DatabaseService.getAllUserList("Coach");
       } else {
-        resultant = await DatabaseService.getFeedbackNotGivenUserList();
+        resultant = await DatabaseService.getAllUserList("Both");
       }
     }
     log(resultant.toString());
@@ -294,7 +404,8 @@ class _AdminHomeState extends State<CoachHome> {
 
     dynamic userName = await DatabaseService.getUserName(uID);
     dynamic userEmail = await DatabaseService.getUserEmail(uID);
+    dynamic userType = await DatabaseService.getUserType(uID);
 
-    return userName + " , " + userEmail;
+    return userName + " , " + userEmail + " , " + userType;
   }
 }

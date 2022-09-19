@@ -281,7 +281,6 @@ class _CoachFeedbackPageState extends State<CoachFeedbackPage> {
                   return answerText(
                       "Answer field error!!! Answer missing some fields. Report Admin");
                 } else {
-                  // answerController.text = answerText(data).toString();
                   return answerText(data);
                 }
               } else {

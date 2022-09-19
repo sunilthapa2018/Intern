@@ -6,6 +6,7 @@ import 'package:motivational_leadership/main.dart';
 import 'package:motivational_leadership/services/get_user_name.dart';
 import 'package:motivational_leadership/ui/admin/admin_add_question_page.dart';
 import 'package:motivational_leadership/ui/admin/admin_add_user_page.dart';
+import 'package:motivational_leadership/ui/admin/admin_edit_user_page.dart';
 import 'package:motivational_leadership/ui/admin/admin_home_page.dart';
 import 'package:motivational_leadership/ui/admin/admin_list_question_page.dart';
 import 'package:motivational_leadership/ui/common/profile_page.dart';
@@ -47,10 +48,10 @@ class AdminNavigationDrawerWidget extends StatelessWidget {
           ListTile(
             contentPadding: const EdgeInsets.symmetric(horizontal: 24.0),
             leading: Icon(
-              FontAwesomeIcons.fileCircleQuestion,
+              FontAwesomeIcons.userPen,
               color: coachAppBarColor,
             ),
-            title: myText('Add Question'),
+            title: myText('Edit User'),
             onTap: () => selectedItem(context, 2),
           ),
           ListTile(
@@ -59,8 +60,17 @@ class AdminNavigationDrawerWidget extends StatelessWidget {
               FontAwesomeIcons.fileCircleQuestion,
               color: coachAppBarColor,
             ),
-            title: myText('Edit Question'),
+            title: myText('Add Question'),
             onTap: () => selectedItem(context, 3),
+          ),
+          ListTile(
+            contentPadding: const EdgeInsets.symmetric(horizontal: 24.0),
+            leading: Icon(
+              FontAwesomeIcons.fileCircleQuestion,
+              color: coachAppBarColor,
+            ),
+            title: myText('Edit Question'),
+            onTap: () => selectedItem(context, 4),
           ),
           ListTile(
             contentPadding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -69,7 +79,7 @@ class AdminNavigationDrawerWidget extends StatelessWidget {
               color: coachAppBarColor,
             ),
             title: myText('Profile'),
-            onTap: () => selectedItem(context, 4),
+            onTap: () => selectedItem(context, 5),
           ),
           ListTile(
             contentPadding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -78,7 +88,7 @@ class AdminNavigationDrawerWidget extends StatelessWidget {
               color: coachAppBarColor,
             ),
             title: myText('Logout'),
-            onTap: () => selectedItem(context, 5),
+            onTap: () => selectedItem(context, 6),
           ),
         ],
       ),
@@ -144,25 +154,32 @@ class AdminNavigationDrawerWidget extends StatelessWidget {
         break;
       case 2:
         navigateTo(
+          context: context,
+          nextPage: const EditUsers(),
+          currentPage: const AdminHome(),
+        );
+        break;
+      case 3:
+        navigateTo(
             context: context,
             nextPage: const AddQuestion(),
             currentPage: const AdminHome());
         break;
-      case 3:
+      case 4:
         navigateTo(
             context: context,
             nextPage: const AdminListQuestion(),
             currentPage: const AdminHome());
 
         break;
-      case 4:
+      case 5:
         navigateTo(
             context: context,
             nextPage: const Profile(),
             currentPage: const AdminHome());
 
         break;
-      case 5:
+      case 6:
         FirebaseAuth.instance.signOut();
         Navigator.pushReplacement(
           context,

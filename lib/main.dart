@@ -31,6 +31,7 @@ import 'package:motivational_leadership/services/local_push_notification.dart';
 import 'package:motivational_leadership/ui/admin/admin_home_page.dart';
 import 'package:motivational_leadership/ui/auth/sign_in_page.dart';
 import 'package:motivational_leadership/ui/coach/coach_home_page.dart';
+import 'package:motivational_leadership/ui/common/error_page.dart';
 import 'package:motivational_leadership/ui/student/student_home_page.dart';
 import 'package:motivational_leadership/utility/colors.dart';
 import 'package:motivational_leadership/utility/utils.dart';
@@ -286,7 +287,7 @@ class _MainPageState extends State<MainPage> {
           }
         }
         log("Sign in 3");
-        return const SignIn();
+        return const ErrorPage();
       }),
     );
   }

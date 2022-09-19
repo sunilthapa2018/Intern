@@ -265,6 +265,34 @@ class DatabaseService {
     }
   }
 
+  static Future getAllUserList(String type) async {
+    List itemsList = [];
+    final CollectionReference users =
+        FirebaseFirestore.instance.collection('users');
+    try {
+      if (type == "Both") {
+        await users
+            .where("type", isNotEqualTo: "Admin")
+            .get()
+            .then((querySnapshot) {
+          for (var element in querySnapshot.docs) {
+            itemsList.add(element.id);
+          }
+        });
+      } else {
+        await users.where("type", isEqualTo: type).get().then((querySnapshot) {
+          for (var element in querySnapshot.docs) {
+            itemsList.add(element.id);
+          }
+        });
+      }
+      log(itemsList.length.toString());
+      return itemsList;
+    } on FirebaseAuthException catch (e) {
+      Utils.showSnackBar("Failed Error Message: $e.message");
+    }
+  }
+
   static Future getAllQuestionList() async {
     List itemsList = [];
     final CollectionReference questions =
@@ -343,7 +371,7 @@ class DatabaseService {
     }
   }
 
-  static Future searchStudentList(String searchText) async {
+  static Future searchStudentListNyName(String searchText) async {
     List itemsList = [];
     final CollectionReference users =
         FirebaseFirestore.instance.collection('users');
@@ -351,6 +379,26 @@ class DatabaseService {
       await users
           .where("full name", isGreaterThanOrEqualTo: searchText)
           .where("full name", isLessThanOrEqualTo: "$searchText\uf7ff")
+          .get()
+          .then((querySnapshot) async {
+        for (var element in querySnapshot.docs) {
+          itemsList.add(element.id);
+        }
+      });
+      return itemsList;
+    } on FirebaseAuthException catch (e) {
+      Utils.showSnackBar("Failed Error Message: $e.message");
+    }
+  }
+
+  static Future searchStudentListNyEmail(String searchText) async {
+    List itemsList = [];
+    final CollectionReference users =
+        FirebaseFirestore.instance.collection('users');
+    try {
+      await users
+          .where("email", isGreaterThanOrEqualTo: searchText)
+          .where("email", isLessThanOrEqualTo: "$searchText\uf7ff")
           .get()
           .then((querySnapshot) async {
         for (var element in querySnapshot.docs) {
@@ -539,5 +587,65 @@ class DatabaseService {
           (doc) => log("Document deleted"),
           onError: (e) => log("Error updating document $e"),
         );
+  }
+
+  static Future<void> deleteAllUserData(
+    String documentId,
+  ) async {
+    await FirebaseFirestore.instance
+        .collection("users")
+        .doc(documentId)
+        .delete()
+        .then(
+          (doc) => log("users deleted"),
+          onError: (e) => log("Error updating document $e"),
+        );
+
+    await FirebaseFirestore.instance
+        .collection("submissions")
+        .doc(documentId)
+        .delete()
+        .then(
+          (doc) => log("submissions deleted"),
+          onError: (e) => log("Error updating document $e"),
+        );
+
+    final CollectionReference feedbacks =
+        FirebaseFirestore.instance.collection('feedbacks');
+
+    await feedbacks
+        .where("student_id", isEqualTo: documentId)
+        .get()
+        .then((querySnapshot) async {
+      for (var element in querySnapshot.docs) {
+        await FirebaseFirestore.instance
+            .collection("feedbacks")
+            .doc(element.id)
+            .delete()
+            .then(
+              (doc) => log("feedbacks deleted"),
+              onError: (e) => log("Error updating document $e"),
+            );
+      }
+    });
+
+    final CollectionReference answers =
+        FirebaseFirestore.instance.collection('answers');
+
+    await answers
+        .where("uid", isEqualTo: documentId)
+        .get()
+        .then((querySnapshot) async {
+      for (var element in querySnapshot.docs) {
+        await FirebaseFirestore.instance
+            .collection("answers")
+            .doc(element.id)
+            .delete()
+            .then(
+              (doc) => log("answers deleted"),
+              onError: (e) => log("Error updating document $e"),
+            );
+      }
+    });
   }
 }
