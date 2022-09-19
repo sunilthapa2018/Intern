@@ -290,9 +290,11 @@ class _AddUserState extends State<AddUser> {
       User? user = result.user;
       await DatabaseService.updateUserData(
           user!.uid, name, phone, userType, email);
+      var splitted = name.split(' ');
+      String firstName = splitted[0];
       EmailServices.sendNewUserRegistrationEmail(
         email: email,
-        name: name,
+        name: firstName,
         password: password,
       );
       resetForm();
