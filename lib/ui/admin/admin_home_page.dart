@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:motivational_leadership/services/database.dart';
 import 'package:motivational_leadership/ui/admin/widgets/admin_navigation_drawer.dart';
@@ -168,6 +169,7 @@ class _AdminHomeState extends State<AdminHome> {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return textTotal("Loading...");
                     }
+                    FlutterNativeSplash.remove();
                     return textTotal(snapshot.data.toString());
                   }),
             ),
@@ -220,6 +222,7 @@ class _AdminHomeState extends State<AdminHome> {
   @override
   void initState() {
     // addAllQuestionsToDatabase();
+
     super.initState();
   }
 }

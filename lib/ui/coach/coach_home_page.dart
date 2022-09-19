@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:motivational_leadership/services/database.dart';
 import 'package:motivational_leadership/ui/coach/coach_feedback_type_selection_page.dart';
@@ -279,7 +280,7 @@ class _AdminHomeState extends State<CoachHome> {
     } else {
       userSubmissionList = resultant;
     }
-
+    FlutterNativeSplash.remove();
     return userSubmissionList;
   }
 

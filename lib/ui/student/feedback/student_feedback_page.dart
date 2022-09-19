@@ -74,7 +74,7 @@ class _StudentFeedbackPageState extends State<StudentFeedbackPage> {
                   child: TextButton.icon(
                     onPressed: () {
                       loadInfo(context,
-                          "If feedback has been given by coach to selected TYPE and SUB-TYPE then feedback will be shown automatically.");
+                          "If feedback has been given by coach to selected Module and Activity then feedback will be shown automatically.");
                     },
                     label: Text(
                       "Help",

@@ -85,6 +85,7 @@ initializeFcm() async {
 Future main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+
   // WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -212,10 +213,15 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
+    log("Main page built");
     return StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, AsyncSnapshot<User?> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return myCircularProgressIndicator(context);
+          }
           if (snapshot.data == null) {
+            log("Sign in 1");
             return const SignIn();
           } else {
             return FutureBuilder(
@@ -254,12 +260,10 @@ class _MainPageState extends State<MainPage> {
           } else if (userType == 'Student') {
             signInAdminAgain();
             return const StudentHome();
-          } else {
-            return const SignIn();
           }
-        } else {
-          return const SignIn();
         }
+        log("Sign in 2");
+        return const SignIn();
       }),
     );
   }
@@ -279,12 +283,10 @@ class _MainPageState extends State<MainPage> {
             return const CoachHome();
           } else if (userType == 'Student') {
             return const StudentHome();
-          } else {
-            return const SignIn();
           }
-        } else {
-          return const SignIn();
         }
+        log("Sign in 3");
+        return const SignIn();
       }),
     );
   }
@@ -327,8 +329,6 @@ Future<void> signInAdminAgain() async {
   final prefs = await SharedPreferences.getInstance();
   final email = prefs.getString('email').toString();
   final savedPass = prefs.getString('password').toString();
-  AuthCredential credential =
-      EmailAuthProvider.credential(email: email, password: savedPass);
   await FirebaseAuth.instance
       .signInWithEmailAndPassword(email: email, password: savedPass);
 }

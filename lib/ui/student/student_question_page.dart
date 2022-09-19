@@ -124,15 +124,17 @@ class _QuestionState extends State<Question> {
           Utils.showSnackBar('Please answer the question to save data.');
         }
       },
-      child: Container(
-        margin: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-        alignment: Alignment.center,
-        width: MediaQuery.of(context).size.width / 2,
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-        decoration: myButtonBox(),
-        child: const Text(
-          "Save",
-          style: TextStyle(fontSize: 16, color: Colors.white),
+      child: UnconstrainedBox(
+        child: Container(
+          margin: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+          alignment: Alignment.center,
+          width: MediaQuery.of(context).size.width / 3,
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+          decoration: myButtonBox(),
+          child: const Text(
+            "Save",
+            style: TextStyle(fontSize: 16, color: Colors.white),
+          ),
         ),
       ),
     );

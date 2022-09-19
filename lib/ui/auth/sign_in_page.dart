@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:motivational_leadership/main.dart';
 import 'package:motivational_leadership/services/database.dart';
@@ -24,6 +27,7 @@ class _SignInState extends State<SignIn> {
 
   @override
   Widget build(BuildContext context) {
+    log("Sign In page built");
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).requestFocus(FocusNode());
@@ -38,6 +42,7 @@ class _SignInState extends State<SignIn> {
 
   @override
   void initState() {
+    FlutterNativeSplash.remove();
     resetFromAdmin();
     super.initState();
   }
