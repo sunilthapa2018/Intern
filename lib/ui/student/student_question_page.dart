@@ -28,26 +28,27 @@ class _QuestionState extends State<Question> {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
         const SystemUiOverlayStyle(statusBarColor: Colors.white));
-    return WillPopScope(
-      onWillPop: () async {
-        String anwerField = answerController.text.toString();
-        final isEditedPage = _answer != answerController.text.toString();
-        if (isEditedPage && anwerField != "") {
-          final shouldPop = await showWarning(context);
-          return shouldPop ?? false;
-        } else {
-          return true;
-        }
-      },
-      child: Scaffold(
-        backgroundColor: backgroundColor,
-        appBar: appBar(context),
-        body: myBody(context),
-      ),
+    return Scaffold(
+      backgroundColor: backgroundColor,
+      appBar: appBar(context),
+      body: myBody(context),
     );
   }
 
-  Future<bool?> showWarning(BuildContext context) async => showDialog<bool>(
+  bool checkIfAnswerIsChanged(BuildContext context) {
+    String anwerField = answerController.text.toString();
+    final isEditedPage = _answer != answerController.text.toString();
+    if (isEditedPage && anwerField != "") {
+      showWarningOnBackPressed(context);
+      return true;
+    } else {
+      Navigator.pop(context);
+      return false;
+    }
+  }
+
+  Future<bool?> showWarningOnBackPressed(BuildContext context) async =>
+      showDialog<bool>(
         context: context,
         builder: (context) => AlertDialog(
           title: const Text(
@@ -67,7 +68,10 @@ class _QuestionState extends State<Question> {
               child: const Text("Cancel"),
             ),
             ElevatedButton(
-              onPressed: () => Navigator.pop(context, true),
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.pop(context);
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: buttonColor,
               ),
@@ -248,7 +252,7 @@ class _QuestionState extends State<Question> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             IconButton(
-              onPressed: () => Navigator.pop(context),
+              onPressed: () => checkIfAnswerIsChanged(context),
               icon: Icon(Icons.arrow_back, color: iconColor),
             ),
             appBarTitle(),
