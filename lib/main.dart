@@ -41,6 +41,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 String userType = "loading";
 String localType = "";
+late final LocalNotificationService localNotificationService;
 Future<void> backgroundHandler(RemoteMessage message) async {
   log(message.data.toString());
   log(message.notification!.title.toString());
@@ -57,7 +58,7 @@ initializeFcm() async {
   );
 
   FirebaseMessaging.onMessage.listen(
-    (message) {
+    (message) async {
       log("FirebaseMessaging.onMessage.listen");
       if (message.notification != null) {
         String? title = message.notification?.title;
@@ -65,8 +66,10 @@ initializeFcm() async {
         log("FirebaseMessaging.onMessage.listen || title = $title");
         log("FirebaseMessaging.onMessage.listen || body = $body");
         log("message.datail ${message.data}");
-        LocalNotificationService()
-            .showNotification(1, title.toString(), body.toString(), 1);
+        await localNotificationService.showNotification(
+            id: 0, body: 'My body', title: 'My title');
+        // LocalNotificationService()
+        //     .showNotification(1, title.toString(), body.toString(), 1);
         // LocalNotificationService.createanddisplaynotification(message);
       }
     },
@@ -87,6 +90,7 @@ Future main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
+  localNotificationService = LocalNotificationService();
   // WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

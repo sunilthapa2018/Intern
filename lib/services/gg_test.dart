@@ -14,10 +14,9 @@ class _MyHomePageTestState extends State<MyHomePageTest> {
     super.initState();
     flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
     var android = const AndroidInitializationSettings('@mipmap/ic_launcher');
-    var ios = const IOSInitializationSettings();
+    var ios = const DarwinInitializationSettings();
     var initSettings = InitializationSettings(android: android, iOS: ios);
-    flutterLocalNotificationsPlugin.initialize(initSettings,
-        onSelectNotification: (payload) => selectNotification(payload ?? ""));
+    flutterLocalNotificationsPlugin.initialize;
   }
 
   selectNotification(String payload) {
@@ -55,7 +54,7 @@ class _MyHomePageTestState extends State<MyHomePageTest> {
   showNotification() async {
     var android = const AndroidNotificationDetails("channelId", "channelName",
         priority: Priority.high, importance: Importance.max);
-    var iOS = const IOSNotificationDetails();
+    var iOS = const DarwinNotificationDetails();
 
     var platform = NotificationDetails(android: android, iOS: iOS);
     await flutterLocalNotificationsPlugin.show(
