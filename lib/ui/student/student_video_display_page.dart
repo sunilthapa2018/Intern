@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:motivational_leadership/ui/common/widget/copyright_text.dart';
 import 'package:motivational_leadership/ui/common/widget/verticle_spacer.dart';
 import 'package:motivational_leadership/ui/student/student_question_subtype_selection_page.dart';
 import 'package:motivational_leadership/ui/student/widgets/app_bar.dart';
@@ -71,6 +72,7 @@ class _VideoPlaybackState extends State<VideoPlayback> {
           alignment: Alignment.bottomCenter,
           child: _buildButtonLogo(),
         ),
+        copyrightText(),
       ],
     );
   }

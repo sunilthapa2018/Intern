@@ -99,6 +99,7 @@ class _QuestionState extends State<Question> {
         answer(),
         verticleSpacer(6),
         saveButton(context),
+        verticleSpacer(10),
       ],
     );
   }
