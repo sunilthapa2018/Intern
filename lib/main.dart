@@ -65,11 +65,8 @@ initializeFcm() async {
         log("FirebaseMessaging.onMessage.listen || title = $title");
         log("FirebaseMessaging.onMessage.listen || body = $body");
         log("message.datail ${message.data}");
-        LocalNotificationService().showNotification(
-          id: 1,
-          title: title.toString(),
-          body: body.toString(),
-        );
+        LocalNotificationService()
+            .showNotification(1, title.toString(), body.toString(), 1);
         // LocalNotificationService.createanddisplaynotification(message);
       }
     },

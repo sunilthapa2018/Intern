@@ -1,69 +1,112 @@
-import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:timezone/timezone.dart' as tz;
 
 class LocalNotificationService {
   LocalNotificationService() {
-    initializeNotification();
+    initNotification();
   }
+  static final LocalNotificationService _notificationService =
+      LocalNotificationService._internal();
 
-  final _localNotificationService = FlutterLocalNotificationsPlugin();
+  // factory NotificationService() {
+  //   return _notificationService;
+  // }
 
-  Future<void> initializeNotification() async {
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+
+  LocalNotificationService._internal();
+
+  Future<void> initNotification() async {
+    // flutterLocalNotificationsPlugin
+    //     .resolvePlatformSpecificImplementation<
+    //         AndroidFlutterLocalNotificationsPlugin>()
+    //     ?.requestPermission();
+    if (Platform.isAndroid) {
+      flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>();
+    }
+    if (Platform.isIOS) {
+      await flutterLocalNotificationsPlugin
+          .resolvePlatformSpecificImplementation<
+              IOSFlutterLocalNotificationsPlugin>()
+          ?.requestPermissions(
+            alert: true,
+            badge: true,
+            sound: true,
+          );
+    }
+
     const AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('@drawable/ic_stat_app_icon');
-
-    IOSInitializationSettings initializationSettingsIOS =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
+    const IOSInitializationSettings initializationSettingsIOS =
         IOSInitializationSettings(
-            requestAlertPermission: true,
-            requestBadgePermission: true,
-            requestSoundPermission: true,
-            onDidReceiveLocalNotification: onDidReceiveLocalNotification);
-
-    final InitializationSettings initializationSettings =
-        InitializationSettings(
-      android: initializationSettingsAndroid,
-      iOS: initializationSettingsIOS,
+      requestAlertPermission: false,
+      requestBadgePermission: false,
+      requestSoundPermission: false,
     );
 
-    await _localNotificationService.initialize(initializationSettings,
-        onSelectNotification: onSelectedNotification);
+    const InitializationSettings initializationSettings =
+        InitializationSettings(
+            android: initializationSettingsAndroid,
+            iOS: IOSInitializationSettings());
+
+    await flutterLocalNotificationsPlugin.initialize(initializationSettings);
   }
 
-  Future<NotificationDetails> _notificationDetails() async {
-    AndroidNotificationDetails androidNotificationDetails =
-        const AndroidNotificationDetails('main_channel', 'Main Channel',
+  handlePermission() async {
+    final bool? result = await flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+            IOSFlutterLocalNotificationsPlugin>()
+        ?.requestPermissions(
+          alert: true,
+          badge: true,
+          sound: true,
+        );
+  }
+
+  Future<void> showNotification(
+      int id, String title, String body, int seconds) async {
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+      id,
+      title,
+      body,
+      tz.TZDateTime.now(tz.local).add(Duration(seconds: seconds)),
+      const NotificationDetails(
+        android: AndroidNotificationDetails('main_channel', 'Main Channel',
             importance: Importance.max,
             priority: Priority.max,
-            icon: '@mipmap/ic_launcher');
-    IOSNotificationDetails iosNotificationDetails =
-        const IOSNotificationDetails(
-      sound: 'default.wav',
-      presentAlert: true,
-      presentBadge: true,
-      presentSound: true,
+            icon: '@mipmap/ic_launcher'),
+        iOS: IOSNotificationDetails(
+          sound: 'default.wav',
+          presentAlert: true,
+          presentBadge: true,
+          presentSound: true,
+        ),
+      ),
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+      androidAllowWhileIdle: true,
     );
-    return NotificationDetails(
-      android: androidNotificationDetails,
-      iOS: iosNotificationDetails,
-    );
   }
 
-  Future<void> showNotification({
-    required int id,
-    required String title,
-    required String body,
-  }) async {
-    final notificationDetails = await _notificationDetails();
-    await _localNotificationService.show(id, title, body, notificationDetails);
+  Future<void> cancelAllNotifications() async {
+    await flutterLocalNotificationsPlugin.cancelAll();
   }
 
-  void onDidReceiveLocalNotification(
-      int id, String? title, String? body, String? payload) {
-    log("id = $id");
-  }
-
-  void onSelectedNotification(String? payload) {
-    log("payload = $payload");
+  showNew() async {
+    const AndroidNotificationDetails androidPlatformChannelSpecifics =
+        AndroidNotificationDetails('your channel id', 'your channel name',
+            channelDescription: 'your channel description',
+            importance: Importance.max,
+            priority: Priority.high,
+            ticker: 'ticker');
+    const NotificationDetails platformChannelSpecifics =
+        NotificationDetails(android: androidPlatformChannelSpecifics);
+    await flutterLocalNotificationsPlugin.show(
+        0, 'plain title', 'plain body', platformChannelSpecifics,
+        payload: 'item x');
   }
 }

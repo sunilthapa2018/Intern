@@ -65,6 +65,7 @@ class _StudentHomeState extends State<StudentHome> {
   @override
   void initState() {
     localNotificationService = LocalNotificationService();
+    localNotificationService.initNotification();
     super.initState();
     storeNotificationToken();
     tz.initializeTimeZones();
@@ -164,8 +165,7 @@ class _StudentHomeState extends State<StudentHome> {
 
         // await notificationSevice.handlePermission();
         // notificationSevice.showNew();
-        await localNotificationService.showNotification(
-            id: 0, title: "title", body: "body");
+        await localNotificationService.showNotification(0, "title", "body", 1);
         Utils.showSnackBar("Clicked");
       },
       child: Container(
