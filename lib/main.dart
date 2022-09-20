@@ -276,7 +276,7 @@ class _MainPageState extends State<MainPage> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return myCircularProgressIndicator(context);
         }
-        if (snapshot.data != null && snapshot.hasData) {
+        if (snapshot.data != null) {
           final userType = snapshot.data;
           if (userType == 'Admin') {
             return const AdminHome();
@@ -284,10 +284,13 @@ class _MainPageState extends State<MainPage> {
             return const CoachHome();
           } else if (userType == 'Student') {
             return const StudentHome();
+          } else {
+            log("Sign in 3");
+            return const ErrorPage();
           }
-        }
-        log("Sign in 3");
-        return const ErrorPage();
+        } else {}
+        log("Sign in 4");
+        return const SignIn();
       }),
     );
   }

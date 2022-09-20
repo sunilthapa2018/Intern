@@ -1,7 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:motivational_leadership/main.dart';
+import 'package:motivational_leadership/ui/common/widget/verticle_spacer.dart';
 import 'package:motivational_leadership/utility/colors.dart';
 
 class ErrorPage extends StatefulWidget {
@@ -33,17 +36,73 @@ class _ErrorPageState extends State<ErrorPage> {
     );
   }
 
-  Container myBody() {
+  myBody() {
     return Container(
       padding: EdgeInsets.all(16.sp),
       color: backgroundColor,
-      child: Center(
-        child: SelectableText(
-          "Your Authentication has been REVOKED, please contact admin\n\nnicholai@leadershipdevelopment.training",
-          style: TextStyle(
-            fontSize: 16.sp,
+      child: Column(
+        children: [
+          Expanded(child: companyLogo()),
+          Expanded(
+            child: Column(
+              children: [
+                myText(),
+                verticleSpacer(20),
+                GestureDetector(
+                  child: buttonDesign(),
+                  onTap: (() {
+                    FirebaseAuth.instance.signOut();
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) {
+                        return const MainPage();
+                      }),
+                    );
+                  }),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  SelectableText myText() {
+    return SelectableText(
+      "Your Authentication has been REVOKED, please contact admin:\n\nEmail:\nnicholai@leadershipdevelopment.training",
+      style: TextStyle(
+        fontSize: 16.sp,
+      ),
+    );
+  }
+
+  buttonDesign() {
+    return Column(
+      children: [
+        Container(
+          alignment: Alignment.center,
+          width: MediaQuery.of(context).size.width / 3,
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          decoration: BoxDecoration(
+              color: buttonColor, borderRadius: BorderRadius.circular(25)),
+          child: const Text(
+            "Log Out",
+            style: TextStyle(fontSize: 16, color: Colors.white),
           ),
         ),
+      ],
+    );
+  }
+
+  Padding companyLogo() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
+      child: Image.asset(
+        'assets/logo.png',
+        height: 100,
+        width: 130,
+        fit: BoxFit.contain,
       ),
     );
   }
