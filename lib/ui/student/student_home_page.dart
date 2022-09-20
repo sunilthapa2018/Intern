@@ -61,8 +61,10 @@ class _StudentHomeState extends State<StudentHome> {
     );
   }
 
+  late final LocalNotificationService localNotificationService;
   @override
   void initState() {
+    localNotificationService = LocalNotificationService();
     super.initState();
     storeNotificationToken();
     tz.initializeTimeZones();
@@ -159,10 +161,10 @@ class _StudentHomeState extends State<StudentHome> {
       onTap: () async {
         // navigateTo(
         //     context: context, nextPage: MyHomePageTest(), currentPage: widget);
-        final notificationSevice = LocalNotificationService();
+
         // await notificationSevice.handlePermission();
         // notificationSevice.showNew();
-        notificationSevice.showNotification(
+        await localNotificationService.showNotification(
             id: 0, title: "title", body: "body");
         Utils.showSnackBar("Clicked");
       },

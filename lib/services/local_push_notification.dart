@@ -11,7 +11,7 @@ class LocalNotificationService {
 
   Future<void> initializeNotification() async {
     const AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('@drawable/ic_flutternotification');
+        AndroidInitializationSettings('@drawable/ic_stat_app_icon');
 
     IOSInitializationSettings initializationSettingsIOS =
         IOSInitializationSettings(
