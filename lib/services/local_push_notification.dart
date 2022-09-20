@@ -15,10 +15,11 @@ class LocalNotificationService {
 
     DarwinInitializationSettings darwinInitializationSettings =
         DarwinInitializationSettings(
-            requestAlertPermission: true,
-            requestBadgePermission: true,
-            requestSoundPermission: true,
-            onDidReceiveLocalNotification: onDidReceiveLocalNotification);
+      requestSoundPermission: true,
+      requestBadgePermission: true,
+      requestAlertPermission: true,
+      onDidReceiveLocalNotification: onDidReceiveLocalNotification,
+    );
 
     final InitializationSettings initializationSettings =
         InitializationSettings(
@@ -26,26 +27,31 @@ class LocalNotificationService {
       iOS: darwinInitializationSettings,
     );
 
-    // await _localNotificationService.initialize(initializationSettings,
-    //     onSelectedNotification: onSelectedNotification);
     await _localNotificationService.initialize(initializationSettings,
         onDidReceiveNotificationResponse: onDidReceiveNotificationResponse);
+
+    // await _localNotificationService.initialize(initializationSettings,
+    //     onSelectedNotification: onSelectedNotification);
   }
 
   Future<NotificationDetails> _notificationDetails() async {
-    AndroidNotificationDetails androidNotificationDetails =
-        const AndroidNotificationDetails('main_channel', 'Main Channel',
+    const AndroidNotificationDetails androidNotificationDetails =
+        AndroidNotificationDetails('main_channel', 'Main Channel',
             importance: Importance.max,
             priority: Priority.max,
             icon: '@mipmap/ic_launcher');
-    DarwinNotificationDetails iosNotificationDetails =
-        const DarwinNotificationDetails(
-      sound: 'default.wav',
-      presentAlert: true,
-      presentBadge: true,
-      presentSound: true,
+    const DarwinNotificationDetails iosNotificationDetails =
+        DarwinNotificationDetails(
+      categoryIdentifier: 'plainCategory',
     );
-    return NotificationDetails(
+    // DarwinNotificationDetails iosNotificationDetails =
+    //     const DarwinNotificationDetails(
+    //   sound: 'default.wav',
+    //   presentAlert: true,
+    //   presentBadge: true,
+    //   presentSound: true,
+    // );
+    return const NotificationDetails(
       android: androidNotificationDetails,
       iOS: iosNotificationDetails,
     );
