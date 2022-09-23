@@ -12,7 +12,7 @@ import 'package:motivational_leadership/providers/coach/subtype/coach_io_provide
 import 'package:motivational_leadership/providers/coach/subtype/coach_oc_provider.dart';
 import 'package:motivational_leadership/providers/coach/subtype/coach_si_provider.dart';
 import 'package:motivational_leadership/services/database.dart';
-import 'package:motivational_leadership/services/push_notification_service.dart';
+import 'package:motivational_leadership/services/send_email.dart';
 import 'package:motivational_leadership/ui/coach/widgets/subtype/categories_tile/coach_action_tile.dart';
 import 'package:motivational_leadership/ui/coach/widgets/subtype/categories_tile/coach_future_tile.dart';
 import 'package:motivational_leadership/ui/coach/widgets/subtype/categories_tile/coach_imp_tile.dart';
@@ -26,7 +26,6 @@ import 'package:motivational_leadership/utility/utils.dart';
 import 'package:provider/provider.dart';
 import 'package:timezone/data/latest.dart' as tz;
 
-import '../../models/notificatin_request.dart';
 import '../../utility/base_state.dart';
 
 class CoachFeedbackSubTypeSelection extends BaseStatefulWidget {
@@ -214,21 +213,15 @@ class _CoachFeedbackSubTypeSelectionState
           log("Student has been Notified for this token :$token");
           try {
             showProgressDialog();
-            final response = await PushNotificationService().sendPushMessage(
-              request: NotificationRequest(
-                registrationIds: [
-                  token,
-                ],
-                notification: SendNotification(
-                  body: "Your coach had given a feedback for Plan Section",
-                  title: "Feedback Received",
-                  sound: true,
-                ),
-              ),
-            );
+            String fullName = await DatabaseService.getUserName(widget.userID);
+            var splitted = fullName.split(' ');
+            String firstName = splitted[0].trim();
+            String email = await DatabaseService.getUserEmail(widget.userID);
+            String module = widget.questionType;
+            EmailServices.sendUserNotificationEmail(
+                name: firstName, email: email, module: module, type: 'Plan');
             dismissProgressDialog();
             Utils.showSnackBar("Student has been Notified");
-            if (response == null) Utils.showSnackBar("Token not found");
           } catch (e) {
             Utils.showSnackBar(e.toString());
           }
@@ -254,26 +247,16 @@ class _CoachFeedbackSubTypeSelectionState
         bool fCompleted = getCompletedStatus(txtFValue);
 
         if (dCompleted & eCompleted & fCompleted) {
-          //push notification
-          String? token = await DatabaseService.getUserToken(widget.userID);
-          log("Student has been Notified for this token :$token");
           try {
             showProgressDialog();
-            final response = await PushNotificationService().sendPushMessage(
-              request: NotificationRequest(
-                registrationIds: [
-                  token,
-                ],
-                notification: SendNotification(
-                  body: "Your coach has given a feedback for Reflect Section",
-                  title: "Feedback Received",
-                  sound: true,
-                ),
-              ),
-            );
-            dismissProgressDialog();
+            String fullName = await DatabaseService.getUserName(widget.userID);
+            var splitted = fullName.split(' ');
+            String firstName = splitted[0].trim();
+            String email = await DatabaseService.getUserEmail(widget.userID);
+            String module = widget.questionType;
+            EmailServices.sendUserNotificationEmail(
+                name: firstName, email: email, module: module, type: 'Reflect');
             Utils.showSnackBar("Student has been Notified");
-            if (response == null) Utils.showSnackBar("Token not found");
           } catch (e) {
             Utils.showSnackBar(e.toString());
           }
@@ -303,7 +286,7 @@ class _CoachFeedbackSubTypeSelectionState
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         decoration: myButtonBox(),
         child: Text(
-          "Push Student Notification",
+          "Send Email Notification",
           style: Theme.of(context).textTheme.headline1,
         ),
       ),

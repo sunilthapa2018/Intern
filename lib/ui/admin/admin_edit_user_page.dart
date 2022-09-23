@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:motivational_leadership/services/database.dart';
-import 'package:motivational_leadership/ui/coach/coach_feedback_type_selection_page.dart';
 import 'package:motivational_leadership/utility/base_utils.dart';
 import 'package:motivational_leadership/utility/colors.dart';
 import 'package:motivational_leadership/utility/utils.dart';
@@ -228,16 +227,7 @@ class _EditUsersState extends State<EditUsers> {
                         );
                       },
                     ),
-                    onTap: () async {
-                      String userId =
-                          userSubmissionList.elementAt(index).toString().trim();
-                      navigateTo(
-                          context: context,
-                          nextPage: CoachFeedbackTypeSelection(
-                            userID: userId,
-                          ),
-                          currentPage: widget);
-                    }),
+                    onTap: null),
               ),
             ),
           );

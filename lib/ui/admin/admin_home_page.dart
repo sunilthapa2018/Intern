@@ -86,10 +86,8 @@ class _AdminHomeState extends State<AdminHome> {
     String field,
     String fieldData,
   ) async {
-    log("i am here");
     String data = await DatabaseService.getTotalDataInThisDocument(
         document, field, fieldData);
-    log("data = $data");
     return data;
   }
 

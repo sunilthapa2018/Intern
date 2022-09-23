@@ -27,7 +27,6 @@ import 'package:motivational_leadership/providers/student/type/student_autonomy_
 import 'package:motivational_leadership/providers/student/type/student_belonging_provider.dart';
 import 'package:motivational_leadership/providers/student/type/student_competence_provider.dart';
 import 'package:motivational_leadership/services/database.dart';
-import 'package:motivational_leadership/services/local_push_notification.dart';
 import 'package:motivational_leadership/ui/admin/admin_home_page.dart';
 import 'package:motivational_leadership/ui/auth/sign_in_page.dart';
 import 'package:motivational_leadership/ui/coach/coach_home_page.dart';
@@ -41,57 +40,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 String userType = "loading";
 String localType = "";
-late final LocalNotificationService localNotificationService;
-Future<void> backgroundHandler(RemoteMessage message) async {
-  log(message.data.toString());
-  log(message.notification!.title.toString());
-}
-
-initializeFcm() async {
-  FirebaseMessaging.instance.getInitialMessage().then(
-    (message) {
-      log("FirebaseMessaging.instance.getInitialMessage");
-      if (message != null) {
-        log("New Notification");
-      }
-    },
-  );
-
-  FirebaseMessaging.onMessage.listen(
-    (message) async {
-      log("FirebaseMessaging.onMessage.listen");
-      if (message.notification != null) {
-        String? title = message.notification?.title;
-        String? body = message.notification?.body;
-        log("FirebaseMessaging.onMessage.listen || title = $title");
-        log("FirebaseMessaging.onMessage.listen || body = $body");
-        log("message.datail ${message.data}");
-        await localNotificationService.showNotification(
-            id: 0, body: 'My body', title: 'My title');
-        // LocalNotificationService()
-        //     .showNotification(1, title.toString(), body.toString(), 1);
-        // LocalNotificationService.createanddisplaynotification(message);
-      }
-    },
-  );
-  FirebaseMessaging.onMessageOpenedApp.listen(
-    (message) {
-      log("FirebaseMessaging.onMessageOpenedApp.listen");
-      if (message.notification != null) {
-        log(message.notification!.title ?? "");
-        log(message.notification!.body ?? "");
-        log("message.data22 ${message.data['_id']}");
-      }
-    },
-  );
-}
 
 Future main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-
-  localNotificationService = LocalNotificationService();
-  // WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -104,8 +56,6 @@ Future main() async {
     provisional: false,
     sound: true,
   );
-  await initializeFcm();
-
   runApp(const MyApp());
 }
 

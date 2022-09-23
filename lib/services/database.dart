@@ -568,8 +568,10 @@ class DatabaseService {
           .get();
       totalDocuments = querySnapshot.docs.length;
     } else {
-      final QuerySnapshot querySnapshot =
-          await FirebaseFirestore.instance.collection(documentName).get();
+      final QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection(documentName)
+          .where("type", isNotEqualTo: "Admin")
+          .get();
       totalDocuments = querySnapshot.docs.length;
     }
     log("totalDocuments = $totalDocuments");
