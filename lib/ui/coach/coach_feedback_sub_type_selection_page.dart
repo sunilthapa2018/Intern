@@ -24,7 +24,6 @@ import 'package:motivational_leadership/utility/base_page.dart';
 import 'package:motivational_leadership/utility/colors.dart';
 import 'package:motivational_leadership/utility/utils.dart';
 import 'package:provider/provider.dart';
-import 'package:timezone/data/latest.dart' as tz;
 
 import '../../utility/base_state.dart';
 
@@ -111,7 +110,6 @@ class _CoachFeedbackSubTypeSelectionState
   initState() {
     super.initState();
     _questionType = widget.questionType;
-    tz.initializeTimeZones();
   }
 
   Text txtLoading() {

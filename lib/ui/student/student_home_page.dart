@@ -22,7 +22,6 @@ import 'package:motivational_leadership/widget/circular_progress_indicator.dart'
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:timezone/data/latest.dart' as tz;
 
 class StudentHome extends StatefulWidget {
   const StudentHome({Key? key}) : super(key: key);
@@ -64,7 +63,6 @@ class _StudentHomeState extends State<StudentHome> {
   void initState() {
     super.initState();
     storeNotificationToken();
-    tz.initializeTimeZones();
   }
 
   Future<String> loadName() async {

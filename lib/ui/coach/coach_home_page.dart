@@ -12,7 +12,6 @@ import 'package:motivational_leadership/ui/coach/widgets/coach_navigation_drawer
 import 'package:motivational_leadership/utility/base_utils.dart';
 import 'package:motivational_leadership/utility/colors.dart';
 import 'package:motivational_leadership/utility/utils.dart';
-import 'package:timezone/data/latest.dart' as tz;
 
 String uid = FirebaseAuth.instance.currentUser!.uid;
 String selectedStatus = "Feedback Not Given";
@@ -52,7 +51,6 @@ class _AdminHomeState extends State<CoachHome> {
   void initState() {
     super.initState();
     storeNotificationToken();
-    tz.initializeTimeZones();
   }
 
   myBody(BuildContext context) {
