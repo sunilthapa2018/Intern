@@ -141,6 +141,7 @@ class _StudentContactUsState extends State<StudentContactUs> {
       decoration: InputDecoration(
         labelText: "My message *",
         labelStyle: TextStyle(color: iconColor),
+        errorStyle: TextStyle(fontSize: 14.sp),
         contentPadding: const EdgeInsets.fromLTRB(16, 30, 20, 0),
         border: const OutlineInputBorder(),
         focusedBorder: OutlineInputBorder(
@@ -165,6 +166,7 @@ class _StudentContactUsState extends State<StudentContactUs> {
       decoration: InputDecoration(
         labelText: "Subject *",
         labelStyle: TextStyle(color: iconColor),
+        errorStyle: TextStyle(fontSize: 14.sp),
         contentPadding: const EdgeInsets.fromLTRB(16, 30, 20, 0),
         border: const OutlineInputBorder(),
         focusedBorder: OutlineInputBorder(

@@ -96,7 +96,7 @@ class _StudentFeedbackPageState extends State<StudentFeedbackPage> {
   }
 
   myBodySection() {
-    double spacer = 10;
+    double spacer = 10.h;
     return Container(
       padding: const EdgeInsets.all(0),
       color: backgroundColor,

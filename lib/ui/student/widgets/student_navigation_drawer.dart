@@ -58,6 +58,7 @@ class _StudentNavigationDrawerWidgetState
       leading: Icon(
         FontAwesomeIcons.arrowRightFromBracket,
         color: iconColor,
+        size: 16.h,
       ),
       title: myText('Sign Out'),
       onTap: () => selectedItem(context, 4),
@@ -70,6 +71,7 @@ class _StudentNavigationDrawerWidgetState
       leading: Icon(
         FontAwesomeIcons.phone,
         color: iconColor,
+        size: 16.h,
       ),
       title: myText('ContactUs'),
       onTap: () => selectedItem(context, 3),
@@ -82,6 +84,7 @@ class _StudentNavigationDrawerWidgetState
       leading: Icon(
         FontAwesomeIcons.userTie,
         color: iconColor,
+        size: 16.h,
       ),
       title: myText('Profile'),
       onTap: () => selectedItem(context, 2),
@@ -94,6 +97,7 @@ class _StudentNavigationDrawerWidgetState
       leading: Icon(
         FontAwesomeIcons.reply,
         color: iconColor,
+        size: 16.h,
       ),
       title: myText('Feedback'),
       onTap: () => selectedItem(context, 1),
@@ -106,13 +110,15 @@ class _StudentNavigationDrawerWidgetState
       leading: Icon(
         FontAwesomeIcons.houseUser,
         color: iconColor,
+        size: 16.h,
       ),
       title: myText("Home"),
       onTap: () => selectedItem(context, 0),
     );
   }
 
-  EdgeInsets myPadding() => const EdgeInsets.symmetric(horizontal: 24.0);
+  EdgeInsets myPadding() =>
+      EdgeInsets.symmetric(horizontal: 24.0, vertical: 5.h);
 
   Text myText(String title) {
     return Text(

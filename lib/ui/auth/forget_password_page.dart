@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:motivational_leadership/main.dart';
 import 'package:motivational_leadership/utility/colors.dart';
@@ -46,22 +47,22 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               children: [
                 Container(
                   color: Colors.white,
-                  child: Row(children: const [
+                  child: Row(children: [
                     Text(
                       'Forgot',
                       style: TextStyle(
                         //color: Color(0xFFff6600),
-                        color: Color(0xFF2e3c96),
+                        color: const Color(0xFF2e3c96),
                         fontWeight: FontWeight.w900,
-                        fontSize: 36,
+                        fontSize: 36.sp,
                       ),
                     ),
                     Text(
                       ' Password?',
                       style: TextStyle(
-                        color: Color(0xFFff6600),
+                        color: const Color(0xFFff6600),
                         fontWeight: FontWeight.w900,
-                        fontSize: 36,
+                        fontSize: 36.sp,
                       ),
                     ),
                   ]),
@@ -71,17 +72,21 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       const EdgeInsets.symmetric(horizontal: 0, vertical: 40),
                   child: Image.asset(
                     'assets/logo.png',
-                    height: 100,
-                    width: 130,
+                    height: 100.h,
+                    width: 130.w,
                     fit: BoxFit.contain,
                   ),
                 ),
                 TextFormField(
+                  style: TextStyle(fontSize: 14.sp),
                   controller: emailController,
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: "Email",
-                      hintText: "Enter your Email Address"),
+                  decoration: InputDecoration(
+                    labelText: "Email",
+                    labelStyle: TextStyle(fontSize: 14.sp),
+                    hintText: "Enter your Email Address",
+                    hintStyle: TextStyle(fontSize: 14.sp),
+                    errorStyle: TextStyle(fontSize: 14.sp),
+                  ),
                   validator: MultiValidator([
                     RequiredValidator(errorText: 'Required'),
                     EmailValidator(errorText: "Not A Valid Email"),
@@ -105,9 +110,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     decoration: BoxDecoration(
                         color: buttonColor,
                         borderRadius: BorderRadius.circular(30)),
-                    child: const Text(
+                    child: Text(
                       "Reset Password",
-                      style: TextStyle(fontSize: 16, color: Colors.white),
+                      style: TextStyle(fontSize: 16.sp, color: Colors.white),
                     ),
                   ),
                 ),

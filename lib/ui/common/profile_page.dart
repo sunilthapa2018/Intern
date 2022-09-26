@@ -121,10 +121,11 @@ class _ProfileState extends State<Profile> {
       },
       textInputAction: TextInputAction.done,
       controller: phoneController,
-      decoration: const InputDecoration(
-          //border: OutlineInputBorder(),
-          labelText: "Phone No",
-          hintText: "Enter your Phone Number"),
+      decoration: InputDecoration(
+        labelText: "Phone No",
+        hintText: "Enter your Phone Number",
+        errorStyle: TextStyle(fontSize: 14.sp),
+      ),
       validator: MultiValidator([
         MaxLengthValidator(10,
             errorText: "It should be at least 10 characters"),
@@ -137,8 +138,11 @@ class _ProfileState extends State<Profile> {
       style: TextStyle(fontSize: 14.sp, color: Colors.black),
       textInputAction: TextInputAction.next,
       controller: passwordController,
-      decoration: const InputDecoration(
-          labelText: "Password", hintText: "Enter your Password"),
+      decoration: InputDecoration(
+        labelText: "Password",
+        hintText: "Enter your Password",
+        errorStyle: TextStyle(fontSize: 14.sp),
+      ),
       obscureText: true,
       validator: MultiValidator([
         MaxLengthValidator(15, errorText: "It should be Max 15 characters"),
@@ -151,8 +155,13 @@ class _ProfileState extends State<Profile> {
       textInputAction: TextInputAction.next,
       style: TextStyle(fontSize: 14.sp, color: Colors.black),
       controller: emailController,
-      decoration: const InputDecoration(
-          labelText: "Email", hintText: "Enter your Email Address"),
+      decoration: InputDecoration(
+        labelText: "Email",
+        hintText: "Enter your Email Address",
+        errorStyle: TextStyle(
+          fontSize: 14.sp,
+        ),
+      ),
       validator: MultiValidator([
         RequiredValidator(errorText: 'Required'),
         EmailValidator(errorText: "Not A Valid Email"),
@@ -165,8 +174,11 @@ class _ProfileState extends State<Profile> {
       style: TextStyle(fontSize: 14.sp, color: Colors.black),
       textInputAction: TextInputAction.next,
       controller: nameController,
-      decoration: const InputDecoration(
-          labelText: "Full Name", hintText: "Enter your Full Name"),
+      decoration: InputDecoration(
+        labelText: "Full Name",
+        hintText: "Enter your Full Name",
+        errorStyle: TextStyle(fontSize: 14.sp),
+      ),
       validator: MultiValidator([
         RequiredValidator(errorText: 'Required'),
       ]),

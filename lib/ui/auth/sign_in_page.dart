@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:motivational_leadership/main.dart';
 import 'package:motivational_leadership/services/database.dart';
@@ -96,8 +97,8 @@ class _SignInState extends State<SignIn> {
   }
 
   SizedBox spacerTwentyPixel() {
-    return const SizedBox(
-      height: 24,
+    return SizedBox(
+      height: 24.h,
     );
   }
 
@@ -116,13 +117,16 @@ class _SignInState extends State<SignIn> {
           currentPage: widget,
         );
       },
-      child: const Align(
+      child: Align(
         alignment: Alignment.centerRight,
-        child: Text('Forgot Password?',
-            style: TextStyle(
-                color: Colors.black87,
-                decoration: TextDecoration.underline,
-                fontSize: 16)),
+        child: Text(
+          'Forgot Password?',
+          style: TextStyle(
+            color: Colors.black87,
+            decoration: TextDecoration.underline,
+            fontSize: 16.sp,
+          ),
+        ),
       ),
     );
   }
@@ -147,9 +151,9 @@ class _SignInState extends State<SignIn> {
           padding: const EdgeInsets.symmetric(vertical: 16),
           decoration: BoxDecoration(
               color: buttonColor, borderRadius: BorderRadius.circular(25)),
-          child: const Text(
+          child: Text(
             "Sign In",
-            style: TextStyle(fontSize: 16, color: Colors.white),
+            style: TextStyle(fontSize: 16.sp, color: Colors.white),
           ),
         ),
       ],
@@ -158,13 +162,19 @@ class _SignInState extends State<SignIn> {
 
   TextFormField txtPassword() {
     return TextFormField(
+      style: TextStyle(fontSize: 14.sp),
       onFieldSubmitted: (value) {
         validateForm();
       },
       textInputAction: TextInputAction.done,
       controller: passwordController,
-      decoration: const InputDecoration(
-          labelText: "Password", hintText: "Enter your Password"),
+      decoration: InputDecoration(
+        labelText: "Password",
+        labelStyle: TextStyle(fontSize: 14.sp),
+        hintText: "Enter your Password",
+        hintStyle: TextStyle(fontSize: 14.sp),
+        errorStyle: TextStyle(fontSize: 14.sp),
+      ),
       obscureText: true,
       validator: MultiValidator([
         MinLengthValidator(6, errorText: "It should be at least 6 characters"),
@@ -175,11 +185,17 @@ class _SignInState extends State<SignIn> {
 
   TextFormField txtEmail() {
     return TextFormField(
+      style: TextStyle(fontSize: 14.sp),
       autofocus: true,
       textInputAction: TextInputAction.next,
       controller: emailController,
-      decoration: const InputDecoration(
-          labelText: "Email", hintText: "Enter your Email Address"),
+      decoration: InputDecoration(
+        labelText: "Email",
+        labelStyle: TextStyle(fontSize: 14.sp),
+        hintText: "Enter your Email Address",
+        hintStyle: TextStyle(fontSize: 14.sp),
+        errorStyle: TextStyle(fontSize: 14.sp),
+      ),
       //validator: EmailValidator(errorText: "Not A Valid Email"),
       validator: MultiValidator([
         MinLengthValidator(1, errorText: "Please enter your email address"),
@@ -193,8 +209,8 @@ class _SignInState extends State<SignIn> {
       padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
       child: Image.asset(
         'assets/logo.png',
-        height: 100,
-        width: 130,
+        height: 100.h,
+        width: 130.w,
         fit: BoxFit.contain,
       ),
     );
@@ -203,13 +219,13 @@ class _SignInState extends State<SignIn> {
   Container welcomeTitle() {
     return Container(
       color: Colors.white,
-      child: Row(children: const [
+      child: Row(children: [
         Text(
           'Welcome!',
           style: TextStyle(
-            color: Color(0xFFff6600),
+            color: const Color(0xFFff6600),
             fontWeight: FontWeight.w900,
-            fontSize: 36,
+            fontSize: 36.sp,
           ),
         ),
       ]),
