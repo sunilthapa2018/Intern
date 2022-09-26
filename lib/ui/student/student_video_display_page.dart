@@ -62,6 +62,8 @@ class _VideoPlaybackState extends State<VideoPlayback> {
   }
 
   YoutubePlayerBuilder youtubePlayerLandscape(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return YoutubePlayerBuilder(
         onExitFullScreen: () {
           // SystemChrome.setPreferredOrientations(DeviceOrientation.values);
@@ -82,6 +84,7 @@ class _VideoPlaybackState extends State<VideoPlayback> {
         },
         player: YoutubePlayer(
           controller: controller,
+          aspectRatio: width / height,
         ),
         builder: (context, player) {
           return Scaffold(
