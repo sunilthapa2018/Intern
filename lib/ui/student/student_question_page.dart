@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:motivational_leadership/ui/common/widget/verticle_spacer.dart';
 import 'package:motivational_leadership/ui/student/widgets/my_button_box.dart';
 import 'package:motivational_leadership/utility/base_utils.dart';
@@ -136,9 +137,9 @@ class _QuestionState extends State<Question> {
           width: MediaQuery.of(context).size.width / 3,
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           decoration: myButtonBox(),
-          child: const Text(
+          child: Text(
             "Save",
-            style: TextStyle(fontSize: 16, color: Colors.white),
+            style: TextStyle(fontSize: 16.sp, color: Colors.white),
           ),
         ),
       ),
@@ -216,20 +217,20 @@ class _QuestionState extends State<Question> {
   }
 
   TextStyle myTextStyle() {
-    return const TextStyle(
+    return TextStyle(
       fontFamily: 'Roboto',
       color: Colors.black87,
       fontWeight: FontWeight.w400,
-      fontSize: 20,
+      fontSize: 20.sp,
     );
   }
 
   TextStyle myTextStyle2() {
-    return const TextStyle(
+    return TextStyle(
       fontFamily: 'Roboto',
       color: Colors.black87,
       fontWeight: FontWeight.w300,
-      fontSize: 16,
+      fontSize: 16.sp,
     );
   }
 

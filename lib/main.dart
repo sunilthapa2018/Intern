@@ -111,48 +111,49 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: _title,
       theme: ThemeData(
-          textTheme: TextTheme(
-            headline1: TextStyle(
-                fontWeight: FontWeight.w400,
-                fontFamily: 'Roboto',
-                fontSize: 24.sp,
-                color: Colors.white,
-                decoration: TextDecoration.none),
-            headline2: TextStyle(
-                fontWeight: FontWeight.w300,
-                fontFamily: 'Roboto',
-                fontSize: 14.sp,
-                color: Colors.white,
-                decoration: TextDecoration.none),
-            headline3: TextStyle(
-                fontWeight: FontWeight.w500,
-                fontFamily: 'Roboto',
-                fontSize: 24.sp,
-                color: titleOrange,
-                decoration: TextDecoration.none),
-            headline4: TextStyle(
-                fontWeight: FontWeight.w500,
-                fontFamily: 'Roboto',
-                fontSize: 14.sp,
-                color: titleOrange,
-                decoration: TextDecoration.none),
-            headline5: TextStyle(
-                fontWeight: FontWeight.w300,
-                fontFamily: 'Roboto',
-                fontSize: 12.sp,
-                color: Colors.white,
-                decoration: TextDecoration.none),
-            headline6: TextStyle(
-                fontWeight: FontWeight.w400,
-                fontFamily: 'Roboto',
-                fontSize: 17.sp,
-                color: Colors.white,
-                decoration: TextDecoration.none),
-          ),
-          fontFamily: 'Roboto',
-          primarySwatch: Colors.orange,
-          colorScheme: ColorScheme.fromSwatch()
-              .copyWith(primary: orangeColor, secondary: backgroundColor)),
+        textTheme: TextTheme(
+          headline1: TextStyle(
+              fontWeight: FontWeight.w400,
+              fontFamily: 'Roboto',
+              fontSize: 24.sp,
+              color: Colors.white,
+              decoration: TextDecoration.none),
+          headline2: TextStyle(
+              fontWeight: FontWeight.w300,
+              fontFamily: 'Roboto',
+              fontSize: 14.sp,
+              color: Colors.white,
+              decoration: TextDecoration.none),
+          headline3: TextStyle(
+              fontWeight: FontWeight.w500,
+              fontFamily: 'Roboto',
+              fontSize: 24.sp,
+              color: titleOrange,
+              decoration: TextDecoration.none),
+          headline4: TextStyle(
+              fontWeight: FontWeight.w500,
+              fontFamily: 'Roboto',
+              fontSize: 14.sp,
+              color: titleOrange,
+              decoration: TextDecoration.none),
+          headline5: TextStyle(
+              fontWeight: FontWeight.w300,
+              fontFamily: 'Roboto',
+              fontSize: 12.sp,
+              color: Colors.white,
+              decoration: TextDecoration.none),
+          headline6: TextStyle(
+              fontWeight: FontWeight.w400,
+              fontFamily: 'Roboto',
+              fontSize: 17.sp,
+              color: Colors.white,
+              decoration: TextDecoration.none),
+        ),
+        fontFamily: 'Roboto',
+        primarySwatch: Colors.orange,
+        colorScheme: ColorScheme.fromSwatch()
+            .copyWith(primary: orangeColor, secondary: backgroundColor),
+      ),
       home: const MainPage(),
     );
   }

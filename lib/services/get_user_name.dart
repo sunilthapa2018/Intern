@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class GetUserName extends StatelessWidget {
   final String documentId;
@@ -20,10 +21,10 @@ class GetUserName extends StatelessWidget {
           String firstName = splitted[0].trim();
           return Text(
             firstName,
-            style: const TextStyle(
+            style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.w900,
-              fontSize: 36,
+              fontSize: 36.sp,
             ),
           );
         }
