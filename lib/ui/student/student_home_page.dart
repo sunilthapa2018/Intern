@@ -211,22 +211,17 @@ class _StudentHomeState extends State<StudentHome> {
   }
 
   mainImage() {
-    Orientation currentOrientation = MediaQuery.of(context).orientation;
-    if (currentOrientation == Orientation.portrait) {
-      double width = MediaQuery.of(context).size.width;
-      return Padding(
-        padding: const EdgeInsets.all(0),
-        child: Image.asset(
-          'assets/main_image.png',
-          width: width,
-          fit: BoxFit.contain,
-          color: Colors.white.withOpacity(0.3),
-          colorBlendMode: BlendMode.modulate,
-        ),
-      );
-    } else {
-      return Container();
-    }
+    double width = MediaQuery.of(context).size.width;
+    return Padding(
+      padding: const EdgeInsets.all(0),
+      child: Image.asset(
+        'assets/main_image.png',
+        width: width,
+        fit: BoxFit.contain,
+        color: Colors.white.withOpacity(0.3),
+        colorBlendMode: BlendMode.modulate,
+      ),
+    );
   }
 
   heading() {
