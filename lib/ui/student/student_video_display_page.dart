@@ -52,7 +52,7 @@ class _VideoPlaybackState extends State<VideoPlayback> {
         },
         player: YoutubePlayer(
           controller: controller,
-          aspectRatio: 16 / 10,
+          aspectRatio: 16 / 9,
         ),
         builder: (context, player) {
           return Scaffold(
