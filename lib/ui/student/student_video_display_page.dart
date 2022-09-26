@@ -23,14 +23,15 @@ class VideoPlayback extends StatefulWidget {
 class _VideoPlaybackState extends State<VideoPlayback> {
   @override
   Widget build(BuildContext context) {
-    Orientation currentOrientation = MediaQuery.of(context).orientation;
-    if (currentOrientation == Orientation.landscape) {
-      return youtubePlayerLandscape(context);
-    }
+    log("Build Video");
     return youtubePlayerBuilder(context);
   }
 
   YoutubePlayerBuilder youtubePlayerBuilder(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    width = width / 120;
+    height = height / 120;
     return YoutubePlayerBuilder(
         onExitFullScreen: () {
           // SystemChrome.setPreferredOrientations(DeviceOrientation.values);
@@ -51,44 +52,12 @@ class _VideoPlaybackState extends State<VideoPlayback> {
         },
         player: YoutubePlayer(
           controller: controller,
+          aspectRatio: 16 / 10,
         ),
         builder: (context, player) {
           return Scaffold(
             backgroundColor: backgroundColor,
             appBar: myAppBar(context),
-            body: myBody(player, context),
-          );
-        });
-  }
-
-  YoutubePlayerBuilder youtubePlayerLandscape(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
-    return YoutubePlayerBuilder(
-        onExitFullScreen: () {
-          // SystemChrome.setPreferredOrientations(DeviceOrientation.values);
-          Orientation currentOrientation = MediaQuery.of(context).orientation;
-          if (currentOrientation == DeviceOrientation.portraitUp) {
-            SystemChrome.setPreferredOrientations(
-                [DeviceOrientation.portraitDown]);
-          } else if (currentOrientation == DeviceOrientation.portraitDown) {
-            SystemChrome.setPreferredOrientations(
-                [DeviceOrientation.portraitDown]);
-          } else if (currentOrientation == DeviceOrientation.landscapeLeft) {
-            SystemChrome.setPreferredOrientations(
-                [DeviceOrientation.landscapeLeft]);
-          } else if (currentOrientation == DeviceOrientation.landscapeRight) {
-            SystemChrome.setPreferredOrientations(
-                [DeviceOrientation.landscapeRight]);
-          }
-        },
-        player: YoutubePlayer(
-          controller: controller,
-          aspectRatio: width / height,
-        ),
-        builder: (context, player) {
-          return Scaffold(
-            backgroundColor: backgroundColor,
             body: myBody(player, context),
           );
         });
@@ -277,12 +246,13 @@ class _VideoPlaybackState extends State<VideoPlayback> {
     } else {
       url = "https://www.youtube.com/watch?v=sfABqW_ZP6Q";
     }
+
     controller = YoutubePlayerController(
       initialVideoId: YoutubePlayer.convertUrlToId(url)!,
       flags: const YoutubePlayerFlags(
         autoPlay: false,
         disableDragSeek: true,
-        forceHD: true,
+        showLiveFullscreenButton: true,
       ),
     );
   }
