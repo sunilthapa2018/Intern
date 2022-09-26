@@ -123,30 +123,24 @@ class _StudentHomeState extends State<StudentHome> {
                       verticleSpacer(6),
                       firstText(),
                       secondText(),
+                      Column(
+                        children: [
+                          // testButton(context),
+                          verticleSpacer(spacer),
+                          const StudentAutonomyTile(),
+                          verticleSpacer(spacer),
+                          const StudentBelongingTile(),
+                          verticleSpacer(spacer),
+                          const StudentCompetenceTile(),
+                          verticleSpacer(spacer),
+                          verticleSpacer(spacer),
+                          copyrightText()
+                        ],
+                      ),
                     ],
                   ),
                 ),
               ],
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 16,
-                right: 16,
-              ),
-              child: Column(
-                children: [
-                  // testButton(context),
-                  verticleSpacer(spacer),
-                  const StudentAutonomyTile(),
-                  verticleSpacer(spacer),
-                  const StudentBelongingTile(),
-                  verticleSpacer(spacer),
-                  const StudentCompetenceTile(),
-                  verticleSpacer(spacer),
-                  verticleSpacer(spacer),
-                  copyrightText()
-                ],
-              ),
             ),
           ],
         ),
