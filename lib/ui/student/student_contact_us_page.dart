@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:motivational_leadership/services/database.dart';
 import 'package:motivational_leadership/services/send_email.dart';
@@ -107,9 +108,9 @@ class _StudentContactUsState extends State<StudentContactUs> {
       padding: const EdgeInsets.symmetric(vertical: 16),
       decoration: BoxDecoration(
           color: buttonColor, borderRadius: BorderRadius.circular(25)),
-      child: const Text(
+      child: Text(
         "Send Email",
-        style: TextStyle(fontSize: 14, color: Colors.white),
+        style: TextStyle(fontSize: 14.sp, color: Colors.white),
       ),
     );
   }
@@ -129,7 +130,7 @@ class _StudentContactUsState extends State<StudentContactUs> {
 
   TextFormField emailBody() {
     return TextFormField(
-      style: const TextStyle(fontSize: 14),
+      style: TextStyle(fontSize: 14.sp),
       keyboardType: TextInputType.multiline,
       minLines: 10,
       maxLines: null,
@@ -156,7 +157,7 @@ class _StudentContactUsState extends State<StudentContactUs> {
 
   subject() {
     return TextFormField(
-      style: const TextStyle(fontSize: 14),
+      style: TextStyle(fontSize: 14.sp),
       controller: subjectController,
       validator: MultiValidator([
         RequiredValidator(errorText: 'Required'),

@@ -21,7 +21,10 @@ AppBar myAppBar(BuildContext context) {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           IconButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: () {
+              SystemChrome.setPreferredOrientations(DeviceOrientation.values);
+              Navigator.pop(context);
+            },
             icon: Icon(Icons.arrow_back, color: iconColor),
           ),
           // Your widgets here

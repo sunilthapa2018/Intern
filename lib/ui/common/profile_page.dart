@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:motivational_leadership/main.dart';
 import 'package:motivational_leadership/ui/common/widget/verticle_spacer.dart';
@@ -57,7 +58,7 @@ class _ProfileState extends State<Profile> {
   }
 
   SingleChildScrollView myBody(BuildContext context) {
-    double space = 6;
+    double space = 6.sp;
     return SingleChildScrollView(
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
@@ -104,9 +105,9 @@ class _ProfileState extends State<Profile> {
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
         decoration: BoxDecoration(
             color: buttonColor, borderRadius: BorderRadius.circular(30)),
-        child: const Text(
+        child: Text(
           "Save Changes",
-          style: TextStyle(fontSize: 16, color: Colors.white),
+          style: TextStyle(fontSize: 16.sp, color: Colors.white),
         ),
       ),
     );
@@ -114,6 +115,7 @@ class _ProfileState extends State<Profile> {
 
   TextFormField myPhoneNumber() {
     return TextFormField(
+      style: TextStyle(fontSize: 14.sp, color: Colors.black),
       onFieldSubmitted: (value) {
         validateForm();
       },
@@ -132,6 +134,7 @@ class _ProfileState extends State<Profile> {
 
   TextFormField myPassword() {
     return TextFormField(
+      style: TextStyle(fontSize: 14.sp, color: Colors.black),
       textInputAction: TextInputAction.next,
       controller: passwordController,
       decoration: const InputDecoration(
@@ -146,6 +149,7 @@ class _ProfileState extends State<Profile> {
   TextFormField myEmail() {
     return TextFormField(
       textInputAction: TextInputAction.next,
+      style: TextStyle(fontSize: 14.sp, color: Colors.black),
       controller: emailController,
       decoration: const InputDecoration(
           labelText: "Email", hintText: "Enter your Email Address"),
@@ -158,6 +162,7 @@ class _ProfileState extends State<Profile> {
 
   TextFormField fullName() {
     return TextFormField(
+      style: TextStyle(fontSize: 14.sp, color: Colors.black),
       textInputAction: TextInputAction.next,
       controller: nameController,
       decoration: const InputDecoration(
@@ -173,8 +178,8 @@ class _ProfileState extends State<Profile> {
       padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
       child: Image.asset(
         'assets/logo.png',
-        height: 100,
-        width: 130,
+        height: 100.h,
+        width: 130.w,
         fit: BoxFit.contain,
       ),
     );
@@ -183,22 +188,22 @@ class _ProfileState extends State<Profile> {
   Container myTitle() {
     return Container(
       color: Colors.white,
-      child: Row(children: const [
+      child: Row(children: [
         Text(
           'My',
           style: TextStyle(
             //color: Color(0xFFff6600),
             color: Colors.black87,
             fontWeight: FontWeight.w900,
-            fontSize: 24,
+            fontSize: 24.sp,
           ),
         ),
         Text(
           ' Profile',
           style: TextStyle(
-            color: Color(0xFFff6600),
+            color: const Color(0xFFff6600),
             fontWeight: FontWeight.w900,
-            fontSize: 24,
+            fontSize: 24.sp,
           ),
         ),
       ]),

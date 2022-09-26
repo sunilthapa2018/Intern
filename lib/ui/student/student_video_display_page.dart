@@ -23,9 +23,31 @@ class VideoPlayback extends StatefulWidget {
 class _VideoPlaybackState extends State<VideoPlayback> {
   @override
   Widget build(BuildContext context) {
+    Orientation currentOrientation = MediaQuery.of(context).orientation;
+    if (currentOrientation == Orientation.landscape) {
+      return youtubePlayerLandscape(context);
+    }
+    return youtubePlayerBuilder(context);
+  }
+
+  YoutubePlayerBuilder youtubePlayerBuilder(BuildContext context) {
     return YoutubePlayerBuilder(
         onExitFullScreen: () {
-          SystemChrome.setPreferredOrientations(DeviceOrientation.values);
+          // SystemChrome.setPreferredOrientations(DeviceOrientation.values);
+          Orientation currentOrientation = MediaQuery.of(context).orientation;
+          if (currentOrientation == DeviceOrientation.portraitUp) {
+            SystemChrome.setPreferredOrientations(
+                [DeviceOrientation.portraitDown]);
+          } else if (currentOrientation == DeviceOrientation.portraitDown) {
+            SystemChrome.setPreferredOrientations(
+                [DeviceOrientation.portraitDown]);
+          } else if (currentOrientation == DeviceOrientation.landscapeLeft) {
+            SystemChrome.setPreferredOrientations(
+                [DeviceOrientation.landscapeLeft]);
+          } else if (currentOrientation == DeviceOrientation.landscapeRight) {
+            SystemChrome.setPreferredOrientations(
+                [DeviceOrientation.landscapeRight]);
+          }
         },
         player: YoutubePlayer(
           controller: controller,
@@ -34,6 +56,36 @@ class _VideoPlaybackState extends State<VideoPlayback> {
           return Scaffold(
             backgroundColor: backgroundColor,
             appBar: myAppBar(context),
+            body: myBody(player, context),
+          );
+        });
+  }
+
+  YoutubePlayerBuilder youtubePlayerLandscape(BuildContext context) {
+    return YoutubePlayerBuilder(
+        onExitFullScreen: () {
+          // SystemChrome.setPreferredOrientations(DeviceOrientation.values);
+          Orientation currentOrientation = MediaQuery.of(context).orientation;
+          if (currentOrientation == DeviceOrientation.portraitUp) {
+            SystemChrome.setPreferredOrientations(
+                [DeviceOrientation.portraitDown]);
+          } else if (currentOrientation == DeviceOrientation.portraitDown) {
+            SystemChrome.setPreferredOrientations(
+                [DeviceOrientation.portraitDown]);
+          } else if (currentOrientation == DeviceOrientation.landscapeLeft) {
+            SystemChrome.setPreferredOrientations(
+                [DeviceOrientation.landscapeLeft]);
+          } else if (currentOrientation == DeviceOrientation.landscapeRight) {
+            SystemChrome.setPreferredOrientations(
+                [DeviceOrientation.landscapeRight]);
+          }
+        },
+        player: YoutubePlayer(
+          controller: controller,
+        ),
+        builder: (context, player) {
+          return Scaffold(
+            backgroundColor: backgroundColor,
             body: myBody(player, context),
           );
         });
@@ -66,13 +118,13 @@ class _VideoPlaybackState extends State<VideoPlayback> {
             verticleSpacer(10),
             saveButton(context),
             verticleSpacer(10),
+            Align(
+              alignment: Alignment.center,
+              child: _buildButtonLogo(),
+            ),
+            copyrightText(),
           ],
         ),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: _buildButtonLogo(),
-        ),
-        copyrightText(),
       ],
     );
   }
@@ -297,6 +349,7 @@ class _VideoPlaybackState extends State<VideoPlayback> {
     return GestureDetector(
       onTap: () {
         controller.pause();
+        SystemChrome.setPreferredOrientations(DeviceOrientation.values);
         navigateTo(
             context: context,
             nextPage: QuestionTypeSelection(questionType: _questionType),
@@ -308,9 +361,9 @@ class _VideoPlaybackState extends State<VideoPlayback> {
           alignment: Alignment.center,
           padding: const EdgeInsets.symmetric(vertical: 10),
           decoration: myButtonBox(),
-          child: const Text(
+          child: Text(
             "Next",
-            style: TextStyle(fontSize: 16, color: Colors.white),
+            style: TextStyle(fontSize: 16.sp, color: Colors.white),
           ),
         ),
       ),

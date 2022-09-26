@@ -127,6 +127,7 @@ class _StudentFeedbackPageState extends State<StudentFeedbackPage> {
   subTypeSelectionMenu() {
     return DropdownButtonHideUnderline(
       child: DropdownButtonFormField(
+        style: TextStyle(fontSize: 14.sp, color: Colors.black),
         decoration: mySubTypeBox(),
         value: subTypeValue,
         isExpanded: true,
@@ -145,6 +146,7 @@ class _StudentFeedbackPageState extends State<StudentFeedbackPage> {
     return DropdownButtonHideUnderline(
       child: DropdownButtonFormField(
         decoration: myTypeBox(),
+        style: TextStyle(fontSize: 14.sp, color: Colors.black),
         value: typeValue,
         isExpanded: true,
         items: type.map(buildMenuItem).toList(),
@@ -212,7 +214,7 @@ class _StudentFeedbackPageState extends State<StudentFeedbackPage> {
     return TextField(
       enableInteractiveSelection: false,
       readOnly: true,
-      style: const TextStyle(fontSize: 14),
+      style: TextStyle(fontSize: 14.sp),
       keyboardType: TextInputType.multiline,
       minLines: 18,
       maxLines: null,

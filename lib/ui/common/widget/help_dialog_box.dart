@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:motivational_leadership/utility/colors.dart';
 
@@ -31,24 +32,30 @@ Future<bool?> loadInfo(BuildContext context, String text) async {
         ),
         content: Text(
           text,
-          style: const TextStyle(),
+          style: TextStyle(fontFamily: "Roboto", fontSize: 14.sp),
           textAlign: TextAlign.justify,
         ),
         actions: [
           Padding(
-            padding: const EdgeInsets.only(top: 20),
+            padding: EdgeInsets.only(top: 20.sp),
             child: ElevatedButton(
               onPressed: () => Navigator.pop(context, false),
               style: ElevatedButton.styleFrom(
                 backgroundColor: buttonColor,
               ),
-              child: const Text("Close"),
+              child: Padding(
+                padding: EdgeInsets.all(8.0.sp),
+                child: Text(
+                  "Close",
+                  style: TextStyle(fontSize: 14.sp),
+                ),
+              ),
             ),
           ),
         ],
-        contentPadding: const EdgeInsets.only(left: 16, right: 16),
-        titlePadding: const EdgeInsets.all(16),
-        actionsPadding: const EdgeInsets.only(bottom: 12, right: 16),
+        contentPadding: EdgeInsets.only(left: 16.sp, right: 16.sp),
+        titlePadding: EdgeInsets.all(16.sp),
+        actionsPadding: EdgeInsets.only(bottom: 12.sp, right: 16.sp),
         insetPadding: EdgeInsets.all(padding),
       );
     },

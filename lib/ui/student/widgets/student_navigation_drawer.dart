@@ -120,7 +120,7 @@ class _StudentNavigationDrawerWidgetState
       style: TextStyle(
         color: Colors.black,
         fontFamily: 'Roboto',
-        fontSize: 16.sp,
+        fontSize: 18.sp,
       ),
     );
   }
@@ -128,19 +128,19 @@ class _StudentNavigationDrawerWidgetState
   SizedBox title() {
     String uid = FirebaseAuth.instance.currentUser!.uid;
     return SizedBox(
-      height: 140,
+      height: 140.h,
       child: Container(
         decoration: myBoxDecoration(),
         child: Row(children: [
-          const Padding(
-            padding: EdgeInsets.fromLTRB(24, 50, 0, 20),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(24, 50, 0, 20),
             child: Text(
               'Hey',
               style: TextStyle(
                 fontFamily: 'Roboto',
                 color: Colors.black87,
                 fontWeight: FontWeight.w900,
-                fontSize: 36,
+                fontSize: 36.sp,
               ),
             ),
           ),
