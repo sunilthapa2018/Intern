@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:motivational_leadership/providers/student/student_question_provider.dart';
 import 'package:motivational_leadership/providers/student/subtype/student_feedback_action_provider.dart';
 import 'package:motivational_leadership/providers/student/subtype/student_feedback_future_provider.dart';
 import 'package:motivational_leadership/providers/student/subtype/student_feedback_imp_provider.dart';
@@ -32,13 +33,24 @@ class QuestionTypeSelection extends StatefulWidget {
 
 class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
   @override
+  initState() {
+    super.initState();
+    _questionType = widget.questionType;
+    context
+        .read<StudentQuestionProvider>()
+        .setInit(context, _questionType, notify: false);
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final initFuture = context.watch<StudentQuestionProvider>().init;
+
     return Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: backgroundColor,
         appBar: appBar(context),
         body: FutureBuilder(
-            future: _loadInitialData(),
+            future: initFuture,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Container(
@@ -330,8 +342,12 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
               alignment: Alignment.centerRight,
               child: IconButton(
                 padding: const EdgeInsets.only(right: 8, left: 0),
-                onPressed: () {
-                  _refresh(context);
+                onPressed: () async {
+                  context.read<StudentQuestionProvider>().setInit(
+                        context,
+                        widget.questionType,
+                        notify: true,
+                      );
                 },
                 icon: Icon(
                   FontAwesomeIcons.arrowRotateRight,
@@ -345,57 +361,6 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
         ),
       ),
     );
-  }
-
-  // AppBar appBar(BuildContext context) {
-  //   return AppBar(
-  //     leadingWidth: 48, // <-- Use this
-  //     // leading: const Icon(Icons.arrow_back),
-  //     // title: Text(
-  //     //   "Action Plan",
-  //     //   style: Theme.of(context).textTheme.headline4,
-  //     // ),
-  //     titleSpacing: 0,
-  //     toolbarHeight: 36,
-  //     iconTheme: IconThemeData(color: iconColor),
-  //     backgroundColor: appBarColor,
-  //     elevation: 0,
-  //     systemOverlayStyle: const SystemUiOverlayStyle(
-  //       statusBarColor: Colors.transparent,
-  //     ),
-  //     actions: [
-  //       IconButton(
-  //         visualDensity: const VisualDensity(horizontal: -4.0, vertical: -4.0),
-  //         padding: EdgeInsets.zero,
-  //         onPressed: () {
-  //           loadInfo(context,
-  //               "There are two key activities to complete. The Plan and Reflect activities each have three components. You will be prompted to complete responses for three components of both the Plan and Reflect activities. Once you have provided your responses you can submit them for review by a member of our coaching team. You will receive a notification once your coach has responded and find their responses in the Feedback tab in the navigation menu.");
-  //         },
-  //         icon: Icon(
-  //           FontAwesomeIcons.solidCircleQuestion,
-  //           color: iconColor,
-  //           size: 20,
-  //         ),
-  //       ),
-  //       IconButton(
-  //         padding: const EdgeInsets.only(right: 8),
-  //         onPressed: () {
-  //           _refresh(context);
-  //         },
-  //         icon: Icon(
-  //           FontAwesomeIcons.arrowRotateRight,
-  //           color: iconColor,
-  //           size: 20,
-  //         ),
-  //       ),
-  //     ],
-  //   );
-  // }
-
-  @override
-  initState() {
-    super.initState();
-    _questionType = widget.questionType;
   }
 
   bool getCompletedStatus(String value) {
@@ -442,27 +407,26 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
   }
 
   _loadInitialData() async {
-    await Future.wait([
-      context.read<StudentActionProvider>().getData(
-          type: widget.questionType, notify: false, subType: "Actions"),
-      context.read<StudentOCProvider>().getData(
-          type: widget.questionType,
-          notify: false,
-          subType: "Overcoming Challenges"),
-      context.read<StudentSIProvider>().getData(
-          type: widget.questionType,
-          notify: false,
-          subType: "Success Indicators (KPIs)"),
-      context.read<StudentImplementationProvider>().getData(
-          type: widget.questionType, notify: false, subType: "Implementation"),
-      context.read<StudentIOProvider>().getData(
-          type: widget.questionType,
-          notify: false,
-          subType: "Impact and Outcome"),
-      context
-          .read<StudentFutureProvider>()
-          .getData(type: widget.questionType, notify: false, subType: "Future"),
-    ]);
+    context
+        .read<StudentActionProvider>()
+        .getData(type: widget.questionType, notify: false, subType: "Actions");
+    context.read<StudentOCProvider>().getData(
+        type: widget.questionType,
+        notify: false,
+        subType: "Overcoming Challenges");
+    context.read<StudentSIProvider>().getData(
+        type: widget.questionType,
+        notify: false,
+        subType: "Success Indicators (KPIs)");
+    context.read<StudentImplementationProvider>().getData(
+        type: widget.questionType, notify: false, subType: "Implementation");
+    context.read<StudentIOProvider>().getData(
+        type: widget.questionType,
+        notify: false,
+        subType: "Impact and Outcome");
+    context
+        .read<StudentFutureProvider>()
+        .getData(type: widget.questionType, notify: false, subType: "Future");
   }
 
   reflectVerbage() {

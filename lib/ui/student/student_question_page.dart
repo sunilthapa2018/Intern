@@ -3,11 +3,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:motivational_leadership/providers/student/student_question_provider.dart';
 import 'package:motivational_leadership/ui/common/widget/verticle_spacer.dart';
 import 'package:motivational_leadership/ui/student/widgets/my_button_box.dart';
 import 'package:motivational_leadership/utility/base_utils.dart';
 import 'package:motivational_leadership/utility/colors.dart';
 import 'package:motivational_leadership/utility/utils.dart';
+import 'package:provider/provider.dart';
 
 class Question extends StatefulWidget {
   final String questionType;
@@ -29,14 +31,26 @@ class _QuestionState extends State<Question> {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
         const SystemUiOverlayStyle(statusBarColor: Colors.white));
-    return Scaffold(
-      backgroundColor: backgroundColor,
-      appBar: appBar(context),
-      body: myBody(context),
+    return WillPopScope(
+      onWillPop: () async {
+        await checkIfAnswerIsChanged(context);
+        return true;
+      },
+      child: Scaffold(
+        backgroundColor: backgroundColor,
+        appBar: appBar(context),
+        body: myBody(context),
+      ),
     );
   }
 
-  bool checkIfAnswerIsChanged(BuildContext context) {
+  checkIfAnswerIsChanged(BuildContext context) async {
+    await context.read<StudentQuestionProvider>().setInit(
+          context,
+          widget.questionType,
+          notify: true,
+        );
+
     String anwerField = answerController.text.toString();
     final isEditedPage = _answer != answerController.text.toString();
     if (isEditedPage && anwerField != "") {
@@ -253,7 +267,9 @@ class _QuestionState extends State<Question> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             IconButton(
-              onPressed: () => checkIfAnswerIsChanged(context),
+              onPressed: () {
+                checkIfAnswerIsChanged(context);
+              },
               icon: Icon(Icons.arrow_back, color: iconColor),
             ),
             appBarTitle(),

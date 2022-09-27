@@ -9,14 +9,13 @@ class StudentImplementationProvider extends ChangeNotifier {
       {required String type,
       required String subType,
       bool notify = false}) async {
-    isLoading = true;
+    if (notify) isLoading = true;
     if (notify) notifyListeners();
     String text =
         await DatabaseService.getStudentSubTypeReturnData(type, subType);
     String returnText = text;
     completedText = returnText;
-    isLoading = false;
-
+    if (notify) isLoading = false;
     if (notify) notifyListeners();
   }
 }

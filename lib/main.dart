@@ -17,6 +17,7 @@ import 'package:motivational_leadership/providers/coach/subtype/coach_si_provide
 import 'package:motivational_leadership/providers/coach/type/coach_autonomy_provider.dart';
 import 'package:motivational_leadership/providers/coach/type/coach_belonging_provider.dart';
 import 'package:motivational_leadership/providers/coach/type/coach_competence_provider.dart';
+import 'package:motivational_leadership/providers/student/student_question_provider.dart';
 import 'package:motivational_leadership/providers/student/subtype/student_feedback_action_provider.dart';
 import 'package:motivational_leadership/providers/student/subtype/student_feedback_future_provider.dart';
 import 'package:motivational_leadership/providers/student/subtype/student_feedback_imp_provider.dart';
@@ -81,6 +82,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => StudentImplementationProvider()),
         ChangeNotifierProvider(create: (_) => StudentIOProvider()),
         ChangeNotifierProvider(create: (_) => StudentFutureProvider()),
+        ChangeNotifierProvider(create: (_) => StudentQuestionProvider()),
         //Coach type providers
         ChangeNotifierProvider(create: (_) => CoachAutonomyProvider()),
         ChangeNotifierProvider(create: (_) => CoachBelongingProvider()),
