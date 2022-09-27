@@ -6,7 +6,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:motivational_leadership/ui/common/widget/copyright_text.dart';
 import 'package:motivational_leadership/ui/common/widget/verticle_spacer.dart';
 import 'package:motivational_leadership/ui/student/student_question_subtype_selection_page.dart';
-import 'package:motivational_leadership/ui/student/widgets/app_bar.dart';
 import 'package:motivational_leadership/ui/student/widgets/my_button_box.dart';
 import 'package:motivational_leadership/utility/base_utils.dart';
 import 'package:motivational_leadership/utility/colors.dart';
@@ -23,15 +22,33 @@ class VideoPlayback extends StatefulWidget {
 class _VideoPlaybackState extends State<VideoPlayback> {
   @override
   Widget build(BuildContext context) {
-    log("Build Video");
-    return youtubePlayerBuilder(context);
+    return OrientationBuilder(builder: (context, orientation) {
+      if (orientation == Orientation.portrait) {
+        return _buildPortraitMode();
+      }
+      return _landScapeMode(context);
+    });
+  }
+
+  Scaffold _buildPortraitMode() {
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+      ),
+      body: myBody(context, true),
+    );
+  }
+
+  _landScapeMode(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+      ),
+      body: myBody(context, false),
+    );
   }
 
   YoutubePlayerBuilder youtubePlayerBuilder(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
-    width = width / 120;
-    height = height / 120;
     return YoutubePlayerBuilder(
         onExitFullScreen: () {
           // SystemChrome.setPreferredOrientations(DeviceOrientation.values);
@@ -55,20 +72,18 @@ class _VideoPlaybackState extends State<VideoPlayback> {
           aspectRatio: 16 / 9,
         ),
         builder: (context, player) {
-          return Scaffold(
-            backgroundColor: backgroundColor,
-            appBar: myAppBar(context),
-            body: myBody(player, context),
-          );
+          return myBody(context, false);
         });
   }
 
-  myBody(Widget player, BuildContext context) {
+  myBody(BuildContext context, bool isPortrait) {
     return SizedBox(
       width: double.infinity,
       height: double.infinity,
       child: SingleChildScrollView(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             if (_questionType == "Autonomy") ...[
               titleText("A", "utonomy"),
@@ -87,7 +102,50 @@ class _VideoPlaybackState extends State<VideoPlayback> {
               competenceSecondText(),
             ],
             verticleSpacer(10),
-            player,
+            (isPortrait)
+                ? SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    child: YoutubePlayer(
+                      bottomActions: [
+                        PlayPauseButton(
+                          controller: controller,
+                        ),
+                        CurrentPosition(
+                          controller: controller,
+                        ),
+                        ProgressBar(isExpanded: true),
+                        RemainingDuration(
+                          controller: controller,
+                        ),
+                        PlaybackSpeedButton(
+                          controller: controller,
+                        ),
+                      ],
+                      controller: controller,
+                    ),
+                  )
+                : SizedBox(
+                    width: MediaQuery.of(context).size.width * .8,
+                    height: 300,
+                    child: YoutubePlayer(
+                      bottomActions: [
+                        PlayPauseButton(
+                          controller: controller,
+                        ),
+                        CurrentPosition(
+                          controller: controller,
+                        ),
+                        ProgressBar(isExpanded: true),
+                        RemainingDuration(
+                          controller: controller,
+                        ),
+                        PlaybackSpeedButton(
+                          controller: controller,
+                        ),
+                      ],
+                      controller: controller,
+                    ),
+                  ),
             verticleSpacer(10),
             saveButton(context),
             verticleSpacer(10),
