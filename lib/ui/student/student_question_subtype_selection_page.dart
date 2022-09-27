@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:motivational_leadership/providers/student/student_question_provider.dart';
 import 'package:motivational_leadership/providers/student/subtype/student_feedback_action_provider.dart';
 import 'package:motivational_leadership/providers/student/subtype/student_feedback_future_provider.dart';
 import 'package:motivational_leadership/providers/student/subtype/student_feedback_imp_provider.dart';
@@ -32,13 +33,24 @@ class QuestionTypeSelection extends StatefulWidget {
 
 class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
   @override
+  initState() {
+    super.initState();
+    _questionType = widget.questionType;
+    context
+        .read<StudentQuestionProvider>()
+        .setInit(context, _questionType, notify: false);
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final initFuture = context.watch<StudentQuestionProvider>().init;
+
     return Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: backgroundColor,
         appBar: appBar(context),
         body: FutureBuilder(
-            future: _loadInitialData(),
+            future: initFuture,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Container(
@@ -330,8 +342,12 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
               alignment: Alignment.centerRight,
               child: IconButton(
                 padding: const EdgeInsets.only(right: 8, left: 0),
-                onPressed: () {
-                  _refresh(context);
+                onPressed: () async {
+                  context.read<StudentQuestionProvider>().setInit(
+                        context,
+                        widget.questionType,
+                        notify: true,
+                      );
                 },
                 icon: Icon(
                   FontAwesomeIcons.arrowRotateRight,
@@ -345,16 +361,6 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
         ),
       ),
     );
-  }
-
-  @override
-  initState() {
-    super.initState();
-    _questionType = widget.questionType;
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
   }
 
   bool getCompletedStatus(String value) {
@@ -401,27 +407,26 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
   }
 
   _loadInitialData() async {
-    await Future.wait([
-      context.read<StudentActionProvider>().getData(
-          type: widget.questionType, notify: false, subType: "Actions"),
-      context.read<StudentOCProvider>().getData(
-          type: widget.questionType,
-          notify: false,
-          subType: "Overcoming Challenges"),
-      context.read<StudentSIProvider>().getData(
-          type: widget.questionType,
-          notify: false,
-          subType: "Success Indicators (KPIs)"),
-      context.read<StudentImplementationProvider>().getData(
-          type: widget.questionType, notify: false, subType: "Implementation"),
-      context.read<StudentIOProvider>().getData(
-          type: widget.questionType,
-          notify: false,
-          subType: "Impact and Outcome"),
-      context
-          .read<StudentFutureProvider>()
-          .getData(type: widget.questionType, notify: false, subType: "Future"),
-    ]);
+    context
+        .read<StudentActionProvider>()
+        .getData(type: widget.questionType, notify: false, subType: "Actions");
+    context.read<StudentOCProvider>().getData(
+        type: widget.questionType,
+        notify: false,
+        subType: "Overcoming Challenges");
+    context.read<StudentSIProvider>().getData(
+        type: widget.questionType,
+        notify: false,
+        subType: "Success Indicators (KPIs)");
+    context.read<StudentImplementationProvider>().getData(
+        type: widget.questionType, notify: false, subType: "Implementation");
+    context.read<StudentIOProvider>().getData(
+        type: widget.questionType,
+        notify: false,
+        subType: "Impact and Outcome");
+    context
+        .read<StudentFutureProvider>()
+        .getData(type: widget.questionType, notify: false, subType: "Future");
   }
 
   reflectVerbage() {
