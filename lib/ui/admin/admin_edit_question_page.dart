@@ -258,6 +258,7 @@ class _EditQuestionState extends State<EditQuestion> {
             ElevatedButton(
               onPressed: () {
                 deleteThisQuestion();
+                Utils.showSnackBar("A question has been deleted");
                 Navigator.pop(context, true);
               },
               style: ElevatedButton.styleFrom(
