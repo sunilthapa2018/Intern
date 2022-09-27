@@ -77,9 +77,6 @@ class _VideoPlaybackState extends State<VideoPlayback> {
                   ? SizedBox(
                       child: YoutubePlayer(
                         bottomActions: [
-                          PlayPauseButton(
-                            controller: controller,
-                          ),
                           CurrentPosition(
                             controller: controller,
                           ),
@@ -98,9 +95,6 @@ class _VideoPlaybackState extends State<VideoPlayback> {
                       width: MediaQuery.of(context).size.width * .8,
                       child: YoutubePlayer(
                         bottomActions: [
-                          PlayPauseButton(
-                            controller: controller,
-                          ),
                           CurrentPosition(
                             controller: controller,
                           ),

@@ -111,7 +111,7 @@ class _AddUserState extends State<AddUser> {
       children: [
         Container(
           alignment: Alignment.center,
-          width: 600.h,
+          width: 160.w,
           padding: const EdgeInsets.symmetric(vertical: 16),
           decoration: BoxDecoration(
               color: buttonColor, borderRadius: BorderRadius.circular(25)),
