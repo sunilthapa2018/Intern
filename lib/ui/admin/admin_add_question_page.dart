@@ -51,7 +51,6 @@ class _AddQuestionState extends State<AddQuestion> {
       alignment: Alignment.topCenter,
       child: SingleChildScrollView(
         child: Container(
-          width: MediaQuery.of(context).size.width / 2,
           padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
           child: Column(
             children: [
@@ -196,7 +195,6 @@ class _AddQuestionState extends State<AddQuestion> {
       },
       child: Container(
         alignment: Alignment.center,
-        width: MediaQuery.of(context).size.width,
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
         decoration: BoxDecoration(
           color: adminAppBarColor,
