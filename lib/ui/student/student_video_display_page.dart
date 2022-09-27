@@ -64,10 +64,11 @@ class _VideoPlaybackState extends State<VideoPlayback> {
   }
 
   myBody(Widget player, BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.only(left: 16, right: 16),
-      children: [
-        Column(
+    return SizedBox(
+      width: double.infinity,
+      height: double.infinity,
+      child: SingleChildScrollView(
+        child: Column(
           children: [
             if (_questionType == "Autonomy") ...[
               titleText("A", "utonomy"),
@@ -97,7 +98,7 @@ class _VideoPlaybackState extends State<VideoPlayback> {
             copyrightText(),
           ],
         ),
-      ],
+      ),
     );
   }
 
@@ -236,15 +237,19 @@ class _VideoPlaybackState extends State<VideoPlayback> {
   late YoutubePlayerController controller;
   @override
   void initState() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     _questionType = widget.questionType;
     super.initState();
     String url = "";
     if (_questionType == 'Autonomy') {
-      url = "https://www.youtube.com/watch?v=tI87ZnTwsD0";
+      url = "https://www.youtube.com/watch?v=9OlvxqL0mck";
     } else if (_questionType == 'Belonging') {
-      url = "https://www.youtube.com/watch?v=Ylnysm7L82I";
+      url = "https://www.youtube.com/watch?v=qDgisEg7HbQ";
     } else {
-      url = "https://www.youtube.com/watch?v=sfABqW_ZP6Q";
+      url = "https://www.youtube.com/watch?v=XlxPbAPyb4A";
     }
 
     controller = YoutubePlayerController(

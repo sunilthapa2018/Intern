@@ -27,7 +27,6 @@ class _EditUsersState extends State<EditUsers> {
   bool btnSearchClicked = false;
   @override
   Widget build(BuildContext context) {
-    setLandscapeOnlyOrientation();
     return Scaffold(
         backgroundColor: adminBackgroundColor,
         appBar: myAppBar(),
@@ -38,12 +37,13 @@ class _EditUsersState extends State<EditUsers> {
   void initState() {
     super.initState();
     titleController.text = selectedStatus;
+    setLandscapeOnlyOrientation();
   }
 
   myBody(BuildContext context) {
     return Column(
       children: [
-        myRow(),
+        myRowForSearch(),
         Expanded(
           child: listView(),
         )
@@ -51,7 +51,7 @@ class _EditUsersState extends State<EditUsers> {
     );
   }
 
-  myRow() {
+  myRowForSearch() {
     return Container(
       color: Colors.white,
       child: Row(

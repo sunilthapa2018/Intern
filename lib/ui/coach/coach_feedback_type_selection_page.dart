@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:motivational_leadership/providers/coach/type/coach_autonomy_provider.dart';
 import 'package:motivational_leadership/providers/coach/type/coach_belonging_provider.dart';
@@ -24,17 +26,16 @@ class _CoachFeedbackTypeSelectionState
     extends State<CoachFeedbackTypeSelection> {
   @override
   Widget build(BuildContext context) {
+    log("Built Coach feedback type selection page");
     return Scaffold(
+      backgroundColor: coachBackgroundColor,
       appBar: _buildAppBar(context),
       body: FutureBuilder(
           future: _loadInitialData(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Container(
-                color: coachBackgroundColor,
-                child: const Center(
-                  child: CircularProgressIndicator(),
-                ),
+              return const Center(
+                child: CircularProgressIndicator(),
               );
             }
             return _buildMainBody(context);
@@ -57,11 +58,10 @@ class _CoachFeedbackTypeSelectionState
   }
 
   _buildMainBody(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        color: coachBackgroundColor,
+    return SizedBox(
+      width: double.infinity,
+      height: double.infinity,
+      child: SingleChildScrollView(
         child: Column(
           children: [
             CoachAutonomyTile(userID: widget.userID),
@@ -74,15 +74,11 @@ class _CoachFeedbackTypeSelectionState
     );
   }
 
-  Padding _buildButtonLogo() {
-    return Padding(
-      padding: const EdgeInsets.only(),
-      child: Image.asset(
-        'assets/complete_logo.png',
-        // height: 50.h,
-        width: MediaQuery.of(context).size.width / 3,
-        fit: BoxFit.contain,
-      ),
+  _buildButtonLogo() {
+    return Image.asset(
+      'assets/complete_logo.png',
+      width: MediaQuery.of(context).size.width / 3,
+      fit: BoxFit.contain,
     );
   }
 
@@ -99,7 +95,7 @@ class _CoachFeedbackTypeSelectionState
   }
 
   _loadInitialData() async {
-    Future.wait([
+    await Future.wait([
       context
           .read<CoachAutonomyProvider>()
           .getData(studentId: widget.userID, type: "Autonomy", notify: false),

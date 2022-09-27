@@ -52,21 +52,30 @@ class _QuestionState extends State<Question> {
       showDialog<bool>(
         context: context,
         builder: (context) => AlertDialog(
-          title: const Text(
+          title: Text(
             "Discard Changes",
             style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-            ),
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 16.sp),
           ),
-          content: const Text("Changes on this page will not be saved."),
+          content: Text(
+            "Changes on this page will not be saved.",
+            style: TextStyle(fontSize: 16.sp),
+          ),
           actions: [
             ElevatedButton(
               onPressed: () => Navigator.pop(context, false),
               style: ElevatedButton.styleFrom(
                 backgroundColor: buttonColor,
               ),
-              child: const Text("Cancel"),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "Cancel",
+                  style: TextStyle(fontSize: 16.sp),
+                ),
+              ),
             ),
             ElevatedButton(
               onPressed: () {
@@ -76,7 +85,13 @@ class _QuestionState extends State<Question> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: buttonColor,
               ),
-              child: const Text("Discard"),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "Discard",
+                  style: TextStyle(fontSize: 16.sp),
+                ),
+              ),
             ),
           ],
         ),
@@ -381,6 +396,13 @@ class _QuestionState extends State<Question> {
   @override
   initState() {
     super.initState();
+    // SystemChrome.setPreferredOrientations(DeviceOrientation.values);
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     _questionType = widget.questionType;
     _questionSubType = widget.questionSubType;
     _questionNumber = widget.questionNumber;

@@ -30,7 +30,7 @@ class _StudentNavigationDrawerWidgetState
     return Drawer(
       width: (80 / 100) * MediaQuery.of(context).size.width,
       backgroundColor: appBarColor,
-      child: Column(
+      child: ListView(
         children: [
           title(),
           verticleSpacer(20),
@@ -38,7 +38,6 @@ class _StudentNavigationDrawerWidgetState
           feedback(context),
           profile(context),
           contactUs(context),
-          const Expanded(child: SizedBox()),
           line(),
           signOut(context),
           line(),

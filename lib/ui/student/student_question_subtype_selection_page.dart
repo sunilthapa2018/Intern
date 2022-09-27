@@ -347,55 +347,14 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
     );
   }
 
-  // AppBar appBar(BuildContext context) {
-  //   return AppBar(
-  //     leadingWidth: 48, // <-- Use this
-  //     // leading: const Icon(Icons.arrow_back),
-  //     // title: Text(
-  //     //   "Action Plan",
-  //     //   style: Theme.of(context).textTheme.headline4,
-  //     // ),
-  //     titleSpacing: 0,
-  //     toolbarHeight: 36,
-  //     iconTheme: IconThemeData(color: iconColor),
-  //     backgroundColor: appBarColor,
-  //     elevation: 0,
-  //     systemOverlayStyle: const SystemUiOverlayStyle(
-  //       statusBarColor: Colors.transparent,
-  //     ),
-  //     actions: [
-  //       IconButton(
-  //         visualDensity: const VisualDensity(horizontal: -4.0, vertical: -4.0),
-  //         padding: EdgeInsets.zero,
-  //         onPressed: () {
-  //           loadInfo(context,
-  //               "There are two key activities to complete. The Plan and Reflect activities each have three components. You will be prompted to complete responses for three components of both the Plan and Reflect activities. Once you have provided your responses you can submit them for review by a member of our coaching team. You will receive a notification once your coach has responded and find their responses in the Feedback tab in the navigation menu.");
-  //         },
-  //         icon: Icon(
-  //           FontAwesomeIcons.solidCircleQuestion,
-  //           color: iconColor,
-  //           size: 20,
-  //         ),
-  //       ),
-  //       IconButton(
-  //         padding: const EdgeInsets.only(right: 8),
-  //         onPressed: () {
-  //           _refresh(context);
-  //         },
-  //         icon: Icon(
-  //           FontAwesomeIcons.arrowRotateRight,
-  //           color: iconColor,
-  //           size: 20,
-  //         ),
-  //       ),
-  //     ],
-  //   );
-  // }
-
   @override
   initState() {
     super.initState();
     _questionType = widget.questionType;
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
   }
 
   bool getCompletedStatus(String value) {
@@ -487,13 +446,6 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
     );
   }
 
-  // verbage() {
-  //   return Text(
-  //     "To complete this action plan submit your responses for the Plan and Reflect activities below. You will receive a notification once your coach has responded, and find their responses by selecting the Feedback tab in the navigation menu on the Home page.",
-  //     style: myTextStyle3(),
-  //     textAlign: TextAlign.justify,
-  //   );
-  // }
   RichText verbage() {
     return RichText(
       textAlign: TextAlign.justify,

@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -46,15 +45,6 @@ Future main() async {
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-  );
-  await FirebaseMessaging.instance.requestPermission(
-    alert: true,
-    announcement: false,
-    badge: true,
-    carPlay: false,
-    criticalAlert: false,
-    provisional: false,
-    sound: true,
   );
   runApp(const MyApp());
 }
@@ -200,12 +190,14 @@ class _MainPageState extends State<MainPage> {
   }
 
   FutureBuilder<String?> buildFutureByUserType() {
+    log("buildFutureByUserType");
     return FutureBuilder(
       future: getType(),
       builder: ((context, AsyncSnapshot<String?> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return myCircularProgressIndicator(context);
         }
+        log("Snapshot = ${snapshot.data}");
         if (snapshot.data != null && snapshot.hasData) {
           final userType = snapshot.data;
           if (userType == 'Admin') {
@@ -225,6 +217,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   FutureBuilder<String?> buildFutureByUserType2() {
+    log("buildFutureByUserType2  buildFutureByUserType2");
     return FutureBuilder(
       future: getType(),
       builder: ((context, AsyncSnapshot<String?> snapshot) {
@@ -240,11 +233,11 @@ class _MainPageState extends State<MainPage> {
           } else if (userType == 'Student') {
             return const StudentHome();
           } else {
-            log("Sign in 3");
+            log("ErrorPage");
             return const ErrorPage();
           }
         } else {}
-        log("Sign in 4");
+        log("Sign in 3");
         return const SignIn();
       }),
     );
@@ -255,6 +248,7 @@ class _MainPageState extends State<MainPage> {
     if (FirebaseAuth.instance.currentUser != null) {
       String uid = FirebaseAuth.instance.currentUser!.uid;
       userType = await DatabaseService.getUserType(uid);
+      log(userType);
       return userType;
     }
     return null;

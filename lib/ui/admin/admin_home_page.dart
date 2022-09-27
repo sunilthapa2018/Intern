@@ -8,6 +8,7 @@ import 'package:motivational_leadership/services/database.dart';
 import 'package:motivational_leadership/ui/admin/widgets/admin_navigation_drawer.dart';
 import 'package:motivational_leadership/ui/common/widget/type_decoration_box_1.dart';
 import 'package:motivational_leadership/ui/common/widget/verticle_spacer.dart';
+import 'package:motivational_leadership/utility/base_utils.dart';
 import 'package:motivational_leadership/utility/colors.dart';
 
 class AdminHome extends StatefulWidget {
@@ -22,31 +23,34 @@ class _AdminHomeState extends State<AdminHome> {
   Widget build(BuildContext context) {
     log("Admin home Built");
     return Scaffold(
+        backgroundColor: adminBackgroundColor,
         drawer: const AdminNavigationDrawerWidget(),
         appBar: myAppBar(),
         body: myBody());
   }
 
   myBody() {
-    return Container(
-      color: adminBackgroundColor,
-      child: Align(
-        alignment: Alignment.center,
-        child: Column(
-          children: [
-            Wrap(
-              children: [
-                totalUsers(),
-                totalStudents(),
-                totalCoach(),
-              ],
-            ),
-            Wrap(
-              children: [
-                totalQuestion(),
-              ],
-            ),
-          ],
+    return SingleChildScrollView(
+      child: Container(
+        color: adminBackgroundColor,
+        child: Align(
+          alignment: Alignment.center,
+          child: Column(
+            children: [
+              Wrap(
+                children: [
+                  totalUsers(),
+                  totalStudents(),
+                  totalCoach(),
+                ],
+              ),
+              Wrap(
+                children: [
+                  totalQuestion(),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -220,7 +224,7 @@ class _AdminHomeState extends State<AdminHome> {
   @override
   void initState() {
     // addAllQuestionsToDatabase();
-
+    setLandscapeOnlyOrientation();
     super.initState();
   }
 }

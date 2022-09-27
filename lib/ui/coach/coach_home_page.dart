@@ -30,7 +30,6 @@ class _AdminHomeState extends State<CoachHome> {
   bool btnSearchClicked = false;
   @override
   Widget build(BuildContext context) {
-    setLandscapeOnlyOrientation();
     return Scaffold(
         backgroundColor: coachBackgroundColor,
         drawer: const CoachNavigationDrawerWidget(),
@@ -51,6 +50,7 @@ class _AdminHomeState extends State<CoachHome> {
   void initState() {
     super.initState();
     storeNotificationToken();
+    setLandscapeOnlyOrientation();
   }
 
   myBody(BuildContext context) {
