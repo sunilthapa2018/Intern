@@ -14,7 +14,6 @@ import 'package:motivational_leadership/ui/student/widgets/student_navigation_dr
 import 'package:motivational_leadership/ui/student/widgets/type/student_autonomy_tile.dart';
 import 'package:motivational_leadership/ui/student/widgets/type/student_belonging_tile.dart';
 import 'package:motivational_leadership/ui/student/widgets/type/student_competence_tile.dart';
-import 'package:motivational_leadership/utility/base_utils.dart';
 import 'package:motivational_leadership/utility/colors.dart';
 import 'package:motivational_leadership/widget/circular_progress_indicator.dart';
 import 'package:provider/provider.dart';
@@ -48,7 +47,6 @@ class _StudentHomeState extends State<StudentHome> {
   @override
   void initState() {
     super.initState();
-    resetOrientation();
   }
 
   Future<String> loadName() async {

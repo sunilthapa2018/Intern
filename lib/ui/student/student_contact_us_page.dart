@@ -104,7 +104,7 @@ class _StudentContactUsState extends State<StudentContactUs> {
   Container buttonDesign() {
     return Container(
       alignment: Alignment.center,
-      width: MediaQuery.of(context).size.width / 3,
+      width: 150.w,
       padding: const EdgeInsets.symmetric(vertical: 16),
       decoration: BoxDecoration(
           color: buttonColor, borderRadius: BorderRadius.circular(25)),
@@ -182,7 +182,7 @@ class _StudentContactUsState extends State<StudentContactUs> {
   }
 
   Padding buildImage() {
-    double width = MediaQuery.of(context).size.width;
+    double width = double.infinity;
     return Padding(
       padding: const EdgeInsets.only(),
       child: Image.asset(

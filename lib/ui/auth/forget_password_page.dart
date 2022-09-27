@@ -104,7 +104,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   },
                   child: Container(
                     alignment: Alignment.center,
-                    width: MediaQuery.of(context).size.width / 2,
+                    width: 100,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 24, vertical: 20),
                     decoration: BoxDecoration(

@@ -148,7 +148,7 @@ class _SignInState extends State<SignIn> {
       children: [
         Container(
           alignment: Alignment.center,
-          width: MediaQuery.of(context).size.width / 2,
+          width: 160.w,
           padding: const EdgeInsets.symmetric(vertical: 16),
           decoration: BoxDecoration(
               color: buttonColor, borderRadius: BorderRadius.circular(25)),

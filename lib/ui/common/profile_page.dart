@@ -101,7 +101,7 @@ class _ProfileState extends State<Profile> {
       },
       child: Container(
         alignment: Alignment.center,
-        width: MediaQuery.of(context).size.width / 2,
+        width: 160.h,
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
         decoration: BoxDecoration(
             color: buttonColor, borderRadius: BorderRadius.circular(30)),

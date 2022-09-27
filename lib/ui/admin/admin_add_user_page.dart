@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:motivational_leadership/services/database.dart';
 import 'package:motivational_leadership/services/send_email.dart';
@@ -63,7 +64,7 @@ class _AddUserState extends State<AddUser> {
         child: Align(
           alignment: Alignment.topCenter,
           child: SizedBox(
-            width: MediaQuery.of(context).size.width / 3,
+            width: 600.h,
             child: ListView(
               children: [
                 verticleSpacer(val),
@@ -110,7 +111,7 @@ class _AddUserState extends State<AddUser> {
       children: [
         Container(
           alignment: Alignment.center,
-          width: MediaQuery.of(context).size.width / 2,
+          width: 600.h,
           padding: const EdgeInsets.symmetric(vertical: 16),
           decoration: BoxDecoration(
               color: buttonColor, borderRadius: BorderRadius.circular(25)),

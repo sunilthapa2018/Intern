@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:motivational_leadership/ui/common/widget/copyright_text.dart';
 import 'package:motivational_leadership/ui/common/widget/verticle_spacer.dart';
 import 'package:motivational_leadership/ui/student/student_question_subtype_selection_page.dart';
+import 'package:motivational_leadership/ui/student/widgets/app_bar.dart';
 import 'package:motivational_leadership/ui/student/widgets/my_button_box.dart';
 import 'package:motivational_leadership/utility/base_utils.dart';
 import 'package:motivational_leadership/utility/colors.dart';
@@ -32,129 +33,98 @@ class _VideoPlaybackState extends State<VideoPlayback> {
 
   Scaffold _buildPortraitMode() {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-      ),
+      appBar: myAppBar(context),
       body: myBody(context, true),
     );
   }
 
   _landScapeMode(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-      ),
+      appBar: myAppBar(context),
       body: myBody(context, false),
     );
   }
 
-  YoutubePlayerBuilder youtubePlayerBuilder(BuildContext context) {
-    return YoutubePlayerBuilder(
-        onExitFullScreen: () {
-          // SystemChrome.setPreferredOrientations(DeviceOrientation.values);
-          Orientation currentOrientation = MediaQuery.of(context).orientation;
-          if (currentOrientation == DeviceOrientation.portraitUp) {
-            SystemChrome.setPreferredOrientations(
-                [DeviceOrientation.portraitDown]);
-          } else if (currentOrientation == DeviceOrientation.portraitDown) {
-            SystemChrome.setPreferredOrientations(
-                [DeviceOrientation.portraitDown]);
-          } else if (currentOrientation == DeviceOrientation.landscapeLeft) {
-            SystemChrome.setPreferredOrientations(
-                [DeviceOrientation.landscapeLeft]);
-          } else if (currentOrientation == DeviceOrientation.landscapeRight) {
-            SystemChrome.setPreferredOrientations(
-                [DeviceOrientation.landscapeRight]);
-          }
-        },
-        player: YoutubePlayer(
-          controller: controller,
-          aspectRatio: 16 / 9,
-        ),
-        builder: (context, player) {
-          return myBody(context, false);
-        });
-  }
-
   myBody(BuildContext context, bool isPortrait) {
-    return SizedBox(
-      width: double.infinity,
-      height: double.infinity,
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            if (_questionType == "Autonomy") ...[
-              titleText("A", "utonomy"),
+    return Padding(
+      padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
+      child: SizedBox(
+        width: double.infinity,
+        height: double.infinity,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              if (_questionType == "Autonomy") ...[
+                titleText("A", "utonomy"),
+                verticleSpacer(10),
+                autonomyText(),
+                autonomySecondText(),
+              ] else if (widget.questionType == "Belonging") ...[
+                titleText("B", "elonging"),
+                verticleSpacer(10),
+                belongingText(),
+                belongingSecondText(),
+              ] else ...[
+                titleText("C", "ompetence"),
+                verticleSpacer(10),
+                competenceText(),
+                competenceSecondText(),
+              ],
               verticleSpacer(10),
-              autonomyText(),
-              autonomySecondText(),
-            ] else if (widget.questionType == "Belonging") ...[
-              titleText("B", "elonging"),
+              (isPortrait)
+                  ? SizedBox(
+                      child: YoutubePlayer(
+                        bottomActions: [
+                          PlayPauseButton(
+                            controller: controller,
+                          ),
+                          CurrentPosition(
+                            controller: controller,
+                          ),
+                          ProgressBar(isExpanded: true),
+                          RemainingDuration(
+                            controller: controller,
+                          ),
+                          PlaybackSpeedButton(
+                            controller: controller,
+                          ),
+                        ],
+                        controller: controller,
+                      ),
+                    )
+                  : SizedBox(
+                      width: MediaQuery.of(context).size.width * .8,
+                      child: YoutubePlayer(
+                        bottomActions: [
+                          PlayPauseButton(
+                            controller: controller,
+                          ),
+                          CurrentPosition(
+                            controller: controller,
+                          ),
+                          ProgressBar(isExpanded: true),
+                          RemainingDuration(
+                            controller: controller,
+                          ),
+                          PlaybackSpeedButton(
+                            controller: controller,
+                          ),
+                        ],
+                        controller: controller,
+                      ),
+                    ),
               verticleSpacer(10),
-              belongingText(),
-              belongingSecondText(),
-            ] else ...[
-              titleText("C", "ompetence"),
+              saveButton(context),
               verticleSpacer(10),
-              competenceText(),
-              competenceSecondText(),
+              Align(
+                alignment: Alignment.center,
+                child: _buildButtonLogo(),
+              ),
+              copyrightText(),
             ],
-            verticleSpacer(10),
-            (isPortrait)
-                ? SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    child: YoutubePlayer(
-                      bottomActions: [
-                        PlayPauseButton(
-                          controller: controller,
-                        ),
-                        CurrentPosition(
-                          controller: controller,
-                        ),
-                        ProgressBar(isExpanded: true),
-                        RemainingDuration(
-                          controller: controller,
-                        ),
-                        PlaybackSpeedButton(
-                          controller: controller,
-                        ),
-                      ],
-                      controller: controller,
-                    ),
-                  )
-                : SizedBox(
-                    width: MediaQuery.of(context).size.width * .8,
-                    height: 300,
-                    child: YoutubePlayer(
-                      bottomActions: [
-                        PlayPauseButton(
-                          controller: controller,
-                        ),
-                        CurrentPosition(
-                          controller: controller,
-                        ),
-                        ProgressBar(isExpanded: true),
-                        RemainingDuration(
-                          controller: controller,
-                        ),
-                        PlaybackSpeedButton(
-                          controller: controller,
-                        ),
-                      ],
-                      controller: controller,
-                    ),
-                  ),
-            verticleSpacer(10),
-            saveButton(context),
-            verticleSpacer(10),
-            Align(
-              alignment: Alignment.center,
-              child: _buildButtonLogo(),
-            ),
-            copyrightText(),
-          ],
+          ),
         ),
       ),
     );
@@ -295,10 +265,6 @@ class _VideoPlaybackState extends State<VideoPlayback> {
   late YoutubePlayerController controller;
   @override
   void initState() {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
     _questionType = widget.questionType;
     super.initState();
     String url = "";

@@ -163,7 +163,7 @@ class _QuestionState extends State<Question> {
         child: Container(
           margin: const EdgeInsets.fromLTRB(0, 8, 0, 8),
           alignment: Alignment.center,
-          width: MediaQuery.of(context).size.width / 3,
+          width: 160.h,
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           decoration: myButtonBox(),
           child: Text(
