@@ -1,8 +1,6 @@
 import 'dart:developer';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,23 +11,23 @@ import 'package:motivational_leadership/utility/base_utils.dart';
 import 'package:motivational_leadership/utility/colors.dart';
 import 'package:motivational_leadership/utility/utils.dart';
 
-String uid = FirebaseAuth.instance.currentUser!.uid;
-String selectedStatus = "Feedback Not Given";
-final coachNavigatorKey = GlobalKey<NavigatorState>();
-TextEditingController searchController = TextEditingController();
-
 class CoachHome extends StatefulWidget {
   const CoachHome({Key? key}) : super(key: key);
 
   @override
-  State<CoachHome> createState() => _AdminHomeState();
+  State<CoachHome> createState() => _CoachHomeState();
 }
 
-class _AdminHomeState extends State<CoachHome> {
+class _CoachHomeState extends State<CoachHome> {
+  String uid = FirebaseAuth.instance.currentUser!.uid;
+  String selectedStatus = "Feedback Not Given";
+  final coachNavigatorKey = GlobalKey<NavigatorState>();
+  TextEditingController searchController = TextEditingController();
   List userSubmissionList = [];
   bool btnSearchClicked = false;
   @override
   Widget build(BuildContext context) {
+    log("Coach home build");
     return Scaffold(
         backgroundColor: coachBackgroundColor,
         drawer: const CoachNavigationDrawerWidget(),
@@ -37,19 +35,9 @@ class _AdminHomeState extends State<CoachHome> {
         body: myBody(context));
   }
 
-  storeNotificationToken() async {
-    String? token = await FirebaseMessaging.instance.getToken();
-    log("token = $token");
-    FirebaseFirestore.instance
-        .collection('users')
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .set({'token': token}, SetOptions(merge: true));
-  }
-
   @override
   void initState() {
     super.initState();
-    storeNotificationToken();
     setLandscapeOnlyOrientation();
   }
 

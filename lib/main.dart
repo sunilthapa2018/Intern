@@ -250,7 +250,7 @@ class _MainPageState extends State<MainPage> {
     if (FirebaseAuth.instance.currentUser != null) {
       String uid = FirebaseAuth.instance.currentUser!.uid;
       userType = await DatabaseService.getUserType(uid);
-      log(userType);
+      log("userType = $userType");
       return userType;
     }
     return null;

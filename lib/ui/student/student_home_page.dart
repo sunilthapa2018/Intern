@@ -1,8 +1,5 @@
 import 'dart:developer';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -48,21 +45,9 @@ class _StudentHomeState extends State<StudentHome> {
     );
   }
 
-  storeNotificationToken() async {
-    String? token = await FirebaseMessaging.instance.getToken();
-    FirebaseFirestore.instance
-        .collection('users')
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .set(
-      {'token': token},
-      SetOptions(merge: true),
-    );
-  }
-
   @override
   void initState() {
     super.initState();
-    storeNotificationToken();
     resetOrientation();
   }
 

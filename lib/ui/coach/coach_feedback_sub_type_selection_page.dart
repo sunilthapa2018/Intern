@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -207,8 +205,6 @@ class _CoachFeedbackSubTypeSelectionState
         bool cCompleted = getCompletedStatus(txtCValue);
 
         if (aCompleted & bCompleted & cCompleted) {
-          String? token = await DatabaseService.getUserToken(widget.userID);
-          log("Student has been Notified for this token :$token");
           try {
             showProgressDialog();
             String fullName = await DatabaseService.getUserName(widget.userID);

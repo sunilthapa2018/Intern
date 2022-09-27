@@ -385,50 +385,6 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
     );
   }
 
-  _refresh(BuildContext context) async {
-    context
-        .read<StudentActionProvider>()
-        .getData(type: widget.questionType, notify: true, subType: "Actions");
-    context.read<StudentOCProvider>().getData(
-        type: widget.questionType,
-        notify: true,
-        subType: "Overcoming Challenges");
-    context.read<StudentSIProvider>().getData(
-        type: widget.questionType,
-        notify: true,
-        subType: "Success Indicators (KPIs)");
-    context.read<StudentImplementationProvider>().getData(
-        type: widget.questionType, notify: true, subType: "Implementation");
-    context.read<StudentIOProvider>().getData(
-        type: widget.questionType, notify: true, subType: "Impact and Outcome");
-    context
-        .read<StudentFutureProvider>()
-        .getData(type: widget.questionType, notify: true, subType: "Future");
-  }
-
-  _loadInitialData() async {
-    context
-        .read<StudentActionProvider>()
-        .getData(type: widget.questionType, notify: false, subType: "Actions");
-    context.read<StudentOCProvider>().getData(
-        type: widget.questionType,
-        notify: false,
-        subType: "Overcoming Challenges");
-    context.read<StudentSIProvider>().getData(
-        type: widget.questionType,
-        notify: false,
-        subType: "Success Indicators (KPIs)");
-    context.read<StudentImplementationProvider>().getData(
-        type: widget.questionType, notify: false, subType: "Implementation");
-    context.read<StudentIOProvider>().getData(
-        type: widget.questionType,
-        notify: false,
-        subType: "Impact and Outcome");
-    context
-        .read<StudentFutureProvider>()
-        .getData(type: widget.questionType, notify: false, subType: "Future");
-  }
-
   reflectVerbage() {
     return Padding(
       padding: const EdgeInsets.only(left: 8, top: 5, right: 8),

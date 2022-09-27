@@ -77,20 +77,6 @@ class DatabaseService {
     return "";
   }
 
-  static Future<String> getUserToken(String uid) async {
-    try {
-      final docRef = FirebaseFirestore.instance.collection('users').doc(uid);
-      DocumentSnapshot doc = await docRef.get();
-      if (doc.exists) {
-        String token = await doc.get("token");
-        return token;
-      }
-    } on FirebaseAuthException catch (e) {
-      Utils.showSnackBar("Failed Error Message: $e.message");
-    }
-    return "";
-  }
-
   static Future<String> getUserType(String uid) async {
     try {
       final docRef = FirebaseFirestore.instance.collection('users').doc(uid);

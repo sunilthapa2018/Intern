@@ -57,13 +57,13 @@ class _QuestionState extends State<Question> {
       showWarningOnBackPressed(context);
       return true;
     } else {
+      if (!mounted) return;
       Navigator.pop(context);
       return false;
     }
   }
 
-  Future<bool?> showWarningOnBackPressed(BuildContext context) async =>
-      showDialog<bool>(
+  showWarningOnBackPressed(BuildContext context) => showDialog<bool>(
         context: context,
         builder: (context) => AlertDialog(
           title: Text(
