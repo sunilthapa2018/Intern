@@ -24,17 +24,11 @@ class _EditQuestionState extends State<EditQuestion> {
   @override
   Widget build(BuildContext context) {
     return myScaffold();
-    // return WillPopScope(
-    //   onWillPop: () async {
-    //     final shouldPop = await showWarning(context);
-    //     return shouldPop ?? false;
-    //   },
-    //   child: myScaffold(),
-    // );
   }
 
   Scaffold myScaffold() {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: adminBackgroundColor,
       appBar: myAppBar(),
       body: FutureBuilder(
@@ -66,7 +60,7 @@ class _EditQuestionState extends State<EditQuestion> {
   String question = 'Loading...';
   String? typeValue = 'Autonomy';
   String? subTypeValue = 'Actions';
-  TextEditingController questionController = TextEditingController();
+  final TextEditingController questionController = TextEditingController();
 
   AppBar myAppBar() {
     return AppBar(
@@ -83,7 +77,7 @@ class _EditQuestionState extends State<EditQuestion> {
       child: SingleChildScrollView(
         child: Container(
           color: adminBackgroundColor,
-          width: MediaQuery.of(context).size.width / 2,
+          width: 500,
           padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
           child: Column(
             children: [
@@ -146,12 +140,6 @@ class _EditQuestionState extends State<EditQuestion> {
         fontSize: 16.sp,
         color: orangeColor,
       ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: const BorderRadius.all(
-          Radius.circular(5.0),
-        ),
-        borderSide: BorderSide(color: orangeColor),
-      ),
       enabledBorder: OutlineInputBorder(
         borderRadius: const BorderRadius.all(
           Radius.circular(5.0),
@@ -170,12 +158,6 @@ class _EditQuestionState extends State<EditQuestion> {
       labelStyle: TextStyle(
         fontSize: 16.sp,
         color: orangeColor,
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: const BorderRadius.all(
-          Radius.circular(5.0),
-        ),
-        borderSide: BorderSide(color: orangeColor),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: const BorderRadius.all(
@@ -205,10 +187,6 @@ class _EditQuestionState extends State<EditQuestion> {
         labelStyle: TextStyle(color: iconColor),
         contentPadding: const EdgeInsets.fromLTRB(20, 30, 20, 0),
         border: const OutlineInputBorder(),
-        focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.grey, width: 1.0),
-          borderRadius: BorderRadius.circular(5.0),
-        ),
         enabledBorder: OutlineInputBorder(
           borderSide: const BorderSide(color: Colors.grey, width: 1.0),
           borderRadius: BorderRadius.circular(05.0),
@@ -229,7 +207,7 @@ class _EditQuestionState extends State<EditQuestion> {
       },
       child: Container(
         alignment: Alignment.center,
-        width: MediaQuery.of(context).size.width / 8,
+        width: 200,
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
         decoration: BoxDecoration(
           color: adminAppBarColor,
@@ -251,7 +229,7 @@ class _EditQuestionState extends State<EditQuestion> {
       },
       child: Container(
         alignment: Alignment.center,
-        width: MediaQuery.of(context).size.width / 8,
+        width: 200,
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
         margin: const EdgeInsets.only(right: 36),
         decoration: BoxDecoration(
@@ -281,6 +259,7 @@ class _EditQuestionState extends State<EditQuestion> {
             ElevatedButton(
               onPressed: () {
                 deleteThisQuestion();
+                Utils.showSnackBar("A question has been deleted");
                 Navigator.pop(context, true);
               },
               style: ElevatedButton.styleFrom(
