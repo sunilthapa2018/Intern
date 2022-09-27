@@ -24,13 +24,6 @@ class _EditQuestionState extends State<EditQuestion> {
   @override
   Widget build(BuildContext context) {
     return myScaffold();
-    // return WillPopScope(
-    //   onWillPop: () async {
-    //     final shouldPop = await showWarning(context);
-    //     return shouldPop ?? false;
-    //   },
-    //   child: myScaffold(),
-    // );
   }
 
   Scaffold myScaffold() {
@@ -66,7 +59,7 @@ class _EditQuestionState extends State<EditQuestion> {
   String question = 'Loading...';
   String? typeValue = 'Autonomy';
   String? subTypeValue = 'Actions';
-  TextEditingController questionController = TextEditingController();
+  final TextEditingController questionController = TextEditingController();
 
   AppBar myAppBar() {
     return AppBar(
@@ -146,12 +139,6 @@ class _EditQuestionState extends State<EditQuestion> {
         fontSize: 16.sp,
         color: orangeColor,
       ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: const BorderRadius.all(
-          Radius.circular(5.0),
-        ),
-        borderSide: BorderSide(color: orangeColor),
-      ),
       enabledBorder: OutlineInputBorder(
         borderRadius: const BorderRadius.all(
           Radius.circular(5.0),
@@ -170,12 +157,6 @@ class _EditQuestionState extends State<EditQuestion> {
       labelStyle: TextStyle(
         fontSize: 16.sp,
         color: orangeColor,
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: const BorderRadius.all(
-          Radius.circular(5.0),
-        ),
-        borderSide: BorderSide(color: orangeColor),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: const BorderRadius.all(
@@ -205,10 +186,6 @@ class _EditQuestionState extends State<EditQuestion> {
         labelStyle: TextStyle(color: iconColor),
         contentPadding: const EdgeInsets.fromLTRB(20, 30, 20, 0),
         border: const OutlineInputBorder(),
-        focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.grey, width: 1.0),
-          borderRadius: BorderRadius.circular(5.0),
-        ),
         enabledBorder: OutlineInputBorder(
           borderSide: const BorderSide(color: Colors.grey, width: 1.0),
           borderRadius: BorderRadius.circular(05.0),
