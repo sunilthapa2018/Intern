@@ -57,7 +57,7 @@ class _AdminHomeState extends State<AdminHome> {
   }
 
   totalUsers() {
-    double width = MediaQuery.of(context).size.width;
+    double width = 350.w;
     return Padding(
       padding: const EdgeInsets.only(right: 16, top: 16),
       child: Container(
@@ -96,7 +96,7 @@ class _AdminHomeState extends State<AdminHome> {
   }
 
   totalStudents() {
-    double width = MediaQuery.of(context).size.width;
+    double width = 350.w;
     return Padding(
       padding: const EdgeInsets.only(right: 16, top: 16),
       child: Container(
@@ -125,7 +125,7 @@ class _AdminHomeState extends State<AdminHome> {
   }
 
   totalCoach() {
-    double width = MediaQuery.of(context).size.width;
+    double width = 350.w;
     return Padding(
       padding: const EdgeInsets.only(right: 16, top: 16),
       child: Container(
@@ -154,7 +154,7 @@ class _AdminHomeState extends State<AdminHome> {
   }
 
   totalQuestion() {
-    double width = MediaQuery.of(context).size.width;
+    double width = 350.w;
     return Padding(
       padding: const EdgeInsets.only(right: 16, top: 16),
       child: Container(
