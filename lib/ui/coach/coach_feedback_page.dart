@@ -49,6 +49,7 @@ class _CoachFeedbackPageState extends State<CoachFeedbackPage> {
   late String questionId;
   late String answerId;
   late String feedbackId;
+  late int qCount = 0;
 
   Container body(BuildContext context) {
     return Container(
@@ -60,7 +61,7 @@ class _CoachFeedbackPageState extends State<CoachFeedbackPage> {
                 future: getQuestionCount(),
                 builder: (context, snapshot) {
                   String questionCount = snapshot.data.toString().trim();
-                  int qCount = int.tryParse(questionCount) ?? 0;
+                  qCount = int.tryParse(questionCount) ?? 0;
 
                   return ListView.builder(
                       itemCount: qCount,
@@ -196,7 +197,10 @@ class _CoachFeedbackPageState extends State<CoachFeedbackPage> {
   }
 
   FutureBuilder<String> question() {
-    _questionNumber++;
+    if (_questionNumber < qCount) {
+      _questionNumber++;
+    }
+
     questionFuture = getQuestion();
     return FutureBuilder<String>(
         future: questionFuture,
@@ -257,7 +261,6 @@ class _CoachFeedbackPageState extends State<CoachFeedbackPage> {
   }
 
   FutureBuilder<String> answer() {
-    // _questionNumber++;
     answerFuture = getAnswer();
     return FutureBuilder<String>(
         future: answerFuture,

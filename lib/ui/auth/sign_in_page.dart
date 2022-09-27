@@ -45,6 +45,7 @@ class _SignInState extends State<SignIn> {
   void initState() {
     FlutterNativeSplash.remove();
     resetFromAdmin();
+    resetOrientation();
     super.initState();
   }
 
