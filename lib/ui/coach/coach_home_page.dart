@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -19,7 +18,6 @@ class CoachHome extends StatefulWidget {
 }
 
 class _CoachHomeState extends State<CoachHome> {
-  String uid = FirebaseAuth.instance.currentUser!.uid;
   String selectedStatus = "Feedback Not Given";
   final coachNavigatorKey = GlobalKey<NavigatorState>();
   TextEditingController searchController = TextEditingController();
@@ -108,7 +106,6 @@ class _CoachHomeState extends State<CoachHome> {
           fontWeight: FontWeight.normal,
           color: Colors.black,
         ),
-        autofocus: true,
         textInputAction: TextInputAction.next,
         controller: searchController,
         decoration: const InputDecoration(

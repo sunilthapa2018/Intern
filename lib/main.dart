@@ -202,13 +202,12 @@ class _MainPageState extends State<MainPage> {
         log("Snapshot = ${snapshot.data}");
         if (snapshot.data != null && snapshot.hasData) {
           final userType = snapshot.data;
+          signInAdminAgain();
           if (userType == 'Admin') {
             return const AdminHome();
           } else if (userType == 'Coach') {
-            signInAdminAgain();
             return const CoachHome();
           } else if (userType == 'Student') {
-            signInAdminAgain();
             return const StudentHome();
           }
         }
@@ -280,6 +279,7 @@ class _MainPageState extends State<MainPage> {
 }
 
 Future<void> signInAdminAgain() async {
+  log("signInAdminAgain");
   //Reading saved password from local db and re-authenticating user with credentials
   final prefs = await SharedPreferences.getInstance();
   final email = prefs.getString('email').toString();
