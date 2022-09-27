@@ -28,6 +28,7 @@ class _EditQuestionState extends State<EditQuestion> {
 
   Scaffold myScaffold() {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: adminBackgroundColor,
       appBar: myAppBar(),
       body: FutureBuilder(
@@ -76,7 +77,7 @@ class _EditQuestionState extends State<EditQuestion> {
       child: SingleChildScrollView(
         child: Container(
           color: adminBackgroundColor,
-          width: MediaQuery.of(context).size.width / 2,
+          width: 500,
           padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
           child: Column(
             children: [
@@ -206,7 +207,7 @@ class _EditQuestionState extends State<EditQuestion> {
       },
       child: Container(
         alignment: Alignment.center,
-        width: MediaQuery.of(context).size.width / 8,
+        width: 200,
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
         decoration: BoxDecoration(
           color: adminAppBarColor,
@@ -228,7 +229,7 @@ class _EditQuestionState extends State<EditQuestion> {
       },
       child: Container(
         alignment: Alignment.center,
-        width: MediaQuery.of(context).size.width / 8,
+        width: 200,
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
         margin: const EdgeInsets.only(right: 36),
         decoration: BoxDecoration(
