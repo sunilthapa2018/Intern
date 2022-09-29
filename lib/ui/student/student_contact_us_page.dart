@@ -8,6 +8,7 @@ import 'package:motivational_leadership/ui/common/widget/verticle_spacer.dart';
 import 'package:motivational_leadership/ui/student/widgets/app_bar.dart';
 import 'package:motivational_leadership/utility/colors.dart';
 import 'package:motivational_leadership/utility/utils.dart';
+import 'package:motivational_leadership/utility/values.dart';
 
 class StudentContactUs extends StatefulWidget {
   const StudentContactUs({super.key});
@@ -104,7 +105,7 @@ class _StudentContactUsState extends State<StudentContactUs> {
   Container buttonDesign() {
     return Container(
       alignment: Alignment.center,
-      width: 150.w,
+      width: buttonMediumWidth,
       padding: const EdgeInsets.symmetric(vertical: 16),
       decoration: BoxDecoration(
           color: buttonColor, borderRadius: BorderRadius.circular(25)),

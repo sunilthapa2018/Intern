@@ -5,6 +5,7 @@ import 'package:form_field_validator/form_field_validator.dart';
 import 'package:motivational_leadership/main.dart';
 import 'package:motivational_leadership/utility/colors.dart';
 import 'package:motivational_leadership/utility/utils.dart';
+import 'package:motivational_leadership/utility/values.dart';
 
 class ForgotPassword extends StatefulWidget {
   const ForgotPassword({Key? key}) : super(key: key);
@@ -104,7 +105,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   },
                   child: Container(
                     alignment: Alignment.center,
-                    width: 100,
+                    width: buttonLargeWidth,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 24, vertical: 20),
                     decoration: BoxDecoration(

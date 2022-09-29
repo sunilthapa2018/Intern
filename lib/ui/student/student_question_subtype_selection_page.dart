@@ -281,7 +281,7 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
     return UnconstrainedBox(
       child: Container(
         alignment: Alignment.center,
-        width: buttonWidth,
+        width: buttonSmallWidth,
         margin: const EdgeInsets.fromLTRB(0, 5, 0, 5),
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
         decoration: myButtonBox(),

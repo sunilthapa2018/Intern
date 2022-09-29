@@ -9,6 +9,7 @@ import 'package:motivational_leadership/ui/student/widgets/my_button_box.dart';
 import 'package:motivational_leadership/utility/base_utils.dart';
 import 'package:motivational_leadership/utility/colors.dart';
 import 'package:motivational_leadership/utility/utils.dart';
+import 'package:motivational_leadership/utility/values.dart';
 import 'package:provider/provider.dart';
 
 class Question extends StatefulWidget {
@@ -163,8 +164,8 @@ class _QuestionState extends State<Question> {
         child: Container(
           margin: const EdgeInsets.fromLTRB(0, 8, 0, 8),
           alignment: Alignment.center,
-          width: 160.h,
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+          width: buttonSmallWidth,
+          padding: const EdgeInsets.symmetric(vertical: 8),
           decoration: myButtonBox(),
           child: Text(
             "Save",
@@ -250,7 +251,7 @@ class _QuestionState extends State<Question> {
       fontFamily: 'Roboto',
       color: Colors.black87,
       fontWeight: FontWeight.w400,
-      fontSize: 20.sp,
+      fontSize: 16.sp,
     );
   }
 

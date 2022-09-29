@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:motivational_leadership/services/database.dart';
 import 'package:motivational_leadership/utility/colors.dart';
 import 'package:motivational_leadership/utility/utils.dart';
+import 'package:motivational_leadership/utility/values.dart';
 
 class CoachFeedbackPage extends StatefulWidget {
   final String questionType;
@@ -163,13 +164,13 @@ class _CoachFeedbackPageState extends State<CoachFeedbackPage> {
       child: Container(
         margin: const EdgeInsets.fromLTRB(0, 16, 0, 8),
         alignment: Alignment.center,
-        width: 100,
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+        width: buttonXXSmallWidth,
+        padding: const EdgeInsets.symmetric(vertical: 16),
         decoration: BoxDecoration(
             color: buttonColor, borderRadius: BorderRadius.circular(30)),
-        child: const Text(
+        child: Text(
           "Save",
-          style: TextStyle(fontSize: 16, color: Colors.white),
+          style: TextStyle(fontSize: 16.sp, color: Colors.white),
         ),
       ),
     );

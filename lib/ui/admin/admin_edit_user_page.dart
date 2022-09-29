@@ -8,6 +8,7 @@ import 'package:motivational_leadership/services/database.dart';
 import 'package:motivational_leadership/utility/base_utils.dart';
 import 'package:motivational_leadership/utility/colors.dart';
 import 'package:motivational_leadership/utility/utils.dart';
+import 'package:motivational_leadership/utility/values.dart';
 
 String uid = FirebaseAuth.instance.currentUser!.uid;
 String selectedStatus = "Both";
@@ -87,7 +88,7 @@ class _EditUsersState extends State<EditUsers> {
       children: [
         Container(
           alignment: Alignment.center,
-          width: 100,
+          width: buttonXSmallWidth,
           padding: const EdgeInsets.symmetric(vertical: 16),
           decoration: BoxDecoration(
               color: buttonColor, borderRadius: BorderRadius.circular(25)),

@@ -6,6 +6,7 @@ import 'package:motivational_leadership/services/database.dart';
 import 'package:motivational_leadership/ui/common/widget/verticle_spacer.dart';
 import 'package:motivational_leadership/utility/colors.dart';
 import 'package:motivational_leadership/utility/utils.dart';
+import 'package:motivational_leadership/utility/values.dart';
 
 class AddQuestion extends StatefulWidget {
   const AddQuestion({Key? key}) : super(key: key);
@@ -194,15 +195,16 @@ class _AddQuestionState extends State<AddQuestion> {
         }
       },
       child: Container(
+        width: buttonSmallWidth,
         alignment: Alignment.center,
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+        padding: const EdgeInsets.symmetric(vertical: 16),
         decoration: BoxDecoration(
           color: adminAppBarColor,
           borderRadius: BorderRadius.circular(30),
         ),
-        child: const Text(
+        child: Text(
           "Save Question",
-          style: TextStyle(fontSize: 16, color: Colors.white),
+          style: TextStyle(fontSize: 16.sp, color: Colors.white),
         ),
       ),
     );

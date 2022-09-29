@@ -83,7 +83,7 @@ class _ErrorPageState extends State<ErrorPage> {
       children: [
         Container(
           alignment: Alignment.center,
-          width: buttonWidth,
+          width: buttonSmallWidth,
           padding: const EdgeInsets.symmetric(vertical: 16),
           decoration: BoxDecoration(
               color: buttonColor, borderRadius: BorderRadius.circular(25)),

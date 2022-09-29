@@ -9,6 +9,7 @@ import 'package:motivational_leadership/ui/common/widget/verticle_spacer.dart';
 import 'package:motivational_leadership/ui/student/widgets/app_bar.dart';
 import 'package:motivational_leadership/utility/colors.dart';
 import 'package:motivational_leadership/utility/utils.dart';
+import 'package:motivational_leadership/utility/values.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Profile extends StatefulWidget {
@@ -101,8 +102,8 @@ class _ProfileState extends State<Profile> {
       },
       child: Container(
         alignment: Alignment.center,
-        width: 160.h,
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+        width: buttonMediumWidth,
+        padding: const EdgeInsets.symmetric(vertical: 16),
         decoration: BoxDecoration(
             color: buttonColor, borderRadius: BorderRadius.circular(30)),
         child: Text(

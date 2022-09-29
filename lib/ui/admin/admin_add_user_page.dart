@@ -8,6 +8,7 @@ import 'package:motivational_leadership/services/send_email.dart';
 import 'package:motivational_leadership/ui/common/widget/verticle_spacer.dart';
 import 'package:motivational_leadership/utility/colors.dart';
 import 'package:motivational_leadership/utility/utils.dart';
+import 'package:motivational_leadership/utility/values.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AddUser extends StatefulWidget {
@@ -111,7 +112,7 @@ class _AddUserState extends State<AddUser> {
       children: [
         Container(
           alignment: Alignment.center,
-          width: 160.w,
+          width: buttonSmallWidth,
           padding: const EdgeInsets.symmetric(vertical: 16),
           decoration: BoxDecoration(
               color: buttonColor, borderRadius: BorderRadius.circular(25)),

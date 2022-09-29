@@ -8,6 +8,7 @@ import 'package:motivational_leadership/ui/student/widgets/app_bar.dart';
 import 'package:motivational_leadership/ui/student/widgets/my_button_box.dart';
 import 'package:motivational_leadership/utility/base_utils.dart';
 import 'package:motivational_leadership/utility/colors.dart';
+import 'package:motivational_leadership/utility/values.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class VideoPlayback extends StatefulWidget {
@@ -349,7 +350,7 @@ class _VideoPlaybackState extends State<VideoPlayback> {
             currentPage: widget);
       },
       child: SizedBox(
-        width: MediaQuery.of(context).size.width / 3,
+        width: buttonSmallWidth,
         child: Container(
           alignment: Alignment.center,
           padding: const EdgeInsets.symmetric(vertical: 10),

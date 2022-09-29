@@ -9,6 +9,7 @@ import 'package:motivational_leadership/ui/coach/widgets/coach_navigation_drawer
 import 'package:motivational_leadership/utility/base_utils.dart';
 import 'package:motivational_leadership/utility/colors.dart';
 import 'package:motivational_leadership/utility/utils.dart';
+import 'package:motivational_leadership/utility/values.dart';
 
 class CoachHome extends StatefulWidget {
   const CoachHome({Key? key}) : super(key: key);
@@ -84,8 +85,8 @@ class _CoachHomeState extends State<CoachHome> {
       children: [
         Container(
           alignment: Alignment.center,
-          width: 100,
-          padding: const EdgeInsets.symmetric(vertical: 16),
+          width: buttonXSmallWidth,
+          padding: const EdgeInsets.symmetric(vertical: 8),
           decoration: BoxDecoration(
               color: buttonColor, borderRadius: BorderRadius.circular(25)),
           child: const Text(

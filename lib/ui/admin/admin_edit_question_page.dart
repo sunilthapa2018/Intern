@@ -7,6 +7,7 @@ import 'package:motivational_leadership/services/database.dart';
 import 'package:motivational_leadership/ui/common/widget/verticle_spacer.dart';
 import 'package:motivational_leadership/utility/colors.dart';
 import 'package:motivational_leadership/utility/utils.dart';
+import 'package:motivational_leadership/utility/values.dart';
 
 class EditQuestion extends StatefulWidget {
   final String questionId;
@@ -207,8 +208,8 @@ class _EditQuestionState extends State<EditQuestion> {
       },
       child: Container(
         alignment: Alignment.center,
-        width: 200,
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+        width: buttonXXSmallWidth,
+        padding: const EdgeInsets.symmetric(vertical: 16),
         decoration: BoxDecoration(
           color: adminAppBarColor,
           borderRadius: BorderRadius.circular(30),
@@ -229,8 +230,8 @@ class _EditQuestionState extends State<EditQuestion> {
       },
       child: Container(
         alignment: Alignment.center,
-        width: 200,
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+        width: buttonXXSmallWidth,
+        padding: const EdgeInsets.symmetric(vertical: 16),
         margin: const EdgeInsets.only(right: 36),
         decoration: BoxDecoration(
           color: Colors.red,

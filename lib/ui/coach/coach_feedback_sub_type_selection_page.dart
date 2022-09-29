@@ -277,7 +277,7 @@ class _CoachFeedbackSubTypeSelectionState
     return UnconstrainedBox(
       child: Container(
         alignment: Alignment.center,
-        width: buttonWidth,
+        width: buttonSmallWidth,
         margin: const EdgeInsets.fromLTRB(0, 5, 0, 5),
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         decoration: myButtonBox(),
