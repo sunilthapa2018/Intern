@@ -16,24 +16,25 @@ class StudentQuestionProvider extends ChangeNotifier {
     if (notify) notifyListeners();
   }
 
-  Future _loadInitialData(
+  _loadInitialData(
       BuildContext context, String questionType, bool notify) async {
-    context
-        .read<StudentActionProvider>()
-        .getData(type: questionType, notify: notify, subType: "Actions");
-    context.read<StudentOCProvider>().getData(
-        type: questionType, notify: notify, subType: "Overcoming Challenges");
-    context.read<StudentSIProvider>().getData(
-        type: questionType,
-        notify: notify,
-        subType: "Success Indicators (KPIs)");
-    context
-        .read<StudentImplementationProvider>()
-        .getData(type: questionType, notify: notify, subType: "Implementation");
-    context.read<StudentIOProvider>().getData(
-        type: questionType, notify: notify, subType: "Impact and Outcome");
-    context
-        .read<StudentFutureProvider>()
-        .getData(type: questionType, notify: notify, subType: "Future");
+    await Future.wait([
+      context
+          .read<StudentActionProvider>()
+          .getData(type: questionType, notify: notify, subType: "Actions"),
+      context.read<StudentOCProvider>().getData(
+          type: questionType, notify: notify, subType: "Overcoming Challenges"),
+      context.read<StudentSIProvider>().getData(
+          type: questionType,
+          notify: notify,
+          subType: "Success Indicators (KPIs)"),
+      context.read<StudentImplementationProvider>().getData(
+          type: questionType, notify: notify, subType: "Implementation"),
+      context.read<StudentIOProvider>().getData(
+          type: questionType, notify: notify, subType: "Impact and Outcome"),
+      context
+          .read<StudentFutureProvider>()
+          .getData(type: questionType, notify: notify, subType: "Future")
+    ]);
   }
 }
