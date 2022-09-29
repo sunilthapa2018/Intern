@@ -228,6 +228,9 @@ class DatabaseService {
 
     try {
       await submissionsCollection.doc(uid).set({
+        'Autonomy': false,
+        'Belonging': false,
+        'Competence': false,
         'plan': plan,
         'reflect': reflect,
       });
