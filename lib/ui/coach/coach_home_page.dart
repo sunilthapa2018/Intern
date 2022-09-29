@@ -89,9 +89,9 @@ class _CoachHomeState extends State<CoachHome> {
           padding: const EdgeInsets.symmetric(vertical: 8),
           decoration: BoxDecoration(
               color: buttonColor, borderRadius: BorderRadius.circular(25)),
-          child: const Text(
+          child: Text(
             "Search",
-            style: TextStyle(fontSize: 16, color: Colors.white),
+            style: TextStyle(fontSize: 16.sp, color: Colors.white),
           ),
         ),
       ],

@@ -39,7 +39,7 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
     _questionType = widget.questionType;
     context
         .read<StudentQuestionProvider>()
-        .setInit(context, _questionType, notify: true);
+        .setInit(context, _questionType, notify: false);
   }
 
   @override
@@ -211,7 +211,7 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
             //edit data in database
             DatabaseService.updateSubmissions("reflect", "true");
             Utils.showSnackBar(
-                "Your answer has been Edited and re-submitted for Reflect section");
+                "Your answer has been submitted for Reflect section");
           } else {
             //write new data to database
             DatabaseService.addSubmissions("false", "true");
@@ -261,7 +261,7 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
             //edit data in database
             DatabaseService.updateSubmissions("plan", "true");
             Utils.showSnackBar(
-                "Your answer has been Edited and re-submitted for PLAN section");
+                "Your answer has been submitted for PLAN section");
           } else {
             //write new data to database
             DatabaseService.addSubmissions("true", "false");
