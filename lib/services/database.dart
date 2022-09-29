@@ -204,6 +204,7 @@ class DatabaseService {
         return false;
       }
     } on FirebaseAuthException catch (e) {
+      log(e.message.toString());
       Utils.showSnackBar("Failed Error Message: $e.message");
     }
     return false;
@@ -323,7 +324,7 @@ class DatabaseService {
         bool feedbackGiven = false;
 
         for (var element in querySnapshot.docs) {
-          feedbackGiven = await checkIfFeedbackIsGiven(element.id);
+          feedbackGiven = await checkIfAllFeedbackIsGiven(element.id);
           if (feedbackGiven) {
             itemsList.add(element.id);
           }
@@ -331,6 +332,7 @@ class DatabaseService {
       });
       return itemsList;
     } on FirebaseAuthException catch (e) {
+      log(e.message.toString());
       Utils.showSnackBar("Failed Error Message: $e.message");
     }
   }
@@ -344,7 +346,7 @@ class DatabaseService {
         bool feedbackGiven = false;
 
         for (var element in querySnapshot.docs) {
-          feedbackGiven = await checkIfFeedbackIsGiven(element.id);
+          feedbackGiven = await checkIfAllFeedbackIsGiven(element.id);
           if (!feedbackGiven) {
             itemsList.add(element.id);
           }
@@ -353,6 +355,7 @@ class DatabaseService {
 
       return itemsList;
     } on FirebaseAuthException catch (e) {
+      log(e.message.toString());
       Utils.showSnackBar("Failed Error Message: $e.message");
     }
   }
@@ -397,27 +400,32 @@ class DatabaseService {
     }
   }
 
-  static Future<bool> checkIfFeedbackIsGiven(String studentId) async {
+  static Future<bool> checkIfAllFeedbackIsGiven(String studentId) async {
     try {
-      bool hasDocument =
-          await hasThisDocument("feedback_submissions", studentId);
+      bool hasDocument = await hasThisDocument("submissions", studentId);
       if (!hasDocument) {
         return false;
       } else {
-        final docRef = FirebaseFirestore.instance
-            .collection('feedback_submissions')
-            .doc(studentId);
+        final docRef =
+            FirebaseFirestore.instance.collection('submissions').doc(studentId);
         DocumentSnapshot doc = await docRef.get();
-        String action = "false", plan = "false";
+        String autonomy = "false", belonging = "false", competence = "false";
         if (doc.exists) {
-          action = await doc.get("action");
-          plan = await doc.get("plan");
-          if (action == 'false' || plan == 'false') {
+          autonomy = doc.get('Autonomy').toString();
+          belonging = doc.get("Belonging").toString();
+          competence = doc.get("Competence").toString();
+
+          if (autonomy == 'false' ||
+              belonging == 'false' ||
+              competence == 'false') {
+            log("message false");
             return false;
           } else {
+            log("message true");
             return true;
           }
         } else {
+          log("message false 2");
           return false;
         }
       }
@@ -436,7 +444,13 @@ class DatabaseService {
           .where('type', isEqualTo: type)
           .get();
       final int aDocuments = aSnapshot.docs.length;
-
+      if (aDocuments == 6) {
+        final CollectionReference questionCollection =
+            FirebaseFirestore.instance.collection('submissions');
+        await questionCollection.doc(studentId).update({
+          type: true,
+        });
+      }
       return "$aDocuments/6";
     } on FirebaseAuthException catch (e) {
       Utils.showSnackBar("Failed Error Message: $e.message");

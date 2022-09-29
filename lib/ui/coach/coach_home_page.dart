@@ -22,6 +22,7 @@ class _CoachHomeState extends State<CoachHome> {
   String selectedStatus = "Feedback Not Given";
   final coachNavigatorKey = GlobalKey<NavigatorState>();
   TextEditingController searchController = TextEditingController();
+  TextEditingController titleController = TextEditingController();
   List userSubmissionList = [];
   bool btnSearchClicked = false;
   @override
@@ -37,6 +38,7 @@ class _CoachHomeState extends State<CoachHome> {
   @override
   void initState() {
     super.initState();
+    titleController.text = selectedStatus;
     setLandscapeOnlyOrientation();
   }
 
@@ -200,7 +202,7 @@ class _CoachHomeState extends State<CoachHome> {
 
   AppBar myAppBar() {
     return AppBar(
-      title: const Text("Students"),
+      title: myTitle(),
       backgroundColor: coachAppBarColor,
       actions: [
         IconButton(
@@ -225,18 +227,31 @@ class _CoachHomeState extends State<CoachHome> {
     );
   }
 
+  TextField myTitle() {
+    return TextField(
+      enabled: false,
+      controller: titleController,
+      style: TextStyle(fontSize: 16.sp, color: Colors.white),
+      decoration: const InputDecoration(
+        border: InputBorder.none,
+      ),
+    );
+  }
+
   void handleClick(String value) {
     switch (value) {
       case 'Feedback Given':
         searchController.text = "";
         btnSearchClicked = false;
         selectedStatus = "Feedback Given";
+        titleController.text = "Feedback Given";
         setState(() {});
         break;
       case 'Feedback Not Given':
         searchController.text = "";
         btnSearchClicked = false;
         selectedStatus = "Feedback Not Given";
+        titleController.text = "Feedback Not Given";
         setState(() {});
         break;
     }
@@ -244,19 +259,20 @@ class _CoachHomeState extends State<CoachHome> {
 
   Future<List> fetchDatabaseList() async {
     dynamic resultant;
-    log(btnSearchClicked.toString());
+    log("btnSearchClicked = $btnSearchClicked");
     if (btnSearchClicked) {
       resultant =
           await DatabaseService.searchStudentListNyName(searchController.text);
       log("i am here");
     } else {
+      log(selectedStatus);
       if (selectedStatus == "Feedback Given") {
         resultant = await DatabaseService.getFeedbackGivenUserList();
       } else {
         resultant = await DatabaseService.getFeedbackNotGivenUserList();
       }
     }
-    log(resultant.toString());
+    log("resultant $resultant");
 
     if (resultant == null) {
       userSubmissionList = [];
