@@ -22,6 +22,7 @@ import 'package:motivational_leadership/ui/student/widgets/subtype/categories_ti
 import 'package:motivational_leadership/ui/student/widgets/subtype/categories_tile/student_si_tile.dart';
 import 'package:motivational_leadership/utility/colors.dart';
 import 'package:motivational_leadership/utility/utils.dart';
+import 'package:motivational_leadership/utility/values.dart';
 import 'package:provider/provider.dart';
 
 class QuestionTypeSelection extends StatefulWidget {
@@ -280,7 +281,7 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
     return UnconstrainedBox(
       child: Container(
         alignment: Alignment.center,
-        width: MediaQuery.of(context).size.width / 4,
+        width: buttonWidth,
         margin: const EdgeInsets.fromLTRB(0, 5, 0, 5),
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
         decoration: myButtonBox(),

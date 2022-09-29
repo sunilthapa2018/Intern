@@ -5,6 +5,7 @@ import 'package:motivational_leadership/ui/coach/widgets/align_completed.dart';
 import 'package:motivational_leadership/ui/coach/widgets/align_title.dart';
 import 'package:motivational_leadership/ui/common/widget/type_decoration_box_1.dart';
 import 'package:motivational_leadership/utility/base_utils.dart';
+import 'package:motivational_leadership/utility/values.dart';
 import 'package:provider/provider.dart';
 
 class CoachBelongingTile extends StatelessWidget {
@@ -21,7 +22,7 @@ class CoachBelongingTile extends StatelessWidget {
 
     return GestureDetector(
       child: Container(
-        width: MediaQuery.of(context).size.width / 2,
+        width: screenWidth,
         margin: const EdgeInsets.fromLTRB(10, 10, 10, 5),
         decoration: myTypeBoxDecoration1(),
         child: Column(

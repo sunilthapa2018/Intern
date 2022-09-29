@@ -21,6 +21,7 @@ import 'package:motivational_leadership/ui/student/widgets/my_button_box.dart';
 import 'package:motivational_leadership/utility/base_page.dart';
 import 'package:motivational_leadership/utility/colors.dart';
 import 'package:motivational_leadership/utility/utils.dart';
+import 'package:motivational_leadership/utility/values.dart';
 import 'package:provider/provider.dart';
 
 import '../../utility/base_state.dart';
@@ -39,7 +40,7 @@ class _CoachFeedbackSubTypeSelectionState
     extends BaseState<CoachFeedbackSubTypeSelection> {
   @override
   Widget build(BuildContext context) {
-    myWidth = MediaQuery.of(context).size.width / 2;
+    myWidth = screenWidth;
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
@@ -250,6 +251,7 @@ class _CoachFeedbackSubTypeSelectionState
             String module = widget.questionType;
             EmailServices.sendUserNotificationEmail(
                 name: firstName, email: email, module: module, type: 'Reflect');
+            dismissProgressDialog();
             Utils.showSnackBar("Student has been Notified");
           } catch (e) {
             Utils.showSnackBar(e.toString());
@@ -275,7 +277,7 @@ class _CoachFeedbackSubTypeSelectionState
     return UnconstrainedBox(
       child: Container(
         alignment: Alignment.center,
-        width: MediaQuery.of(context).size.width / 3,
+        width: buttonWidth,
         margin: const EdgeInsets.fromLTRB(0, 5, 0, 5),
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         decoration: myButtonBox(),

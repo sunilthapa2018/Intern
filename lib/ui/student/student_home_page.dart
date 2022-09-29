@@ -195,7 +195,7 @@ class _StudentHomeState extends State<StudentHome> {
   }
 
   mainImage() {
-    double width = MediaQuery.of(context).size.width;
+    double width = double.infinity;
     return Padding(
       padding: const EdgeInsets.all(0),
       child: Image.asset(

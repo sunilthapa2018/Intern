@@ -8,6 +8,7 @@ import 'package:motivational_leadership/ui/coach/widgets/type/coach_autonomy_til
 import 'package:motivational_leadership/ui/coach/widgets/type/coach_belonging_tile.dart';
 import 'package:motivational_leadership/ui/coach/widgets/type/coach_competence_tile.dart';
 import 'package:motivational_leadership/utility/colors.dart';
+import 'package:motivational_leadership/utility/values.dart';
 import 'package:provider/provider.dart';
 
 class CoachFeedbackTypeSelection extends StatefulWidget {
@@ -77,7 +78,7 @@ class _CoachFeedbackTypeSelectionState
   _buildButtonLogo() {
     return Image.asset(
       'assets/complete_logo.png',
-      width: MediaQuery.of(context).size.width / 3,
+      width: screenWidth,
       fit: BoxFit.contain,
     );
   }

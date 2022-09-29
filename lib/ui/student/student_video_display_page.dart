@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -47,7 +45,7 @@ class _VideoPlaybackState extends State<VideoPlayback> {
 
   myBody(BuildContext context, bool isPortrait) {
     return Padding(
-      padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
+      padding: const EdgeInsets.only(left: 16, right: 16),
       child: SizedBox(
         width: double.infinity,
         height: double.infinity,
@@ -295,7 +293,6 @@ class _VideoPlaybackState extends State<VideoPlayback> {
   _buildButtonLogo() {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    log("width = $width, height = $height");
     if (height > 600) {
       return Padding(
         padding: const EdgeInsets.only(bottom: 30),

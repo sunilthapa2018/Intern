@@ -106,7 +106,6 @@ class _CoachHomeState extends State<CoachHome> {
           fontWeight: FontWeight.normal,
           color: Colors.black,
         ),
-        textInputAction: TextInputAction.next,
         controller: searchController,
         decoration: const InputDecoration(
           labelText: "Search Student by First Name",

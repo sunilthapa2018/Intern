@@ -24,11 +24,16 @@ int totalQuestion = 0;
 class _CoachFeedbackPageState extends State<CoachFeedbackPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: coachBackgroundColor,
-      appBar: appBar(context),
-      body: body(context),
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).requestFocus(FocusNode());
+      },
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        backgroundColor: coachBackgroundColor,
+        appBar: appBar(context),
+        body: body(context),
+      ),
     );
   }
 
@@ -42,8 +47,6 @@ class _CoachFeedbackPageState extends State<CoachFeedbackPage> {
   late Future<String> feedbackFuture;
   late Future<String> totalFuture;
   TextEditingController feedbackController = TextEditingController();
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  String uid = FirebaseAuth.instance.currentUser!.uid;
 
   bool hasFeedback = false;
   late String questionId;
@@ -83,14 +86,19 @@ class _CoachFeedbackPageState extends State<CoachFeedbackPage> {
           ),
           // horizontalSpacing(),
           Expanded(
-            child: Column(
-              children: [
-                verticalSpacing(),
-                txtFeedback(),
-                verticalSpacing(),
-                Expanded(child: feedback()),
-                saveButton(context),
-              ],
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    verticalSpacing(),
+                    txtFeedback(),
+                    verticalSpacing(),
+                    feedback(),
+                    saveButton(context),
+                  ],
+                ),
+              ),
             ),
           ),
         ],
@@ -155,11 +163,10 @@ class _CoachFeedbackPageState extends State<CoachFeedbackPage> {
       child: Container(
         margin: const EdgeInsets.fromLTRB(0, 16, 0, 8),
         alignment: Alignment.center,
-        width: 160.w,
+        width: 100,
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
         decoration: BoxDecoration(
-            color: const Color(0xFF2e3c96),
-            borderRadius: BorderRadius.circular(30)),
+            color: buttonColor, borderRadius: BorderRadius.circular(30)),
         child: const Text(
           "Save",
           style: TextStyle(fontSize: 16, color: Colors.white),

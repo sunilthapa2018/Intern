@@ -22,7 +22,7 @@ class StudentFutureTile extends StatelessWidget {
 
     return GestureDetector(
       child: Container(
-        width: MediaQuery.of(context).size.width,
+        width: double.infinity,
         margin: const EdgeInsets.fromLTRB(10, 10, 10, 0),
         decoration: mySubTypeBoxDecoration3(),
         child: Column(

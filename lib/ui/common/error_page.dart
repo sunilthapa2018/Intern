@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:motivational_leadership/main.dart';
 import 'package:motivational_leadership/ui/common/widget/verticle_spacer.dart';
 import 'package:motivational_leadership/utility/colors.dart';
+import 'package:motivational_leadership/utility/values.dart';
 
 class ErrorPage extends StatefulWidget {
   const ErrorPage({super.key});
@@ -82,7 +83,7 @@ class _ErrorPageState extends State<ErrorPage> {
       children: [
         Container(
           alignment: Alignment.center,
-          width: MediaQuery.of(context).size.width / 3,
+          width: buttonWidth,
           padding: const EdgeInsets.symmetric(vertical: 16),
           decoration: BoxDecoration(
               color: buttonColor, borderRadius: BorderRadius.circular(25)),
