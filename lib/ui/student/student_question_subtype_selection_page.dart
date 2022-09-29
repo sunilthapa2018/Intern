@@ -39,7 +39,7 @@ class _QuestionTypeSelectionState extends State<QuestionTypeSelection> {
     _questionType = widget.questionType;
     context
         .read<StudentQuestionProvider>()
-        .setInit(context, _questionType, notify: false);
+        .setInit(context, _questionType, notify: true);
   }
 
   @override
